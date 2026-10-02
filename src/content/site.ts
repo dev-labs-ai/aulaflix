@@ -1,13 +1,12 @@
-// Conteúdo global do site. Os textos ainda são placeholders copiados da referência
-// (programe.ai) e devem ser trocados pelo conteúdo do Aulaflix.
+// Conteúdo global do site.
 
 export const site = {
   name: "Aulaflix",
   // O logotipo renderiza `brand.base` + `brand.accent` (este último na cor de destaque).
   brand: { base: "Aula", accent: "flix" },
-  title: "Aulaflix — Formação em Engenharia de IA",
+  title: "Aulaflix — Cursos online para aprender no seu ritmo",
   description:
-    "Formação em Engenharia de IA. Aprenda como sistemas com IA são projetados, construídos e avaliados.",
+    "Cursos online de programação, design, dados, negócios e outros temas. Aprenda no seu ritmo, com acesso vitalício.",
   legalName: "AULAFLIX TECNOLOGIA LTDA",
 };
 

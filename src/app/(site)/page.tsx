@@ -22,17 +22,17 @@ function Hero() {
       <div className="lg:grid lg:grid-cols-12 lg:gap-x-12">
         <div className="lg:col-span-8 lg:col-start-1">
           <p className="anim-hero font-mono text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-accent sm:text-[12px] sm:tracking-[0.16em]">
-            Cursos de Engenharia de IA
+            Cursos online
           </p>
           <h1
             id="hero-title"
             className="anim-hero anim-hero-delay-1 mt-6 max-w-[640px] font-heading text-[30px] leading-[1.12] font-semibold tracking-[-0.02em] text-ink sm:text-[40px] sm:leading-[1.08] lg:text-[44px] lg:leading-[1.08] xl:text-[52px] xl:leading-[1.05]"
           >
-            <Highlight>Tudo</Highlight> que você precisa saber para utilizar agentes de IA <Highlight>em produção</Highlight>.
+            <Highlight>Aprenda</Highlight> no seu ritmo, com cursos feitos para <Highlight>a prática</Highlight>.
           </h1>
           <p className="anim-hero anim-hero-delay-2 mt-8 max-w-[48ch] font-sans text-[17px] leading-normal text-ink-tertiary sm:text-[19px]">
-            Cursos práticos para entender os fundamentos, aplicar a programação agêntica e construir e avaliar
-            sistemas de agentes de IA.
+            Cursos online de programação, design, dados, negócios e outros temas. Escolha o que quer aprender,
+            assista quando quiser e volte às aulas sempre que precisar.
           </p>
           <div className="anim-hero anim-hero-delay-3 mt-10 flex flex-wrap items-center gap-3">
             <ButtonLink href="/#a-venda">Ver cursos à venda</ButtonLink>
@@ -62,7 +62,7 @@ function OnSaleSection() {
               Cursos <Highlight>à venda</Highlight>
             </h2>
             <p className="mt-5 max-w-[60ch] font-sans text-[16px] leading-[1.55] text-ink-tertiary sm:text-[17px]">
-              Você compra uma vez e o acesso é vitalício: o curso é seu para assistir quantas vezes quiser, no seu tempo.
+              Pague uma vez e tenha acesso para sempre: assista às aulas no seu ritmo e volte a elas quando quiser.
             </p>
           </header>
         </div>
@@ -78,22 +78,22 @@ function WaitlistSection() {
       <div className="lg:grid lg:grid-cols-12 lg:gap-x-12">
         <div className="reveal lg:col-span-9 lg:col-start-2">
           <header>
-            <Eyebrow>Cursos em lista de espera</Eyebrow>
+            <Eyebrow>Lista de espera</Eyebrow>
             <h2
               id="cursos-title"
               className="mt-5 font-heading text-[30px] leading-[1.12] font-semibold tracking-[-0.02em] text-ink sm:text-[40px] sm:leading-[1.08]"
             >
-              Escolha os cursos que fazem sentido para o que você quer construir.
+              Próximos cursos.
             </h2>
             <p className="mt-5 max-w-[640px] font-sans text-[16px] leading-[1.55] text-ink-tertiary sm:text-[17px]">
-              Entre na lista de espera dos temas que mais importam para você. As listas ajudam a decidir quais cursos
-              entram primeiro em produção; novos cursos serão adicionados ao currículo com o tempo.
+              Estes cursos ainda estão em produção. Entre na lista de espera para ser avisado do lançamento e ajudar a
+              decidir quais chegam primeiro.
             </p>
           </header>
         </div>
         <CourseList
           courses={waitlistCourses}
-          label="Cursos do currículo"
+          label="Próximos cursos"
           className="mt-12 lg:col-span-11 lg:col-start-2 lg:mt-16"
         />
         <div className="reveal mt-12 lg:col-span-11 lg:col-start-2">
@@ -105,7 +105,7 @@ function WaitlistSection() {
               ringOffset.canvas,
             )}
           >
-            Ver o currículo completo
+            Ver todos os cursos
             <span aria-hidden="true" className="font-mono">
               →
             </span>

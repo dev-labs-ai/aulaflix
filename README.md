@@ -1,6 +1,6 @@
 # Aulaflix
 
-Protótipo do site do Aulaflix, construído inicialmente como réplica visual de [programe.ai](https://programe.ai/). Os textos ainda são os da referência (exceto a marca) e as imagens são placeholders — tudo pensado para ser trocado.
+Protótipo do site do Aulaflix, uma plataforma de cursos online. O layout partiu de uma réplica visual de [programe.ai](https://programe.ai/); textos e cursos são conteúdo de exemplo do Aulaflix e as imagens são placeholders.
 
 Stack: Next.js 16 (App Router, Turbopack) · React 19 · Tailwind CSS v4 · TypeScript · lucide-react.
 
@@ -28,7 +28,7 @@ O grupo `(site)` aplica header e rodapé; as telas de autenticação (`/entrar`,
 
 ## Onde mudar as coisas
 
-- **Marca, menu, rodapé, redes, instrutor:** `src/content/site.ts`
+- **Marca, título e descrição do site, menu, rodapé, redes:** `src/content/site.ts`
 - **Lista de cursos (título, resumo, status, ícone/capa):** `src/content/courses.ts`
 - **Conteúdo de cada curso (ementa, preços, FAQ):** `src/content/course-details/<slug>.ts`
 - **Home (texto da seção Sobre):** `src/content/home.ts`

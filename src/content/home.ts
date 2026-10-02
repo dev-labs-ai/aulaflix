@@ -2,7 +2,7 @@
 
 /** Texto da seção Sobre. */
 export const about = [
-  "O Aulaflix é uma plataforma de cursos sobre Engenharia de IA. Cada curso parte de problemas concretos e avança junto com a implementação, mostrando os detalhes que fazem diferença quando um sistema com IA sai do protótipo e vai para produção.",
-  "Os cursos são independentes: você escolhe os temas que fazem sentido para o que quer construir, dos fundamentos de modelos e agentes até o domínio de ferramentas específicas, como Claude Code, Codex e Agent Skills.",
-  "Você compra cada curso uma vez e o acesso é vitalício, para assistir no seu ritmo e voltar às aulas quando precisar. As listas de espera ajudam a decidir quais cursos entram primeiro em produção, e novos temas são adicionados ao currículo com o tempo.",
+  "O Aulaflix é uma plataforma de cursos online para quem quer aprender algo novo ou se aprofundar no que já faz. Os cursos são divididos em módulos curtos, com aulas em vídeo e materiais de apoio.",
+  "Cada curso é independente: você escolhe os temas que fazem sentido para você, sem assinatura e sem uma ordem obrigatória.",
+  "Depois da compra, o curso é seu para sempre. Os cursos que ainda estão em produção ficam em lista de espera, e quem se inscreve é avisado por e-mail no lançamento.",
 ];
