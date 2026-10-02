@@ -1,26 +1,171 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+@theme {
+  /* Paleta base */
+  --color-neutral-0: #ffffff;
+  --color-neutral-25: #fcfbf9;
+  --color-neutral-50: #f7f5f0;
+  --color-neutral-100: #f0ede6;
+  --color-neutral-200: #e2ded5;
+  --color-neutral-300: #cfc8bc;
+  --color-neutral-600: #6c665b;
+  --color-neutral-700: #4d4a44;
+  --color-neutral-850: #262b35;
+  --color-neutral-950: #111318;
+
+  --color-accent-100: #dce5ff;
+  --color-accent-300: #8eafff;
+  --color-accent-500: #2457ff;
+  --color-accent-600: #1f4ae0;
+  --color-accent-700: #193dba;
+
+  --color-success-100: #ddf5e8;
+  --color-success-500: #176b47;
+  --color-warning-100: #fff0cc;
+  --color-warning-500: #714b13;
+  --color-danger-100: #ffe2de;
+  --color-danger-500: #94302b;
+
+  /* Tokens semânticos */
+  --color-canvas: var(--color-neutral-25);
+  --color-section: var(--color-neutral-50);
+  --color-surface: var(--color-neutral-0);
+  --color-surface-raised: var(--color-neutral-0);
+  --color-surface-muted: var(--color-neutral-100);
+  --color-surface-accent: var(--color-accent-500);
+  --color-surface-accent-soft: var(--color-accent-100);
+
+  --color-ink: var(--color-neutral-950);
+  --color-ink-secondary: var(--color-neutral-850);
+  --color-ink-tertiary: var(--color-neutral-700);
+  --color-ink-muted: var(--color-neutral-600);
+  --color-ink-inverse: var(--color-neutral-0);
+  --color-ink-accent: var(--color-accent-600);
+
+  --color-line: var(--color-neutral-200);
+  --color-line-subtle: var(--color-neutral-100);
+  --color-line-strong: var(--color-neutral-300);
+  --color-line-accent: var(--color-accent-300);
+
+  --color-focus: var(--color-accent-500);
+  --color-preview-bg: var(--color-success-100);
+  --color-preview-text: var(--color-success-500);
+
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+
+  --shadow-raised: 0 1px 2px #1113180a, 0 8px 24px #1113180f;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Entrada do hero */
+@keyframes anim-hero-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.anim-hero {
+  opacity: 0;
+  animation: anim-hero-reveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.anim-hero-delay-1 {
+  animation-delay: 80ms;
+}
+.anim-hero-delay-2 {
+  animation-delay: 200ms;
+}
+.anim-hero-delay-3 {
+  animation-delay: 340ms;
+}
+.anim-hero-delay-4 {
+  animation-delay: 480ms;
+}
+
+/* Revelação ao rolar (ativada por RevealObserver) */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal-stagger.is-visible > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-stagger.is-visible > :nth-child(2) {
+  transition-delay: 60ms;
+}
+.reveal-stagger.is-visible > :nth-child(3) {
+  transition-delay: 110ms;
+}
+.reveal-stagger.is-visible > :nth-child(4) {
+  transition-delay: 160ms;
+}
+.reveal-stagger.is-visible > :nth-child(5) {
+  transition-delay: 210ms;
+}
+.reveal-stagger.is-visible > :nth-child(6) {
+  transition-delay: 260ms;
+}
+.reveal-stagger.is-visible > :nth-child(7) {
+  transition-delay: 300ms;
+}
+.reveal-stagger.is-visible > :nth-child(8) {
+  transition-delay: 335ms;
+}
+.reveal-stagger.is-visible > :nth-child(9) {
+  transition-delay: 370ms;
+}
+.reveal-stagger.is-visible > :nth-child(10) {
+  transition-delay: 400ms;
+}
+.reveal-stagger.is-visible > :nth-child(n + 11) {
+  transition-delay: 430ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-hero {
+    opacity: 1;
+    animation: none;
+    transform: none;
+  }
+  .reveal,
+  .reveal-stagger > * {
+    opacity: 1;
+    transition: none;
+    transform: none;
+  }
 }
