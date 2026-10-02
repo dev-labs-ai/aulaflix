@@ -1,281 +1,134 @@
 "use client";
 
-import { useId, useState, type ChangeEvent, type FormEvent, type ReactNode } from "react";
-import { ChevronDown, Globe } from "lucide-react";
-import { cn } from "@/components/ui";
+import Link from "next/link";
+import { useActionState, useId, type ReactNode } from "react";
+import { useFormStatus } from "react-dom";
+import { TriangleAlert } from "lucide-react";
+import { buttonClass, cn, focusRing, ringOffset } from "@/components/ui";
+import { joinWaitlist, joinWaitlistWithEmail, leaveWaitlist } from "@/lib/waitlist-actions";
 import styles from "./waitlist.module.css";
 
-// Protótipo: nada é enviado a um backend. A inscrição fica só no estado do cliente.
+// Lista de espera na lousa da página de curso. Com a conta, basta um clique em "Avise-me";
+// sem a conta, só o e-mail. Protótipo: a inscrição fica num cookie e nenhum aviso é enviado.
 
-type Submission = { name: string; email: string };
+const introClass = "max-w-[52ch] text-[17px] leading-[1.6] text-giz-apagado";
 
-export function WaitlistCard({ courseTitle, id, className }: { courseTitle: string; id?: string; className?: string }) {
-  const [submission, setSubmission] = useState<Submission | null>(null);
+function ChalkSubmit({ children, pendingLabel }: { children: ReactNode; pendingLabel: string }) {
+  const { pending } = useFormStatus();
   return (
-    <div
-      id={id}
-      className={cn("overflow-hidden rounded-card border border-line bg-surface-raised shadow-(--shadow-raised)", className)}
-    >
-      <span aria-hidden="true" className="block h-3 tracejado text-salvia-400" />
-      <div className="p-6 sm:p-7">
-        {submission ? (
-          <WaitlistConfirmed courseTitle={courseTitle} {...submission} />
-        ) : (
-          <>
-            <p className="font-heading text-[22px] font-bold leading-[1.2] tracking-[-0.015em] text-ink sm:text-[24px]">
-              Seja avisado do lançamento
-            </p>
-            <p className="mt-3 text-[15px] leading-[1.55] text-ink-tertiary">
-              Entre na lista de espera e receba um e-mail quando as inscrições abrirem.
-            </p>
-            <div className="mt-6">
-              <WaitlistForm onSubmitted={setSubmission} />
-            </div>
-          </>
-        )}
-      </div>
+    <button type="submit" disabled={pending} className={cn(buttonClass("chalk", "board"), "shrink-0 disabled:opacity-70")}>
+      {pending ? pendingLabel : children}
+    </button>
+  );
+}
+
+/** Confirmação: o check é desenhado a giz e o e-mail ganha um traço amarelo. */
+function Confirmed({ email, children }: { email: string; children?: ReactNode }) {
+  return (
+    <div className={styles.success}>
+      <p className="flex items-start gap-3 text-[18px] leading-[1.55] text-giz">
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 32 32"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className={cn("size-7 shrink-0 text-amarelo-300", styles.mark)}
+        >
+          <path d="M7 17 L 13 23 L 25 10" pathLength={100} />
+        </svg>
+        <span>
+          Pronto! Vamos avisar em <span className={cn("font-bold", styles.email)}>{email}</span> quando as inscrições
+          abrirem.
+        </span>
+      </p>
+      {children}
     </div>
   );
 }
 
-const countries = [
-  { code: "BR", label: "Brasil" },
-  { code: "PT", label: "Portugal" },
-  { code: "US", label: "Estados Unidos" },
-  { code: "ZZ", label: "Internacional" },
-] as const;
-
-type CountryCode = (typeof countries)[number]["code"];
-
-const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-function validate(values: { name: string; email: string; phone: string }) {
-  const digits = values.phone.replace(/\D/g, "");
-  return {
-    name: values.name.trim() ? null : "Digite seu nome.",
-    email: emailPattern.test(values.email.trim()) ? null : "Esse e-mail não parece válido.",
-    phone: !digits || (digits.length >= 8 && digits.length <= 15) ? null : "Esse telefone não parece válido.",
-  };
-}
-
-const inputClass = (invalid: boolean) =>
-  cn(
-    "block w-full rounded-control border bg-surface px-3.5 py-2.5 font-sans text-[16px] text-ink placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-surface-raised disabled:opacity-60",
-    invalid ? "border-danger-500 focus:ring-danger-100" : "border-line focus:border-line-accent focus:ring-focus",
-  );
-
-const labelClass = "block text-[14px] font-bold text-ink-secondary";
-
-function FieldError({ id, children }: { id: string; children: ReactNode }) {
-  return (
-    <p id={id} className="text-[13px] leading-[1.45] text-error-text">
-      {children}
-    </p>
-  );
-}
-
-function WaitlistForm({ onSubmitted }: { onSubmitted: (submission: Submission) => void }) {
-  const id = useId();
-  const [values, setValues] = useState({ name: "", email: "", phone: "" });
-  const [country, setCountry] = useState<CountryCode>("BR");
-  const [touched, setTouched] = useState({ name: false, email: false, phone: false });
-  const [pending, setPending] = useState(false);
-
-  const errors = validate(values);
-  const canSubmit = !errors.name && !errors.email && !errors.phone && !pending;
-  const show = (field: keyof typeof touched) => (touched[field] ? errors[field] : null);
-
-  const update = (field: keyof typeof values) => (e: ChangeEvent<HTMLInputElement>) =>
-    setValues((v) => ({ ...v, [field]: e.target.value }));
-  const blur = (field: keyof typeof touched) => () => setTouched((t) => ({ ...t, [field]: true }));
-
-  function onSubmit(e: FormEvent) {
-    e.preventDefault();
-    setTouched({ name: true, email: true, phone: true });
-    if (!canSubmit) return;
-    setPending(true);
-    // Simula a latência de uma requisição.
-    setTimeout(() => onSubmitted({ name: values.name.trim(), email: values.email.trim() }), 600);
+/** Para quem entrou na conta: um clique, com o e-mail da conta. */
+export function WaitlistOneClick({ courseSlug, email, joined }: { courseSlug: string; email: string; joined: boolean }) {
+  if (joined) {
+    return (
+      <Confirmed email={email}>
+        <form action={leaveWaitlist.bind(null, courseSlug)} className="mt-4">
+          <button
+            type="submit"
+            className={cn(
+              "rounded-control text-[15px] font-bold text-giz-apagado underline decoration-2 underline-offset-4 transition-colors hover:text-giz",
+              focusRing,
+              ringOffset.board,
+            )}
+          >
+            Não quero mais ser avisado
+          </button>
+        </form>
+      </Confirmed>
+    );
   }
-
   return (
-    <form className="space-y-3.5" noValidate onSubmit={onSubmit}>
-      <div className="space-y-1.5">
-        <label htmlFor={`${id}-name`} className={labelClass}>
-          Nome
-        </label>
-        <input
-          id={`${id}-name`}
-          name="name"
-          type="text"
-          autoComplete="name"
-          required
-          placeholder="Seu nome"
-          value={values.name}
-          onChange={update("name")}
-          onBlur={blur("name")}
-          disabled={pending}
-          aria-invalid={Boolean(show("name"))}
-          aria-describedby={show("name") ? `${id}-name-error` : undefined}
-          className={inputClass(Boolean(show("name")))}
-        />
-        {show("name") && <FieldError id={`${id}-name-error`}>{show("name")}</FieldError>}
-      </div>
-
-      <div className="space-y-1.5">
-        <label htmlFor={`${id}-email`} className={labelClass}>
-          E-mail
-        </label>
-        <input
-          id={`${id}-email`}
-          name="email"
-          type="email"
-          autoComplete="email"
-          required
-          placeholder="seu@email.com"
-          value={values.email}
-          onChange={update("email")}
-          onBlur={blur("email")}
-          disabled={pending}
-          aria-invalid={Boolean(show("email"))}
-          aria-describedby={show("email") ? `${id}-email-error` : undefined}
-          className={inputClass(Boolean(show("email")))}
-        />
-        {show("email") && <FieldError id={`${id}-email-error`}>{show("email")}</FieldError>}
-      </div>
-
-      <div className="space-y-1.5">
-        <label htmlFor={`${id}-phone`} className={cn(labelClass, "flex items-baseline justify-between")}>
-          <span>Telefone</span>
-          <span className="text-[13px] font-normal text-ink-muted">opcional</span>
-        </label>
-        <div
-          className={cn(
-            "flex w-full items-center border bg-surface px-3.5 py-2.5 font-sans focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-surface-raised",
-            "rounded-control",
-            show("phone")
-              ? "border-danger-500 focus-within:ring-danger-100"
-              : "border-line focus-within:border-line-accent focus-within:ring-focus",
-            pending && "opacity-60",
-          )}
-        >
-          <div className="relative mr-3 flex items-center self-stretch">
-            <select
-              aria-label="País"
-              value={country}
-              onChange={(e) => setCountry(e.target.value as CountryCode)}
-              disabled={pending}
-              className="absolute inset-0 z-10 size-full cursor-pointer opacity-0"
-            >
-              {countries.map((c) => (
-                <option key={c.code} value={c.code}>
-                  {c.label}
-                </option>
-              ))}
-            </select>
-            <Flag code={country} />
-            <ChevronDown aria-hidden="true" className="ml-1 size-3 text-ink-muted" />
-          </div>
-          <input
-            id={`${id}-phone`}
-            name="phone"
-            type="tel"
-            inputMode="tel"
-            autoComplete="tel"
-            placeholder="(11) 99999-9999"
-            value={values.phone}
-            onChange={update("phone")}
-            onBlur={blur("phone")}
-            disabled={pending}
-            aria-invalid={Boolean(show("phone"))}
-            aria-describedby={show("phone") ? `${id}-phone-error` : undefined}
-            className="min-w-0 flex-1 border-0 bg-transparent p-0 font-sans text-[16px] text-ink outline-none placeholder:text-ink-muted disabled:cursor-not-allowed"
-          />
-        </div>
-        {show("phone") && <FieldError id={`${id}-phone-error`}>{show("phone")}</FieldError>}
-      </div>
-
-      <button
-        type="submit"
-        disabled={!canSubmit}
-        className="mt-2 inline-flex h-12 w-full items-center justify-center rounded-control bg-surface-accent px-5 text-[16px] font-bold text-ink-inverse transition-colors enabled:hover:bg-surface-accent-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-4 focus-visible:ring-offset-surface-raised disabled:cursor-not-allowed disabled:bg-surface-muted disabled:text-ink-muted"
-      >
-        {pending ? "Enviando…" : "Quero ser avisado"}
-      </button>
-    </form>
-  );
-}
-
-function WaitlistConfirmed({ name, email, courseTitle }: Submission & { courseTitle: string }) {
-  const firstName = name.split(/\s+/)[0] ?? "";
-  return (
-    <output aria-live="polite" className={cn("block", styles.success)}>
-      <svg
-        aria-hidden="true"
-        viewBox="0 0 32 32"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2.75"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        className={cn("block size-9 text-ink-accent", styles.mark)}
-      >
-        <path d="M7 17 L 13 23 L 25 10" pathLength={100} />
-      </svg>
-      <h3
-        className={cn(
-          "mt-5 font-heading text-[26px] font-bold leading-[1.1] tracking-[-0.02em] text-ink sm:text-[28px]",
-          styles.fadeUp,
-          styles.delayTitle,
-        )}
-      >
-        {firstName ? `Pronto, ${firstName}! Você vai ser avisado.` : "Pronto! Você vai ser avisado."}
-      </h3>
-      <p
-        className={cn(
-          "mt-3 max-w-[44ch] text-[16px] leading-[1.6] text-ink-secondary",
-          styles.fadeUp,
-          styles.delayBody,
-        )}
-      >
-        Registramos seu interesse em <span className="text-ink">{courseTitle}</span>. Vamos avisar você em{" "}
-        <span className={cn("font-bold text-ink", styles.email)}>{email}</span> quando as inscrições abrirem.
+    <>
+      <p className={introClass}>
+        O curso ainda está em produção. Com um clique, avisamos em <strong className="text-giz">{email}</strong> quando
+        as inscrições abrirem.
       </p>
-    </output>
+      <form action={joinWaitlist.bind(null, courseSlug)} className="mt-6">
+        <ChalkSubmit pendingLabel="Inscrevendo…">Avise-me</ChalkSubmit>
+      </form>
+    </>
   );
 }
 
-/** Bandeiras simplificadas (emoji de bandeira não renderiza em todos os sistemas). */
-function Flag({ code }: { code: CountryCode }) {
-  const box = "block h-4 w-6 overflow-hidden rounded-[2px]";
-  switch (code) {
-    case "BR":
-      return (
-        <svg viewBox="0 0 24 16" aria-hidden="true" className={box}>
-          <rect width="24" height="16" fill="#009b3a" />
-          <path d="M12 2 22 8 12 14 2 8z" fill="#fedf00" />
-          <circle cx="12" cy="8" r="3.4" fill="#002776" />
-        </svg>
-      );
-    case "PT":
-      return (
-        <svg viewBox="0 0 24 16" aria-hidden="true" className={box}>
-          <rect width="24" height="16" fill="#da291c" />
-          <rect width="9.6" height="16" fill="#046a38" />
-          <circle cx="9.6" cy="8" r="3" fill="#ffe900" />
-        </svg>
-      );
-    case "US":
-      return (
-        <svg viewBox="0 0 24 16" aria-hidden="true" className={box}>
-          <rect width="24" height="16" fill="#fff" />
-          {[0, 2, 4, 6, 8, 10, 12].map((i) => (
-            <rect key={i} y={(i * 16) / 13} width="24" height={16 / 13} fill="#b22234" />
-          ))}
-          <rect width="10.4" height="8.6" fill="#3c3b6e" />
-        </svg>
-      );
-    default:
-      return <Globe aria-hidden="true" className="size-4 text-ink-muted" />;
-  }
+/** Para quem não entrou: só o e-mail, e o convite para entrar e se inscrever com um clique. */
+export function WaitlistEmail({ courseSlug }: { courseSlug: string }) {
+  const id = useId();
+  const [state, action] = useActionState(joinWaitlistWithEmail.bind(null, courseSlug), { error: null, email: null });
+
+  if (state.email) return <Confirmed email={state.email} />;
+
+  return (
+    <>
+      <p className={introClass}>
+        O curso ainda está em produção. Deixe seu e-mail e avisamos quando as inscrições abrirem.
+      </p>
+      <form action={action} noValidate className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-start">
+        <div className="flex flex-col gap-2 sm:w-80">
+          <label htmlFor={`${id}-email`} className="sr-only">
+            E-mail
+          </label>
+          <input
+            id={`${id}-email`}
+            type="email"
+            name="email"
+            autoComplete="email"
+            required
+            placeholder="seu@email.com"
+            aria-invalid={state.error ? true : undefined}
+            aria-describedby={state.error ? `${id}-error` : undefined}
+            className="h-12 w-full rounded-control border-2 border-salvia-400 bg-lousa-600 px-3.5 text-[16px] text-giz placeholder:text-giz-apagado focus:border-amarelo-300 focus:outline-none aria-[invalid=true]:border-amarelo-300"
+          />
+          {state.error && (
+            <p id={`${id}-error`} className="flex items-start gap-1.5 text-[14px] leading-5 text-amarelo-300">
+              <TriangleAlert aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
+              {state.error}
+            </p>
+          )}
+        </div>
+        <ChalkSubmit pendingLabel="Enviando…">Avise-me</ChalkSubmit>
+      </form>
+      <p className="mt-5 text-[15px] leading-[1.6] text-giz-apagado">
+        Já tem conta?{" "}
+        <Link
+          href={`/entrar?next=/cursos/${courseSlug}`}
+          className={cn("rounded-control font-bold text-giz underline decoration-2 underline-offset-4", focusRing, ringOffset.board)}
+        >
+          Entre
+        </Link>{" "}
+        e seja avisado com um clique.
+      </p>
+    </>
+  );
 }

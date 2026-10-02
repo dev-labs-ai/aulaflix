@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 import { Check, ChevronLeft, Play } from "lucide-react";
 import { BuyButton } from "@/components/curso/buy-button";
 import { courseIcons } from "@/components/placeholders";
@@ -34,22 +35,10 @@ export function priceTerms(pricing: CoursePricing) {
 }
 
 /**
- * Topo da página de curso: área, título e resumo escritos na lousa e, logo abaixo, a ação principal:
- * preço e compra nos cursos à venda (`pricing`), ou o convite para a lista de espera.
+ * Topo da página de curso: área, título e resumo escritos na lousa e, logo abaixo, a ação principal
+ * (`children`): preço e compra, a lista de espera, ou o atalho para quem já tem o curso.
  */
-export function CourseBoard({
-  course,
-  pricing,
-  freeLessonHref,
-  waitlistHref,
-}: {
-  course: Course;
-  pricing?: CoursePricing;
-  /** Âncora da aula grátis, quando o curso tem uma. */
-  freeLessonHref?: string;
-  /** Âncora do formulário da lista de espera. */
-  waitlistHref?: string;
-}) {
+export function CourseBoard({ course, children }: { course: Course; children: ReactNode }) {
   const Icon = courseIcons[course.icon];
 
   return (
@@ -71,23 +60,7 @@ export function CourseBoard({
           </p>
 
           {/* Traço de giz separando o texto da ação. */}
-          <div className="mt-10 border-t-2 border-dashed border-salvia-400 pt-8">
-            {pricing ? (
-              <PriceAndBuy pricing={pricing} freeLessonHref={freeLessonHref} />
-            ) : (
-              <>
-                <p className="max-w-[48ch] text-[17px] leading-[1.6] text-giz-apagado">
-                  O curso ainda está em produção. Entre na lista de espera e receba um e-mail quando as inscrições
-                  abrirem.
-                </p>
-                {waitlistHref && (
-                  <ButtonLink href={waitlistHref} variant="chalk" offset="board" className="mt-6 w-full sm:w-auto">
-                    Quero ser avisado
-                  </ButtonLink>
-                )}
-              </>
-            )}
-          </div>
+          <div className="mt-10 border-t-2 border-dashed border-salvia-400 pt-8">{children}</div>
         </div>
 
         {/* O ícone do tema desenhado a giz, só no desktop, onde sobra lousa ao lado do texto. */}
@@ -99,7 +72,8 @@ export function CourseBoard({
   );
 }
 
-function PriceAndBuy({ pricing, freeLessonHref }: { pricing: CoursePricing; freeLessonHref?: string }) {
+/** Ação da lousa nos cursos à venda: preço, condições, compra e o atalho para a aula grátis. */
+export function PriceAndBuy({ pricing, freeLessonHref }: { pricing: CoursePricing; freeLessonHref?: string }) {
   const terms = priceTerms(pricing);
   return (
     <>

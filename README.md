@@ -60,4 +60,4 @@ As contas e a sessão ficam em `src/lib/auth.ts`; os cursos e o progresso inicia
 
 ## Limitações do protótipo
 
-Fora o login e o cadastro, os formulários (Google/GitHub, redefinição de senha, compra, lista de espera) são só visuais: validam no navegador e mostram um estado de confirmação, mas não enviam nada. Nenhum e-mail é enviado de verdade. O player da aula grátis também é só visual: ainda não há vídeos. Na redefinição de senha, qualquer código de 6 dígitos é aceito.
+Fora o login, o cadastro e a lista de espera, os formulários (Google/GitHub, redefinição de senha, compra) são só visuais: validam no navegador e mostram um estado de confirmação, mas não enviam nada. A lista de espera guarda a inscrição num cookie deste navegador (`src/lib/waitlist.ts`): com a conta, basta um clique em "Avise-me"; sem ela, só o e-mail. Nenhum e-mail é enviado de verdade. O player da aula grátis também é só visual: ainda não há vídeos. Na redefinição de senha, qualquer código de 6 dígitos é aceito.

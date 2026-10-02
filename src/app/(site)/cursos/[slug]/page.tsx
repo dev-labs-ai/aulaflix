@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { BackToCourses, boardBuyId, CourseBoard, priceTerms } from "@/components/curso/course-hero";
+import { BackToCourses, boardBuyId, CourseBoard, PriceAndBuy, priceTerms } from "@/components/curso/course-hero";
 import {
   AudienceSection,
   CourseFaqSection,
@@ -11,11 +11,13 @@ import {
   WhySection,
 } from "@/components/curso/course-sections";
 import { MobileBuyBar } from "@/components/curso/mobile-buy-bar";
-import { WaitlistCard } from "@/components/curso/waitlist";
+import { WaitlistEmail, WaitlistOneClick } from "@/components/curso/waitlist";
 import { cn, container } from "@/components/ui";
 import { courses, getCourse } from "@/content/courses";
 import { getCourseDetail, getFreeLesson } from "@/content/course-details";
+import { getSessionUser } from "@/lib/auth";
 import { brl } from "@/lib/format";
+import { isOnWaitlist } from "@/lib/waitlist";
 
 // Só os cursos conhecidos existem; qualquer outro slug vira 404.
 export const dynamicParams = false;
@@ -31,11 +33,10 @@ export async function generateMetadata(props: PageProps<"/cursos/[slug]">): Prom
 }
 
 const freeLessonId = "aula-gratis";
-const waitlistId = "lista-de-espera";
 
 /**
- * Página de curso: a lousa com título e compra; a ementa logo depois, ao lado da aula grátis
- * (ou do formulário da lista de espera); e o resto do conteúdo embaixo.
+ * Página de curso: a lousa com título e compra (ou a lista de espera); a ementa logo depois, ao lado
+ * da aula grátis; e o resto do conteúdo embaixo.
  */
 export default async function CoursePage(props: PageProps<"/cursos/[slug]">) {
   const { slug } = await props.params;
@@ -46,6 +47,7 @@ export default async function CoursePage(props: PageProps<"/cursos/[slug]">) {
   const onSale = detail.kind === "on-sale";
   const freeLesson = onSale ? getFreeLesson(detail) : undefined;
   const freeLessonHref = freeLesson && `#${freeLessonId}`;
+  const user = await getSessionUser();
 
   return (
     // A barra de compra do celular é `sticky` dentro deste bloco: acompanha a página e para antes do rodapé.
@@ -53,12 +55,15 @@ export default async function CoursePage(props: PageProps<"/cursos/[slug]">) {
       <div className={cn(container, "pb-24 pt-6 sm:pb-32 sm:pt-10 lg:pb-40")}>
         <BackToCourses />
         <div className="mt-3">
-          <CourseBoard
-            course={course}
-            pricing={onSale ? detail.pricing : undefined}
-            freeLessonHref={freeLessonHref}
-            waitlistHref={onSale ? undefined : `#${waitlistId}`}
-          />
+          <CourseBoard course={course}>
+            {onSale ? (
+              <PriceAndBuy pricing={detail.pricing} freeLessonHref={freeLessonHref} />
+            ) : user ? (
+              <WaitlistOneClick courseSlug={slug} email={user.email} joined={await isOnWaitlist(user.email, slug)} />
+            ) : (
+              <WaitlistEmail courseSlug={slug} />
+            )}
+          </CourseBoard>
         </div>
 
         <div className="lg:grid lg:grid-cols-12 lg:gap-x-12">
@@ -76,13 +81,6 @@ export default async function CoursePage(props: PageProps<"/cursos/[slug]">) {
                 lesson={freeLesson.lesson}
                 number={freeLesson.number}
                 moduleTitle={freeLesson.module.title}
-              />
-            )}
-            {!onSale && (
-              <WaitlistCard
-                id={waitlistId}
-                courseTitle={course.title}
-                className="mt-20 scroll-mt-24 sm:mt-24 lg:sticky lg:top-24"
               />
             )}
           </div>
