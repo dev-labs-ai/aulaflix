@@ -45,3 +45,17 @@ export const myCoursesCopy = {
     cta: "Ver todos os cursos",
   },
 };
+
+export const purchasesCopy = {
+  title: "Minhas compras",
+  description: "Seus pedidos no Aulaflix: pagamentos, valores e cursos incluídos.",
+  status: { paid: "Pago" },
+  paymentMethod: { pix: "Pix", card: "Cartão" },
+  order: (id: string) => `Pedido ${id}`,
+  includes: "Inclui",
+  empty: {
+    title: "Você ainda não realizou nenhuma compra",
+    body: "Explore os cursos e escolha por onde começar.",
+    cta: "Ver todos os cursos",
+  },
+};
