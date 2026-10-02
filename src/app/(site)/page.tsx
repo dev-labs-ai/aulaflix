@@ -19,27 +19,25 @@ export default function HomePage() {
 function Hero() {
   return (
     <section aria-labelledby="hero-title" className={cn(container, "pt-20 pb-24 sm:pt-28 sm:pb-28 lg:pt-32 lg:pb-32")}>
-      <div className="lg:grid lg:grid-cols-12 lg:gap-x-12">
-        <div className="lg:col-span-8 lg:col-start-1">
-          <p className="anim-hero font-mono text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-accent sm:text-[12px] sm:tracking-[0.16em]">
-            Cursos online
-          </p>
-          <h1
-            id="hero-title"
-            className="anim-hero anim-hero-delay-1 mt-6 max-w-[640px] font-heading text-[30px] leading-[1.12] font-semibold tracking-[-0.02em] text-ink sm:text-[40px] sm:leading-[1.08] lg:text-[44px] lg:leading-[1.08] xl:text-[52px] xl:leading-[1.05]"
-          >
-            <Highlight>Aprenda</Highlight> no seu ritmo, com cursos feitos para <Highlight>a prática</Highlight>.
-          </h1>
-          <p className="anim-hero anim-hero-delay-2 mt-8 max-w-[48ch] font-sans text-[17px] leading-normal text-ink-tertiary sm:text-[19px]">
-            Cursos online de programação, design, dados, negócios e outros temas. Escolha o que quer aprender,
-            assista quando quiser e volte às aulas sempre que precisar.
-          </p>
-          <div className="anim-hero anim-hero-delay-3 mt-10 flex flex-wrap items-center gap-3">
-            <ButtonLink href="/#a-venda">Ver cursos à venda</ButtonLink>
-            <ButtonLink href="/cursos" variant="secondary">
-              Ver todos os cursos
-            </ButtonLink>
-          </div>
+      <div className="mx-auto max-w-[820px] text-center">
+        <p className="anim-hero font-mono text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-accent sm:text-[12px] sm:tracking-[0.16em]">
+          Cursos online
+        </p>
+        <h1
+          id="hero-title"
+          className="anim-hero anim-hero-delay-1 mx-auto mt-6 max-w-[760px] text-balance font-heading text-[30px] leading-[1.12] font-semibold tracking-[-0.02em] text-ink sm:text-[40px] sm:leading-[1.08] lg:text-[44px] lg:leading-[1.08] xl:text-[52px] xl:leading-[1.05]"
+        >
+          <Highlight>Aprenda</Highlight> no seu ritmo, com cursos feitos para <Highlight>a prática</Highlight>.
+        </h1>
+        <p className="anim-hero anim-hero-delay-2 mx-auto mt-8 max-w-[52ch] text-pretty font-sans text-[17px] leading-normal text-ink-tertiary sm:text-[19px]">
+          Cursos online de programação, design, dados, negócios e outros temas. Escolha o que quer aprender, assista
+          quando quiser e volte às aulas sempre que precisar.
+        </p>
+        <div className="anim-hero anim-hero-delay-3 mt-10 flex flex-wrap items-center justify-center gap-3">
+          <ButtonLink href="/#a-venda">Ver cursos à venda</ButtonLink>
+          <ButtonLink href="/cursos" variant="secondary">
+            Ver todos os cursos
+          </ButtonLink>
         </div>
       </div>
     </section>
