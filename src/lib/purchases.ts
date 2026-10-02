@@ -34,7 +34,7 @@ const PURCHASES_BY_ACCOUNT: Record<string, PurchaseRecord[]> = {
       method: "card",
       status: "paid",
       amount: 597,
-      courses: ["design-de-interfaces"],
+      courses: ["frontend-com-react"],
     },
     {
       id: "B4T8N1RE",
@@ -42,7 +42,7 @@ const PURCHASES_BY_ACCOUNT: Record<string, PurchaseRecord[]> = {
       method: "pix",
       status: "paid",
       amount: 447.3,
-      courses: ["programacao-do-zero"],
+      courses: ["backend-com-node-js"],
     },
     {
       id: "H2V6C3PW",
@@ -50,7 +50,7 @@ const PURCHASES_BY_ACCOUNT: Record<string, PurchaseRecord[]> = {
       method: "card",
       status: "paid",
       amount: 397,
-      courses: ["analise-de-dados-com-planilhas"],
+      courses: ["sql-e-modelagem-de-dados"],
     },
   ],
 };

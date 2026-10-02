@@ -9,9 +9,9 @@ import { getOwnedCourseSlugs } from "@/lib/purchases";
 // Por e-mail da conta: slug do curso → quantas aulas (as primeiras do curso) o aluno já concluiu.
 const SEED_PROGRESS: Record<string, Record<string, number>> = {
   "aulaflix@email.com": {
-    "programacao-do-zero": 5,
-    "design-de-interfaces": 0,
-    "analise-de-dados-com-planilhas": 9,
+    "backend-com-node-js": 5,
+    "frontend-com-react": 0,
+    "sql-e-modelagem-de-dados": 9,
   },
 };
 

@@ -1,28 +1,29 @@
 // Placeholder visual para as capas de curso. Troque por <Image> quando houver
 // capas próprias em /public.
-import { Camera, ChartColumn, Code, Globe, Megaphone, PenTool, PiggyBank, type LucideIcon } from "lucide-react";
+import { AppWindow, Blocks, Bot, Container, Database, FlaskConical, Server, type LucideIcon } from "lucide-react";
 import { cn } from "@/components/ui";
 import type { Course, CourseArea, CourseIcon, CourseTone } from "@/content/courses";
 
 /** Componente React de cada nome de ícone usado no catálogo. */
 export const courseIcons: Record<CourseIcon, LucideIcon> = {
-  code: Code,
-  "pen-tool": PenTool,
-  "chart-column": ChartColumn,
-  globe: Globe,
-  megaphone: Megaphone,
-  camera: Camera,
-  "piggy-bank": PiggyBank,
+  server: Server,
+  "app-window": AppWindow,
+  database: Database,
+  container: Container,
+  bot: Bot,
+  "flask-conical": FlaskConical,
+  blocks: Blocks,
 };
 
 /** Ícone de cada área, nos botões de área da home. */
 export const areaIcons: Record<CourseArea, LucideIcon> = {
-  programacao: Code,
-  design: PenTool,
-  dados: ChartColumn,
-  negocios: Megaphone,
-  fotografia: Camera,
-  financas: PiggyBank,
+  backend: Server,
+  frontend: AppWindow,
+  "banco-de-dados": Database,
+  devops: Container,
+  ia: Bot,
+  qualidade: FlaskConical,
+  arquitetura: Blocks,
 };
 
 /**
