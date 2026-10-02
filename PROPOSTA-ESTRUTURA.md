@@ -53,5 +53,5 @@ A identidade visual do Aulaflix já é própria (direção Lousa), mas a estrutu
 
 1. Catálogo e página de curso (itens 2 e 3), que são as partes públicas mais parecidas com o original. **Feito.**
 2. Entrar e cadastrar no mesmo fluxo (item 4). **Feito.**
-3. Página de aula (item 5), que corrige o "Continuar" levando para a página de venda.
+3. Página de aula (item 5), que corrige o "Continuar" levando para a página de venda. **Feito.**
 4. Compra e conta (item 6 e o resto do item 5).
