@@ -25,24 +25,35 @@ import { lookUpEmail, signIn, signUp } from "@/lib/auth-actions";
 // Google e GitHub ainda não têm backend e só mostram um aviso.
 
 type Step = "email" | "password" | "create";
+type HeadingLevel = "h1" | "h2";
 
-export function EntryFlow({ next }: { next: string }) {
+/** `heading="h2"` quando o fluxo fica dentro de outra página (a de compra), que já tem o h1. */
+export function EntryFlow({ next, heading = "h1" }: { next: string; heading?: HeadingLevel }) {
   const [step, setStep] = useState<Step>("email");
   const [email, setEmail] = useState("");
 
   const back = () => setStep("email");
 
-  if (step === "password") return <PasswordStep email={email.trim()} next={next} onBack={back} />;
-  if (step === "create") return <CreateAccountStep email={email.trim()} next={next} onBack={back} />;
-  return <EmailStep email={email} onEmailChange={setEmail} onFound={(exists) => setStep(exists ? "password" : "create")} />;
+  if (step === "password") return <PasswordStep email={email.trim()} next={next} heading={heading} onBack={back} />;
+  if (step === "create") return <CreateAccountStep email={email.trim()} next={next} heading={heading} onBack={back} />;
+  return (
+    <EmailStep
+      email={email}
+      heading={heading}
+      onEmailChange={setEmail}
+      onFound={(exists) => setStep(exists ? "password" : "create")}
+    />
+  );
 }
 
 function EmailStep({
   email,
+  heading,
   onEmailChange,
   onFound,
 }: {
   email: string;
+  heading: HeadingLevel;
   onEmailChange: (email: string) => void;
   onFound: (exists: boolean) => void;
 }) {
@@ -71,7 +82,7 @@ function EmailStep({
 
   return (
     <>
-      <AuthHeading title={authCopy.entry.title} body={authCopy.entry.body} />
+      <AuthHeading as={heading} title={authCopy.entry.title} body={authCopy.entry.body} />
       <AuthCard label={authCopy.entry.title}>
         <OAuthButtons onSelect={() => setOauthNotice(true)} />
         {oauthNotice && <PrototypeNotice>{authCopy.prototype.unavailable}</PrototypeNotice>}
@@ -99,11 +110,21 @@ function EmailStep({
 }
 
 /** Cabeçalho dos passos depois do e-mail: voltar, título e o e-mail escolhido. */
-function StepHeading({ title, body, onBack }: { title: string; body: readonly [string, string, string]; onBack: () => void }) {
+function StepHeading({
+  title,
+  body,
+  heading,
+  onBack,
+}: {
+  title: string;
+  body: readonly [string, string, string];
+  heading: HeadingLevel;
+  onBack: () => void;
+}) {
   return (
     <div className="flex flex-col gap-6">
       <BackLink onClick={onBack} />
-      <AuthHeading title={title} body={<Emphasis parts={body} />} />
+      <AuthHeading as={heading} title={title} body={<Emphasis parts={body} />} />
     </div>
   );
 }
@@ -113,7 +134,9 @@ function EmailCarry({ email }: { email: string }) {
   return <input type="email" name="email" autoComplete="username" value={email} readOnly hidden />;
 }
 
-function PasswordStep({ email, next, onBack }: { email: string; next: string; onBack: () => void }) {
+type FollowUpProps = { email: string; next: string; heading: HeadingLevel; onBack: () => void };
+
+function PasswordStep({ email, next, heading, onBack }: FollowUpProps) {
   const [password, setPassword] = useState("");
   const [state, signInAction, pending] = useActionState(signIn, { error: null });
   const validation = useFieldValidation({ password }, { password: password ? undefined : authErrors.passwordRequired });
@@ -127,7 +150,7 @@ function PasswordStep({ email, next, onBack }: { email: string; next: string; on
 
   return (
     <>
-      <StepHeading title={authCopy.signIn.heading} body={authCopy.signIn.body(email)} onBack={onBack} />
+      <StepHeading title={authCopy.signIn.heading} body={authCopy.signIn.body(email)} heading={heading} onBack={onBack} />
       <AuthCard label={authCopy.signIn.title}>
         <form className="flex flex-col gap-4" noValidate onSubmit={handleSubmit}>
           {state.error && <AuthAlert tone="error">{state.error}</AuthAlert>}
@@ -158,7 +181,7 @@ function PasswordStep({ email, next, onBack }: { email: string; next: string; on
   );
 }
 
-function CreateAccountStep({ email, next, onBack }: { email: string; next: string; onBack: () => void }) {
+function CreateAccountStep({ email, next, heading, onBack }: FollowUpProps) {
   const [values, setValues] = useState({ name: "", password: "" });
   const [state, signUpAction, pending] = useActionState(signUp, { error: null });
 
@@ -183,7 +206,7 @@ function CreateAccountStep({ email, next, onBack }: { email: string; next: strin
 
   return (
     <>
-      <StepHeading title={authCopy.signUp.heading} body={authCopy.signUp.body(email)} onBack={onBack} />
+      <StepHeading title={authCopy.signUp.heading} body={authCopy.signUp.body(email)} heading={heading} onBack={onBack} />
       <AuthCard label={authCopy.signUp.heading}>
         <form className="flex flex-col gap-4" noValidate onSubmit={handleSubmit}>
           {state.error && <AuthAlert tone="error">{state.error}</AuthAlert>}

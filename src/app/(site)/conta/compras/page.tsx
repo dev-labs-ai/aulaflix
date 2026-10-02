@@ -40,7 +40,7 @@ function listCourses(titles: string[]) {
 /** Aba "Compras" de /conta: os pedidos, do mais recente para o mais antigo. */
 export default async function ComprasPage() {
   const user = await requireUser("/conta/compras");
-  const purchases = getPurchases(user);
+  const purchases = await getPurchases(user);
 
   return purchases.length > 0 ? (
     <ul className="mt-8 flex flex-col gap-4">
@@ -54,7 +54,8 @@ export default async function ComprasPage() {
 }
 
 function PurchaseCard({ purchase }: { purchase: Purchase }) {
-  const meta = [copy.paymentMethod[purchase.method], formatDate(purchase.createdAt), copy.order(purchase.id)];
+  const installments = purchase.installments && purchase.installments > 1 ? ` em ${purchase.installments}x` : "";
+  const meta = [copy.paymentMethod[purchase.method] + installments, formatDate(purchase.createdAt), copy.order(purchase.id)];
 
   return (
     <li className="rounded-card border border-line bg-surface p-5 shadow-(--shadow-raised) sm:p-6">

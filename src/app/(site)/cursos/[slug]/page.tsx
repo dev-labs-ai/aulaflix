@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { BackToCourses, boardBuyId, CourseBoard, PriceAndBuy, priceTerms } from "@/components/curso/course-hero";
+import { BackToCourses, boardBuyId, CourseBoard, OwnedCourse, PriceAndBuy, priceTerms } from "@/components/curso/course-hero";
 import {
   AudienceSection,
   CourseFaqSection,
@@ -16,6 +16,7 @@ import { cn, container } from "@/components/ui";
 import { courses, getCourse } from "@/content/courses";
 import { getCourseDetail, getFreeLesson } from "@/content/course-details";
 import { getSessionUser } from "@/lib/auth";
+import { getEnrollment } from "@/lib/enrollments";
 import { brl } from "@/lib/format";
 import { isOnWaitlist } from "@/lib/waitlist";
 
@@ -48,6 +49,8 @@ export default async function CoursePage(props: PageProps<"/cursos/[slug]">) {
   const freeLesson = onSale ? getFreeLesson(detail) : undefined;
   const freeLessonHref = freeLesson && `#${freeLessonId}`;
   const user = await getSessionUser();
+  const owned = Boolean(user && onSale && (await getEnrollment(user, slug)));
+  const buyHref = `/cursos/${slug}/comprar`;
 
   return (
     // A barra de compra do celular é `sticky` dentro deste bloco: acompanha a página e para antes do rodapé.
@@ -56,8 +59,10 @@ export default async function CoursePage(props: PageProps<"/cursos/[slug]">) {
         <BackToCourses />
         <div className="mt-3">
           <CourseBoard course={course}>
-            {onSale ? (
-              <PriceAndBuy pricing={detail.pricing} freeLessonHref={freeLessonHref} />
+            {owned ? (
+              <OwnedCourse courseSlug={slug} />
+            ) : onSale ? (
+              <PriceAndBuy pricing={detail.pricing} buyHref={buyHref} freeLessonHref={freeLessonHref} />
             ) : user ? (
               <WaitlistOneClick courseSlug={slug} email={user.email} joined={await isOnWaitlist(user.email, slug)} />
             ) : (
@@ -96,9 +101,10 @@ export default async function CoursePage(props: PageProps<"/cursos/[slug]">) {
         </div>
       </div>
 
-      {onSale && (
+      {onSale && !owned && (
         <MobileBuyBar
           watchId={boardBuyId}
+          buyHref={buyHref}
           price={brl(detail.pricing.price)}
           installments={priceTerms(detail.pricing).installments}
         />

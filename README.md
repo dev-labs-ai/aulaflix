@@ -20,6 +20,7 @@ pnpm lint
 | `/` | `src/app/(site)/page.tsx` |
 | `/cursos` (filtros `?area=` e `?situacao=a-venda\|em-breve`) | `src/app/(site)/cursos/page.tsx` |
 | `/cursos/[slug]` (7 cursos) | `src/app/(site)/cursos/[slug]/page.tsx` |
+| `/cursos/[slug]/comprar` (cursos à venda) | `src/app/(site)/cursos/[slug]/comprar/page.tsx` |
 | `/meus-cursos` (só logado) | `src/app/(site)/meus-cursos/page.tsx` |
 | `/aprender/[curso]` (só para quem tem o curso) | `src/app/(site)/aprender/[curso]/page.tsx`, que leva à aula onde o aluno parou |
 | `/aprender/[curso]/[aula]` (só para quem tem o curso) | `src/app/(site)/aprender/[curso]/[aula]/page.tsx` |
@@ -56,8 +57,8 @@ Direção "Lousa": a sala de aula como referência. Fundo de papel, texto em gra
 
 A conta criada no cadastro fica num cookie deste navegador (com a senha em hash), e só uma por vez: um novo cadastro substitui a anterior. Ela começa sem cursos e com o e-mail por confirmar; enquanto isso, uma faixa abaixo do header pede a confirmação, sem bloquear nada, e oferece um botão de protótipo que faz o papel do link do e-mail.
 
-As contas e a sessão ficam em `src/lib/auth.ts`; os cursos e o progresso inicial da conta de demonstração, em `src/lib/enrollments.ts` (as aulas concluídas e a última aula aberta de cada curso ficam em cookies deste navegador; é daí que sai o "Continuar de onde parou"), e os pedidos, em `src/lib/purchases.ts`. Páginas só para quem está logado usam `requireUser()`, que manda para `/entrar?next=…`. Em Conta, o nome editado fica num cookie e aparece no header; a troca de senha é só simulada (a senha continua a mesma). É uma simulação: o cookie guarda só o e-mail e não é protegido contra falsificação, então deve ser substituído por um backend de autenticação real.
+As contas e a sessão ficam em `src/lib/auth.ts`; os cursos e o progresso inicial da conta de demonstração, em `src/lib/enrollments.ts` (as aulas concluídas e a última aula aberta de cada curso ficam em cookies deste navegador; é daí que sai o "Continuar de onde parou"), e os pedidos, em `src/lib/purchases.ts` (os feitos em `/cursos/[slug]/comprar` também ficam num cookie). Os cursos do aluno são os que aparecem nos pedidos dele. Páginas só para quem está logado usam `requireUser()`, que manda para `/entrar?next=…`. Em Conta, o nome editado fica num cookie e aparece no header; a troca de senha é só simulada (a senha continua a mesma). É uma simulação: o cookie guarda só o e-mail e não é protegido contra falsificação, então deve ser substituído por um backend de autenticação real.
 
 ## Limitações do protótipo
 
-Fora o login, o cadastro e a lista de espera, os formulários (Google/GitHub, redefinição de senha, compra) são só visuais: validam no navegador e mostram um estado de confirmação, mas não enviam nada. A lista de espera guarda a inscrição num cookie deste navegador (`src/lib/waitlist.ts`): com a conta, basta um clique em "Avise-me"; sem ela, só o e-mail. Nenhum e-mail é enviado de verdade. O player da aula grátis também é só visual: ainda não há vídeos. Na redefinição de senha, qualquer código de 6 dígitos é aceito.
+Fora o login, o cadastro, a compra e a lista de espera, os formulários (Google/GitHub, redefinição de senha) são só visuais: validam no navegador e mostram um estado de confirmação, mas não enviam nada. A compra não cobra nada: o pedido é aprovado na hora, e os dados do cartão são validados no navegador e nem chegam ao servidor. A lista de espera guarda a inscrição num cookie deste navegador (`src/lib/waitlist.ts`): com a conta, basta um clique em "Avise-me"; sem ela, só o e-mail. Nenhum e-mail é enviado de verdade. O player da aula grátis também é só visual: ainda não há vídeos. Na redefinição de senha, qualquer código de 6 dígitos é aceito.

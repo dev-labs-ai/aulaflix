@@ -2,8 +2,10 @@ import { courseLessons, getCourseDetail, type LessonEntry } from "@/content/cour
 import { courses, type Course } from "@/content/courses";
 import type { SessionUser } from "@/lib/auth";
 import { isRecord, readJsonCookie, writeJsonCookie } from "@/lib/cookie-store";
+import { getOwnedCourseSlugs } from "@/lib/purchases";
 
-// Protótipo: cursos e progresso iniciais fixos por conta, até existir um backend.
+// Os cursos do aluno são os que ele comprou (src/lib/purchases.ts).
+// Protótipo: progresso inicial fixo por conta, até existir um backend.
 // Por e-mail da conta: slug do curso → quantas aulas (as primeiras do curso) o aluno já concluiu.
 const SEED_PROGRESS: Record<string, Record<string, number>> = {
   "aulaflix@email.com": {
@@ -54,20 +56,25 @@ export type Enrollment = {
   resume: LessonEntry;
 };
 
-function buildEnrollments(user: SessionUser, progress: ProgressStore, visits: VisitsStore): Enrollment[] {
+function buildEnrollments(
+  user: SessionUser,
+  owned: Set<string>,
+  progress: ProgressStore,
+  visits: VisitsStore,
+): Enrollment[] {
   const seed = SEED_PROGRESS[user.email] ?? {};
   const saved = progress[user.email] ?? {};
   const lastOpened = visits[user.email]?.lessons ?? {};
   return courses.flatMap((course) => {
     const detail = getCourseDetail(course.slug);
-    if (seed[course.slug] === undefined || detail?.kind !== "on-sale") return [];
+    if (!owned.has(course.slug) || detail?.kind !== "on-sale") return [];
 
     const lessons = courseLessons(detail);
     const savedSlugs = saved[course.slug];
     const completedSlugs = new Set(
       Array.isArray(savedSlugs)
         ? lessons.filter((entry) => savedSlugs.includes(entry.slug)).map((entry) => entry.slug)
-        : lessons.slice(0, seed[course.slug]).map((entry) => entry.slug),
+        : lessons.slice(0, seed[course.slug] ?? 0).map((entry) => entry.slug),
     );
     const todo = (entry: LessonEntry) => Boolean(entry.lesson.duration) && !completedSlugs.has(entry.slug);
     const lastIndex = lessons.findIndex((entry) => entry.slug === lastOpened[course.slug]);
@@ -89,7 +96,7 @@ function buildEnrollments(user: SessionUser, progress: ProgressStore, visits: Vi
 
 /** Cursos do aluno, com o andamento de cada um. */
 export async function getEnrollments(user: SessionUser): Promise<Enrollment[]> {
-  return buildEnrollments(user, await readProgress(), await readVisits());
+  return buildEnrollments(user, await getOwnedCourseSlugs(user), await readProgress(), await readVisits());
 }
 
 /** O curso `slug` do aluno, ou `null` se ele não tem esse curso. */

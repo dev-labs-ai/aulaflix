@@ -1,7 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { Check, ChevronLeft, Play } from "lucide-react";
-import { BuyButton } from "@/components/curso/buy-button";
 import { courseIcons } from "@/components/placeholders";
 import { Badge, Board, ButtonLink } from "@/components/ui";
 import type { CoursePricing } from "@/content/course-details";
@@ -23,7 +22,8 @@ export function BackToCourses() {
 /** Id dos botões de compra da lousa: a barra de compra do celular aparece quando eles saem da tela. */
 export const boardBuyId = "comprar";
 
-const perks = ["Acesso vitalício", "Materiais de apoio", "Garantia de 7 dias"];
+/** O que vem com a compra, na lousa e no resumo do pedido. */
+export const perks = ["Acesso vitalício", "Materiais de apoio", "Garantia de 7 dias"];
 
 /** Parcelado e Pix, como aparecem embaixo do preço. */
 export function priceTerms(pricing: CoursePricing) {
@@ -73,7 +73,15 @@ export function CourseBoard({ course, children }: { course: Course; children: Re
 }
 
 /** Ação da lousa nos cursos à venda: preço, condições, compra e o atalho para a aula grátis. */
-export function PriceAndBuy({ pricing, freeLessonHref }: { pricing: CoursePricing; freeLessonHref?: string }) {
+export function PriceAndBuy({
+  pricing,
+  buyHref,
+  freeLessonHref,
+}: {
+  pricing: CoursePricing;
+  buyHref: string;
+  freeLessonHref?: string;
+}) {
   const terms = priceTerms(pricing);
   return (
     <>
@@ -88,7 +96,9 @@ export function PriceAndBuy({ pricing, freeLessonHref }: { pricing: CoursePricin
       </div>
 
       <div id={boardBuyId} className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-start">
-        <BuyButton variant="chalk" offset="board" className="sm:min-w-60" />
+        <ButtonLink href={buyHref} variant="chalk" offset="board" className="sm:min-w-60">
+          Comprar curso
+        </ButtonLink>
         {freeLessonHref && (
           <ButtonLink href={freeLessonHref} variant="chalk-outline" offset="board">
             <Play aria-hidden="true" fill="currentColor" strokeWidth={0} className="size-4" />
@@ -105,6 +115,22 @@ export function PriceAndBuy({ pricing, freeLessonHref }: { pricing: CoursePricin
           </li>
         ))}
       </ul>
+    </>
+  );
+}
+
+/** Ação da lousa para quem já comprou o curso: o atalho para continuar de onde parou. */
+export function OwnedCourse({ courseSlug }: { courseSlug: string }) {
+  return (
+    <>
+      <p className="flex items-center gap-2 text-[17px] font-bold text-giz">
+        <Check aria-hidden="true" strokeWidth={3} className="size-5 text-amarelo-300" />
+        Você já tem este curso.
+      </p>
+      <ButtonLink href={`/aprender/${courseSlug}`} variant="chalk" offset="board" className="mt-6 w-full sm:w-auto">
+        <Play aria-hidden="true" fill="currentColor" strokeWidth={0} className="size-4" />
+        Continuar curso
+      </ButtonLink>
     </>
   );
 }

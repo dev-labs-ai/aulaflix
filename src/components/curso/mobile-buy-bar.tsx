@@ -1,15 +1,24 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { BuyButton } from "@/components/curso/buy-button";
-import { cn, container } from "@/components/ui";
+import { ButtonLink, cn, container } from "@/components/ui";
 
 /**
  * Barra de compra presa ao pé da tela no celular. Só aparece depois que o elemento `watchId`
  * (os botões de compra da lousa) sai da tela por cima.
  * É `sticky`, e não `fixed`: no fim da página ela para no lugar dela, acima do rodapé, sem cobri-lo.
  */
-export function MobileBuyBar({ watchId, price, installments }: { watchId: string; price: string; installments: string }) {
+export function MobileBuyBar({
+  watchId,
+  buyHref,
+  price,
+  installments,
+}: {
+  watchId: string;
+  buyHref: string;
+  price: string;
+  installments: string;
+}) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -37,7 +46,9 @@ export function MobileBuyBar({ watchId, price, installments }: { watchId: string
           </p>
           <p className="truncate text-[14px] tabular-nums text-ink-muted">{installments}</p>
         </div>
-        <BuyButton label="Comprar" notice="above" className="shrink-0" />
+        <ButtonLink href={buyHref} className="shrink-0">
+          Comprar
+        </ButtonLink>
       </div>
     </div>
   );
