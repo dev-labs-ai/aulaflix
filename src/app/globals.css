@@ -105,6 +105,12 @@ body {
   background-image: repeating-linear-gradient(to bottom, transparent 0 27px, var(--color-pauta) 27px 28px);
 }
 
+/* Faixa tracejada das fichas em lista de espera: traços na cor do texto (ex.: text-coral-400). */
+@utility tracejado {
+  background-color: var(--color-surface);
+  background-image: repeating-linear-gradient(to right, currentColor 0 20px, transparent 20px 32px);
+}
+
 /* Entrada do hero: o título aparece como se fosse escrito a giz, da esquerda para a direita. */
 @keyframes giz-escrita {
   from {

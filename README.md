@@ -18,7 +18,7 @@ pnpm lint
 | Rota | Arquivo |
 | --- | --- |
 | `/` | `src/app/(site)/page.tsx` |
-| `/cursos` | `src/app/(site)/cursos/page.tsx` |
+| `/cursos` (filtros `?area=` e `?situacao=a-venda\|em-breve`) | `src/app/(site)/cursos/page.tsx` |
 | `/cursos/[slug]` (7 cursos) | `src/app/(site)/cursos/[slug]/page.tsx` |
 | `/meus-cursos` (só logado) | `src/app/(site)/meus-cursos/page.tsx` |
 | `/compras` (só logado) | `src/app/(site)/compras/page.tsx` |
@@ -32,7 +32,7 @@ O grupo `(site)` aplica header e rodapé; as telas de autenticação (`/entrar`,
 ## Onde mudar as coisas
 
 - **Marca, título e descrição do site, menu:** `src/content/site.ts`
-- **Lista de cursos (título, área, resumo, status, ícone, cor, capa):** `src/content/courses.ts`
+- **Lista de cursos (título, área, resumo, status, ícone, cor, capa) e áreas do filtro do catálogo:** `src/content/courses.ts`
 - **Conteúdo de cada curso (ementa, preços, FAQ):** `src/content/course-details/<slug>.ts`
 - **Home (texto da seção Sobre):** `src/content/home.ts`
 - **Login, cadastro e redefinição de senha (textos, mensagens de erro, regras de senha e código):** `src/content/auth.ts`
@@ -46,7 +46,7 @@ O grupo `(site)` aplica header e rodapé; as telas de autenticação (`/entrar`,
 Direção "Lousa": a sala de aula como referência. Fundo de papel, texto em grafite e verde de quadro-negro como cor principal.
 
 - **Lousa:** painel verde com a régua de madeira embaixo (`Board` em `src/components/ui.tsx`), usado no topo da home e na capa da página de curso. O título da home aparece como se fosse escrito a giz.
-- **Fichas pautadas:** os cursos à venda são fichas com linhas a cada 28px (`pautado`) e uma faixa no topo na cor do curso (`tone` em `courses.ts`: coral, amarelo ou sálvia).
+- **Fichas pautadas:** os cursos são fichas com linhas a cada 28px (`pautado`) e uma faixa no topo na cor do curso (`tone` em `courses.ts`: coral, amarelo ou sálvia). Nos cursos em lista de espera, a faixa é tracejada (`tracejado`).
 - **Giz amarelo:** botão principal sobre a lousa, avatar, marcadores e selos de destaque.
 
 ## Login de demonstração

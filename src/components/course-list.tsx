@@ -3,7 +3,7 @@ import Link from "next/link";
 import { CourseCoverPlaceholder, courseIcons, toneClasses } from "@/components/placeholders";
 import { Badge, cn, focusRing, ringOffset } from "@/components/ui";
 import { getCourseDetail } from "@/content/course-details";
-import { statusLabel, type Course } from "@/content/courses";
+import { areaLabel, statusLabel, type Course } from "@/content/courses";
 import { brl } from "@/lib/format";
 
 /** Capa do curso: a imagem própria, quando houver, ou o placeholder na cor do curso. */
@@ -19,16 +19,22 @@ export function CourseCover({ course, className }: { course: Course; className?:
   );
 }
 
-/** Número de aulas e preço, para cursos à venda. */
-function saleFacts(course: Course) {
+const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
+
+/** Rodapé da ficha: número de aulas e preço à venda; tópicos previstos e "Em breve" na lista de espera. */
+function cardFacts(course: Course) {
   const detail = getCourseDetail(course.slug);
-  if (detail?.kind !== "on-sale") return null;
+  if (!detail) return null;
+  if (detail.kind === "waitlist") {
+    return { size: plural(detail.coverage.length, "tópico previsto", "tópicos previstos"), status: "Em breve" };
+  }
   const lessons = detail.modules.reduce((n, mod) => n + mod.lessons.length, 0);
-  return { lessons: `${lessons} ${lessons === 1 ? "aula" : "aulas"}`, price: brl(detail.pricing.price) };
+  return { size: plural(lessons, "aula", "aulas"), status: brl(detail.pricing.price) };
 }
 
 /**
- * Cursos à venda como fichas pautadas, com a faixa do topo na cor do curso.
+ * Cursos como fichas pautadas, com a faixa do topo na cor do curso: cheia nos cursos à venda
+ * e tracejada nos que estão em lista de espera.
  * Todo o texto da ficha usa leading-7 e espaços múltiplos de 28px, para cair nas linhas da pauta.
  */
 export function CourseCards({
@@ -46,7 +52,9 @@ export function CourseCards({
     <ul aria-label={label} className={cn("grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-7", className)}>
       {courses.map((course) => {
         const Icon = courseIcons[course.icon];
-        const facts = saleFacts(course);
+        const tone = toneClasses[course.tone];
+        const facts = cardFacts(course);
+        const waitlist = course.status === "waitlist";
         return (
           <li key={course.slug}>
             <Link
@@ -57,11 +65,11 @@ export function CourseCards({
                 ringOffset[offset],
               )}
             >
-              <span aria-hidden="true" className={cn("h-3 shrink-0", toneClasses[course.tone].stripe)} />
+              <span aria-hidden="true" className={cn("h-3 shrink-0", waitlist ? cn("tracejado", tone.dash) : tone.stripe)} />
               <div className="flex flex-1 flex-col pautado px-6 py-7">
                 <p className="flex items-center gap-2.5 text-[15px] font-bold leading-7 text-ink-tertiary">
                   <Icon aria-hidden="true" className="size-5" />
-                  {course.subject}
+                  {areaLabel[course.area]}
                 </p>
                 <h3 className="mt-7 font-heading text-[26px] font-bold leading-7 tracking-[-0.02em] text-ink transition-colors group-hover:text-ink-accent">
                   {course.title}
@@ -69,8 +77,8 @@ export function CourseCards({
                 <p className="mt-7 flex-1 text-[16px] leading-7 text-ink-tertiary">{course.summary}</p>
                 {facts && (
                   <p className="mt-7 flex justify-between gap-4 text-[16px] font-bold leading-7 tabular-nums text-ink">
-                    <span>{facts.lessons}</span>
-                    <span>{facts.price}</span>
+                    <span>{facts.size}</span>
+                    <span className={cn(waitlist && "text-ink-muted")}>{facts.status}</span>
                   </p>
                 )}
               </div>
