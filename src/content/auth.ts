@@ -1,33 +1,39 @@
-// Textos e regras das telas de autenticação (/entrar, /cadastrar e /redefinir-senha).
+// Textos e regras das telas de autenticação (/entrar e /redefinir-senha) e do aviso de confirmação de e-mail.
 
 export const AUTH_CODE_LENGTH = 6;
-export const AUTH_CODE_TTL_MINUTES = 10;
 export const AUTH_PASSWORD_MIN_LENGTH = 8;
 export const AUTH_RESEND_SECONDS = 60;
 
 export const authCopy = {
+  /** Primeiro passo de /entrar: o e-mail decide se a pessoa entra ou cria a conta. */
+  entry: {
+    title: "Entre ou crie sua conta",
+    body: "Comece pelo seu e-mail. Se ainda não tiver conta, você cria uma no passo seguinte.",
+    submit: "Continuar",
+    pending: "Verificando…",
+  },
   signIn: {
+    /** Botão do header e título da aba de /entrar. */
     title: "Entrar",
+    heading: "Que bom ver você de novo",
+    body: (email: string) => ["Digite a senha da conta ", email, "."] as const,
     submit: "Entrar",
     pending: "Entrando…",
     forgotPassword: "Esqueceu a senha?",
-    switchPrompt: "Primeira vez no Aulaflix?",
-    switchLink: "Crie sua conta",
   },
   signUp: {
-    title: "Criar conta",
-    submit: "Criar minha conta",
-    codeNotice: "Para ativar a conta, você vai receber um código no seu e-mail.",
-    switchPrompt: "Já tem cadastro?",
-    switchLink: "Entrar",
+    heading: "Crie sua conta",
+    body: (email: string) => ["Ainda não há conta com ", email, ". Falta só seu nome e uma senha."] as const,
+    submit: "Criar conta",
+    pending: "Criando conta…",
+    confirmLater: "Depois mandamos um link para confirmar o e-mail. Você já pode estudar antes disso.",
   },
-  verify: {
-    title: "Verifique seu e-mail",
-    body: (email: string) =>
-      ["Digite o código que mandamos para ", email, `. Ele expira em ${AUTH_CODE_TTL_MINUTES} minutos.`] as const,
-    submit: "Verificar e-mail",
-    wrongEmail: "Digitou o e-mail errado?",
-    changeEmail: "Alterar e-mail",
+  /** Aviso no site para quem ainda não confirmou o e-mail da conta criada. */
+  confirmEmail: {
+    body: (email: string) => ["Confirme seu e-mail: mandamos um link para ", email, "."] as const,
+    resend: "Reenviar link",
+    resent: "Link reenviado.",
+    simulate: "Protótipo: simular o clique no link",
   },
   forgot: {
     title: "Recuperar acesso",
@@ -48,7 +54,6 @@ export const authCopy = {
     email: "E-mail",
     emailPlaceholder: "seu@email.com",
     password: "Senha",
-    confirmPassword: "Repita a senha",
     newPassword: "Nova senha",
     confirmNewPassword: "Repita a nova senha",
     passwordHint: `Mínimo de ${AUTH_PASSWORD_MIN_LENGTH} caracteres.`,
@@ -65,7 +70,6 @@ export const authCopy = {
   },
   prototype: {
     unavailable: "Protótipo: a autenticação ainda não está disponível.",
-    verified: "Protótipo: código aceito. Com o backend conectado, a conta seria criada e você já entraria.",
     passwordSaved: "Protótipo: senha redefinida. Com o backend conectado, você já entraria na sua conta.",
     goHome: "Ir para a página inicial",
   },
@@ -76,7 +80,8 @@ export const authErrors = {
   emailRequired: "Digite seu e-mail.",
   emailInvalid: "Esse e-mail não parece válido.",
   passwordRequired: "Digite sua senha.",
-  wrongCredentials: "E-mail ou senha não conferem.",
+  wrongPassword: "Senha incorreta. Confira e tente de novo.",
+  emailTaken: "Já existe uma conta com esse e-mail. Volte e entre com a senha.",
   passwordTooShort: `A senha precisa de no mínimo ${AUTH_PASSWORD_MIN_LENGTH} caracteres.`,
   passwordMismatch: "As senhas digitadas são diferentes.",
 };

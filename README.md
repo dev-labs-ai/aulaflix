@@ -23,11 +23,10 @@ pnpm lint
 | `/meus-cursos` (só logado) | `src/app/(site)/meus-cursos/page.tsx` |
 | `/compras` (só logado) | `src/app/(site)/compras/page.tsx` |
 | `/configuracoes` (só logado) | `src/app/(site)/configuracoes/page.tsx` |
-| `/entrar` | `src/app/entrar/page.tsx` (sem header/rodapé) |
-| `/cadastrar` | `src/app/cadastrar/page.tsx` (sem header/rodapé) |
+| `/entrar` (entrar e criar conta) | `src/app/entrar/page.tsx` (sem header/rodapé) |
 | `/redefinir-senha` | `src/app/redefinir-senha/page.tsx` (sem header/rodapé) |
 
-O grupo `(site)` aplica header e rodapé; as telas de autenticação (`/entrar`, `/cadastrar`, `/redefinir-senha`) ficam fora dele.
+O grupo `(site)` aplica header e rodapé; as telas de autenticação (`/entrar`, `/redefinir-senha`) ficam fora dele. `/cadastrar` redireciona para `/entrar` (em `next.config.ts`).
 
 ## Onde mudar as coisas
 
@@ -49,12 +48,14 @@ Direção "Lousa": a sala de aula como referência. Fundo de papel, texto em gra
 - **Fichas pautadas:** os cursos são fichas com linhas a cada 28px (`pautado`) e uma faixa no topo na cor do curso (`tone` em `courses.ts`: coral, amarelo ou sálvia). Nos cursos em lista de espera, a faixa é tracejada (`tracejado`).
 - **Giz amarelo:** botão principal sobre a lousa, avatar, marcadores e selos de destaque.
 
-## Login de demonstração
+## Login e cadastro
 
-Em `/entrar`, use **aulaflix@email.com** com a senha **aulaflix**. As credenciais são conferidas no servidor (Server Action em `src/lib/auth-actions.ts`) e a sessão fica num cookie `httpOnly` por 7 dias; o header passa a mostrar o usuário e o botão Sair. `/entrar?next=/caminho` define para onde ir depois de entrar.
+`/entrar` começa pelo e-mail. Se já existe conta, pede a senha; se não existe, pede nome e senha e cria a conta na hora. Para a conta de demonstração, use **aulaflix@email.com** com a senha **aulaflix**. Tudo é conferido no servidor (Server Actions em `src/lib/auth-actions.ts`) e a sessão fica num cookie `httpOnly` por 7 dias; o header passa a mostrar o usuário e o botão Sair. `/entrar?next=/caminho` define para onde ir depois de entrar.
 
-A conta e a sessão ficam em `src/lib/auth.ts`; os cursos e o progresso da conta de demonstração, em `src/lib/enrollments.ts`, e os pedidos, em `src/lib/purchases.ts`. Páginas só para quem está logado usam `requireUser()`, que manda para `/entrar?next=…`. Em Configurações, o nome editado fica num cookie e aparece no header; a troca de senha é só simulada (o login continua com `aulaflix`). É uma simulação: o cookie guarda só o e-mail e não é protegido contra falsificação, então deve ser substituído por um backend de autenticação real.
+A conta criada no cadastro fica num cookie deste navegador (com a senha em hash), e só uma por vez: um novo cadastro substitui a anterior. Ela começa sem cursos e com o e-mail por confirmar; enquanto isso, uma faixa abaixo do header pede a confirmação, sem bloquear nada, e oferece um botão de protótipo que faz o papel do link do e-mail.
+
+As contas e a sessão ficam em `src/lib/auth.ts`; os cursos e o progresso da conta de demonstração, em `src/lib/enrollments.ts`, e os pedidos, em `src/lib/purchases.ts`. Páginas só para quem está logado usam `requireUser()`, que manda para `/entrar?next=…`. Em Configurações, o nome editado fica num cookie e aparece no header; a troca de senha é só simulada (a senha continua a mesma). É uma simulação: o cookie guarda só o e-mail e não é protegido contra falsificação, então deve ser substituído por um backend de autenticação real.
 
 ## Limitações do protótipo
 
-Fora o login com a conta de demonstração, os formulários (Google/GitHub, cadastro, redefinição de senha, compra, lista de espera) são só visuais: validam no navegador e mostram um estado de confirmação, mas não enviam nada. O player da aula grátis também é só visual: ainda não há vídeos. No cadastro e na redefinição de senha, qualquer código de 6 dígitos é aceito.
+Fora o login e o cadastro, os formulários (Google/GitHub, redefinição de senha, compra, lista de espera) são só visuais: validam no navegador e mostram um estado de confirmação, mas não enviam nada. Nenhum e-mail é enviado de verdade. O player da aula grátis também é só visual: ainda não há vídeos. Na redefinição de senha, qualquer código de 6 dígitos é aceito.
