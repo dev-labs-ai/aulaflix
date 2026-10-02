@@ -127,9 +127,12 @@ export async function endSession() {
   (await cookies()).delete(SESSION_COOKIE);
 }
 
-/** Aceita só caminhos internos (ex.: "/cursos"), para o `?next=` não virar redirecionamento aberto. */
+/**
+ * Aceita só caminhos internos (ex.: "/cursos"), para o `?next=` não virar redirecionamento aberto.
+ * Recusa "//site" e também "/\site", que o navegador lê como "//site".
+ */
 export function safeNextPath(value: unknown): string {
-  return typeof value === "string" && value.startsWith("/") && !value.startsWith("//") ? value : "/";
+  return typeof value === "string" && /^\/(?![/\\])/.test(value) ? value : "/";
 }
 
 /** Na tela de entrar, quem já está logado segue direto para o destino. */
