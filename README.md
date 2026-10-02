@@ -20,7 +20,6 @@ pnpm lint
 | `/` | `src/app/(site)/page.tsx` |
 | `/cursos` | `src/app/(site)/cursos/page.tsx` |
 | `/cursos/[slug]` (11 cursos) | `src/app/(site)/cursos/[slug]/page.tsx` |
-| `/privacidade` | `src/app/(site)/privacidade/page.tsx` |
 | `/entrar` | `src/app/entrar/page.tsx` (sem header/rodapé) |
 | `/cadastrar` | `src/app/cadastrar/page.tsx` (sem header/rodapé) |
 | `/redefinir-senha` | `src/app/redefinir-senha/page.tsx` (sem header/rodapé) |

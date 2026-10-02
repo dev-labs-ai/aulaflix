@@ -75,17 +75,9 @@ export function SiteFooter() {
             "flex flex-wrap items-center justify-between gap-x-6 gap-y-3 py-5 font-mono text-[11px] text-ink-muted",
           )}
         >
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-            <span>
-              © {new Date().getFullYear()} {site.name}
-            </span>
-            <Link
-              href="/privacidade"
-              className={cn("rounded-xs text-ink-muted underline underline-offset-2 transition-colors hover:text-ink", smallRing)}
-            >
-              Privacidade
-            </Link>
-          </div>
+          <span>
+            © {new Date().getFullYear()} {site.name}
+          </span>
           <div className="flex items-center gap-4">
             <ul className="flex items-center gap-3" aria-label={`${instructor.name} nas redes`}>
               {socialLinks.map((item) => {
