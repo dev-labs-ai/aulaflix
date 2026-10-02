@@ -87,7 +87,7 @@ export function SiteHeader({ user }: { user: SessionUser | null }) {
             </nav>
             <div className="mt-3 border-t border-line-subtle pt-4">
               {user ? (
-                <MobileAccountPanel user={user} onNavigate={closeMenu} />
+                <MobileAccountPanel user={user} />
               ) : (
                 <Link
                   href="/entrar"

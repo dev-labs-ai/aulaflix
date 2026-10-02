@@ -1,18 +1,24 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { BackToCourses, CourseHero } from "@/components/curso/course-hero";
+import { BackToCourses, boardBuyId, CourseBoard, OwnedCourse, PriceAndBuy, priceTerms } from "@/components/curso/course-hero";
 import {
   AudienceSection,
   CourseFaqSection,
   CoverageSection,
+  FreeLessonSection,
   LearnSection,
   SyllabusSection,
   WhySection,
 } from "@/components/curso/course-sections";
-import { PricingCard } from "@/components/curso/pricing-card";
-import { WaitlistCard, WaitlistProvider } from "@/components/curso/waitlist";
+import { MobileBuyBar } from "@/components/curso/mobile-buy-bar";
+import { WaitlistEmail, WaitlistOneClick } from "@/components/curso/waitlist";
+import { cn, container } from "@/components/ui";
 import { courses, getCourse } from "@/content/courses";
-import { getCourseDetail } from "@/content/course-details";
+import { getCourseDetail, getFreeLesson } from "@/content/course-details";
+import { getSessionUser } from "@/lib/auth";
+import { getEnrollment } from "@/lib/enrollments";
+import { brl } from "@/lib/format";
+import { isOnWaitlist } from "@/lib/waitlist";
 
 // Só os cursos conhecidos existem; qualquer outro slug vira 404.
 export const dynamicParams = false;
@@ -27,49 +33,82 @@ export async function generateMetadata(props: PageProps<"/cursos/[slug]">): Prom
   return course ? { title: course.title, description: course.summary } : {};
 }
 
+const freeLessonId = "aula-gratis";
+
+/**
+ * Página de curso: a lousa com título e compra (ou a lista de espera); a ementa logo depois, ao lado
+ * da aula grátis; e o resto do conteúdo embaixo.
+ */
 export default async function CoursePage(props: PageProps<"/cursos/[slug]">) {
   const { slug } = await props.params;
   const course = getCourse(slug);
   const detail = getCourseDetail(slug);
   if (!course || !detail) notFound();
 
-  const sideCard =
-    detail.kind === "on-sale" ? (
-      <PricingCard pricing={detail.pricing} />
-    ) : (
-      <WaitlistCard courseTitle={course.title} />
-    );
-
-  const content = (
-    <div className="mt-8 lg:grid lg:grid-cols-12 lg:gap-x-12">
-      <article className="lg:col-span-7 lg:col-start-1">
-        <CourseHero course={course} />
-        <div className="mt-12 lg:hidden">{sideCard}</div>
-
-        <WhySection paragraphs={detail.why} />
-        <LearnSection items={detail.learn} />
-        <AudienceSection items={detail.audience} />
-        {detail.kind === "on-sale" ? (
-          <SyllabusSection modules={detail.modules} />
-        ) : (
-          <CoverageSection items={detail.coverage} />
-        )}
-        <CourseFaqSection items={detail.faq} />
-
-        {/* Na lista de espera, o formulário se repete ao fim da página no mobile. */}
-        {detail.kind === "waitlist" && <div className="mt-12 lg:hidden">{sideCard}</div>}
-      </article>
-
-      <aside className="hidden lg:col-span-4 lg:col-start-9 lg:block">
-        <div className="sticky top-24">{sideCard}</div>
-      </aside>
-    </div>
-  );
+  const onSale = detail.kind === "on-sale";
+  const freeLesson = onSale ? getFreeLesson(detail) : undefined;
+  const freeLessonHref = freeLesson && `#${freeLessonId}`;
+  const user = await getSessionUser();
+  const owned = Boolean(user && onSale && (await getEnrollment(user, slug)));
+  const buyHref = `/cursos/${slug}/comprar`;
 
   return (
-    <div className="mx-auto w-full max-w-7xl px-4 pt-12 pb-24 sm:px-6 sm:pt-16 sm:pb-32 lg:px-10 lg:pt-20 lg:pb-40">
-      <BackToCourses />
-      {detail.kind === "waitlist" ? <WaitlistProvider>{content}</WaitlistProvider> : content}
+    // A barra de compra do celular é `sticky` dentro deste bloco: acompanha a página e para antes do rodapé.
+    <div>
+      <div className={cn(container, "pb-24 pt-6 sm:pb-32 sm:pt-10 lg:pb-40")}>
+        <BackToCourses />
+        <div className="mt-3">
+          <CourseBoard course={course}>
+            {owned ? (
+              <OwnedCourse courseSlug={slug} />
+            ) : onSale ? (
+              <PriceAndBuy pricing={detail.pricing} buyHref={buyHref} freeLessonHref={freeLessonHref} />
+            ) : user ? (
+              <WaitlistOneClick courseSlug={slug} email={user.email} joined={await isOnWaitlist(user.email, slug)} />
+            ) : (
+              <WaitlistEmail courseSlug={slug} />
+            )}
+          </CourseBoard>
+        </div>
+
+        <div className="lg:grid lg:grid-cols-12 lg:gap-x-12">
+          <div className="lg:col-span-7">
+            {onSale ? (
+              <SyllabusSection modules={detail.modules} freeLessonHref={freeLessonHref} />
+            ) : (
+              <CoverageSection items={detail.coverage} />
+            )}
+          </div>
+          <div className="lg:col-span-5">
+            {freeLesson && (
+              <FreeLessonSection
+                id={freeLessonId}
+                lesson={freeLesson.lesson}
+                number={freeLesson.number}
+                moduleTitle={freeLesson.module.title}
+              />
+            )}
+          </div>
+        </div>
+
+        <div className="lg:grid lg:grid-cols-12 lg:gap-x-12">
+          <div className="lg:col-span-7">
+            <WhySection paragraphs={detail.why} />
+            <LearnSection items={detail.learn} />
+            <AudienceSection items={detail.audience} />
+            <CourseFaqSection items={detail.faq} />
+          </div>
+        </div>
+      </div>
+
+      {onSale && !owned && (
+        <MobileBuyBar
+          watchId={boardBuyId}
+          buyHref={buyHref}
+          price={brl(detail.pricing.price)}
+          installments={priceTerms(detail.pricing).installments}
+        />
+      )}
     </div>
   );
 }

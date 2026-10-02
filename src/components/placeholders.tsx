@@ -2,7 +2,7 @@
 // capas próprias em /public.
 import { Camera, ChartColumn, Code, Globe, Megaphone, PenTool, PiggyBank, type LucideIcon } from "lucide-react";
 import { cn } from "@/components/ui";
-import type { Course, CourseIcon, CourseTone } from "@/content/courses";
+import type { Course, CourseArea, CourseIcon, CourseTone } from "@/content/courses";
 
 /** Componente React de cada nome de ícone usado no catálogo. */
 export const courseIcons: Record<CourseIcon, LucideIcon> = {
@@ -15,11 +15,24 @@ export const courseIcons: Record<CourseIcon, LucideIcon> = {
   "piggy-bank": PiggyBank,
 };
 
-/** Classes de cada cor de curso: faixa da ficha, fundo claro e ícone sobre esse fundo. */
-export const toneClasses: Record<CourseTone, { stripe: string; soft: string; ink: string }> = {
-  coral: { stripe: "bg-coral-400", soft: "bg-coral-100", ink: "text-coral-700" },
-  amarelo: { stripe: "bg-amarelo-300", soft: "bg-amarelo-100", ink: "text-amarelo-700" },
-  salvia: { stripe: "bg-salvia-400", soft: "bg-salvia-100", ink: "text-salvia-700" },
+/** Ícone de cada área, nos botões de área da home. */
+export const areaIcons: Record<CourseArea, LucideIcon> = {
+  programacao: Code,
+  design: PenTool,
+  dados: ChartColumn,
+  negocios: Megaphone,
+  fotografia: Camera,
+  financas: PiggyBank,
+};
+
+/**
+ * Classes de cada cor de curso: faixa da ficha (cheia ou, com `tracejado`, em traços),
+ * fundo claro e ícone sobre esse fundo.
+ */
+export const toneClasses: Record<CourseTone, { stripe: string; dash: string; soft: string; ink: string }> = {
+  coral: { stripe: "bg-coral-400", dash: "text-coral-400", soft: "bg-coral-100", ink: "text-coral-700" },
+  amarelo: { stripe: "bg-amarelo-300", dash: "text-amarelo-300", soft: "bg-amarelo-100", ink: "text-amarelo-700" },
+  salvia: { stripe: "bg-salvia-400", dash: "text-salvia-400", soft: "bg-salvia-100", ink: "text-salvia-700" },
 };
 
 /** Capa de curso: fundo claro na cor do curso com o ícone do tema. */

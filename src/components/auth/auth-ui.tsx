@@ -31,12 +31,18 @@ export function AuthPageShell({ children }: { children: ReactNode }) {
   );
 }
 
-export function AuthHeading({ title, body }: { title: string; body?: ReactNode }) {
+/** Título e texto de apoio. `as="h2"` quando o fluxo fica dentro de outra página, como a de compra. */
+export function AuthHeading({ title, body, as: Heading = "h1" }: { title: string; body?: ReactNode; as?: "h1" | "h2" }) {
   return (
     <div className="flex flex-col gap-3">
-      <h1 className="font-heading text-[32px] font-bold leading-[1.15] tracking-[-0.025em] text-ink sm:text-[38px]">
+      <Heading
+        className={cn(
+          "font-heading font-bold leading-[1.15] tracking-[-0.025em] text-ink",
+          Heading === "h1" ? "text-[32px] sm:text-[38px]" : "text-[26px] sm:text-[30px]",
+        )}
+      >
         {title}
-      </h1>
+      </Heading>
       {body && <p className="text-[17px] leading-[1.6] text-ink-tertiary">{body}</p>}
     </div>
   );

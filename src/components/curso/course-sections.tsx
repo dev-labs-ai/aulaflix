@@ -1,12 +1,26 @@
 import type { ReactNode } from "react";
-import { Check, Lock } from "lucide-react";
-import { cn } from "@/components/ui";
-import type { CourseModule, FaqEntry } from "@/content/course-details";
+import Link from "next/link";
+import { Check, Lock, Play } from "lucide-react";
+import { LessonPlayer } from "@/components/curso/lesson-player";
+import { cn, focusRing, ringOffset } from "@/components/ui";
+import type { CourseModule, FaqEntry, Lesson } from "@/content/course-details";
 
 /** Seção do corpo da página de curso (título, linha de apoio opcional e conteúdo). */
-function CourseSection({ title, note, children }: { title: string; note?: string; children: ReactNode }) {
+function CourseSection({
+  id,
+  title,
+  note,
+  className,
+  children,
+}: {
+  id?: string;
+  title: string;
+  note?: string;
+  className?: string;
+  children: ReactNode;
+}) {
   return (
-    <section className="mt-20 sm:mt-24">
+    <section id={id} className={cn("mt-20 sm:mt-24", className)}>
       <header>
         <h2 className="font-heading text-[28px] font-bold leading-[1.1] tracking-[-0.02em] text-ink sm:text-[34px]">
           {title}
@@ -97,8 +111,11 @@ export function CoverageSection({ items }: { items: string[] }) {
   );
 }
 
-/** Conteúdo programático: módulos com aulas numeradas em sequência contínua. */
-export function SyllabusSection({ modules }: { modules: CourseModule[] }) {
+/**
+ * Conteúdo programático: módulos com aulas numeradas em sequência contínua.
+ * A aula aberta (`free`) ganha um link para o player da aula grátis (`freeLessonHref`).
+ */
+export function SyllabusSection({ modules, freeLessonHref }: { modules: CourseModule[]; freeLessonHref?: string }) {
   // Índice da primeira aula de cada módulo (a numeração continua entre módulos).
   const starts = modules.map((_, m) => modules.slice(0, m).reduce((n, mod) => n + mod.lessons.length, 0));
   const lessonCount = modules.reduce((n, mod) => n + mod.lessons.length, 0);
@@ -117,10 +134,11 @@ export function SyllabusSection({ modules }: { modules: CourseModule[] }) {
             <ol className="mt-3 border-y border-line">
               {mod.lessons.map((lesson, l) => {
                 const available = Boolean(lesson.duration);
+                const freeHref = lesson.free ? freeLessonHref : undefined;
                 return (
                   <li
                     key={lesson.title}
-                    className="grid grid-cols-[auto_1fr] items-center gap-x-5 border-b border-line py-4 last:border-b-0"
+                    className="grid grid-cols-[auto_1fr_auto] items-center gap-x-5 border-b border-line py-4 last:border-b-0"
                   >
                     <Step muted={!available}>{available ? starts[m] + l + 1 : <Lock className="size-3.5" />}</Step>
                     <div className="min-w-0">
@@ -134,6 +152,20 @@ export function SyllabusSection({ modules }: { modules: CourseModule[] }) {
                       </p>
                       <p className="mt-0.5 text-[14px] tabular-nums text-ink-muted">{lesson.duration ?? "Em breve"}</p>
                     </div>
+                    {freeHref && (
+                      <Link
+                        href={freeHref}
+                        className={cn(
+                          "inline-flex h-9 items-center gap-1.5 rounded-full bg-amarelo-100 px-3 text-[14px] font-bold text-amarelo-700 transition-colors hover:bg-amarelo-300 hover:text-ink",
+                          focusRing,
+                          ringOffset.canvas,
+                        )}
+                      >
+                        <Play aria-hidden="true" fill="currentColor" strokeWidth={0} className="size-3.5" />
+                        Grátis
+                        <span className="sr-only">: assistir à aula {lesson.title}</span>
+                      </Link>
+                    )}
                   </li>
                 );
               })}
@@ -141,6 +173,25 @@ export function SyllabusSection({ modules }: { modules: CourseModule[] }) {
           </div>
         ))}
       </div>
+    </CourseSection>
+  );
+}
+
+/** A aula aberta do curso, para assistir antes de comprar. No desktop, fica presa ao lado da ementa. */
+export function FreeLessonSection({
+  id,
+  lesson,
+  number,
+  moduleTitle,
+}: {
+  id: string;
+  lesson: Lesson;
+  number: number;
+  moduleTitle: string;
+}) {
+  return (
+    <CourseSection id={id} title="Aula grátis" note="Assista antes de comprar." className="scroll-mt-24 lg:sticky lg:top-24">
+      <LessonPlayer title={lesson.title} duration={lesson.duration ?? ""} caption={{ label: `Aula ${number} · ${moduleTitle}` }} />
     </CourseSection>
   );
 }

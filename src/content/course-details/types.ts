@@ -2,6 +2,8 @@ export type Lesson = {
   title: string;
   /** Duração no formato "mm:ss". Sem duração, a aula aparece bloqueada como "Em breve". */
   duration?: string;
+  /** Aula aberta: pode ser assistida na página do curso antes da compra. */
+  free?: boolean;
 };
 
 export type CourseModule = {

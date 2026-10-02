@@ -76,26 +76,45 @@ const buttonVariants = {
   "chalk-outline": "border-2 border-salvia-400 font-bold text-giz hover:border-giz-apagado",
 } as const;
 
+export type ButtonVariant = keyof typeof buttonVariants;
+
+/** Classes de botão, para usar tanto em links (`ButtonLink`) quanto em `<button>`. */
+export function buttonClass(variant: ButtonVariant = "primary", offset: Offset = "canvas") {
+  return cn(
+    "inline-flex h-12 items-center justify-center gap-2 rounded-control px-6 font-sans text-[16px] transition-colors",
+    buttonVariants[variant],
+    focusRing,
+    ringOffset[offset],
+  );
+}
+
 type ButtonLinkProps = ComponentProps<typeof Link> & {
-  variant?: keyof typeof buttonVariants;
+  variant?: ButtonVariant;
   offset?: Offset;
 };
 
 export function ButtonLink({ variant = "primary", offset = "canvas", className, children, ...props }: ButtonLinkProps) {
   return (
-    <Link
-      className={cn(
-        "inline-flex h-12 items-center justify-center rounded-control px-6 font-sans text-[16px] transition-colors",
-        buttonVariants[variant],
-        focusRing,
-        ringOffset[offset],
-        className,
-      )}
-      {...props}
-    >
+    <Link className={cn(buttonClass(variant, offset), className)} {...props}>
       {children}
     </Link>
   );
 }
 
 export { focusRing };
+
+/** Barra de andamento de um curso (0 a 100%). */
+export function ProgressBar({ value, label, className }: { value: number; label: string; className?: string }) {
+  return (
+    <div
+      role="progressbar"
+      aria-label={label}
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={value}
+      className={cn("h-2 w-full overflow-hidden rounded-full bg-surface-muted", className)}
+    >
+      <div className="h-full rounded-full bg-lousa-400" style={{ width: `${value}%` }} />
+    </div>
+  );
+}

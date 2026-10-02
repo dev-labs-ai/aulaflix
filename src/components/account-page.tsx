@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { ButtonLink, cn, container } from "@/components/ui";
 
-/** Moldura das páginas da conta (Meus cursos, Minhas compras): título e conteúdo. */
+/** Moldura das páginas da conta (Meus cursos e Conta): título e conteúdo. */
 export function AccountPage({ id, title, children }: { id: string; title: string; children: ReactNode }) {
   return (
     <section aria-labelledby={id} className={cn(container, "pb-24 pt-14 sm:pb-32")}>

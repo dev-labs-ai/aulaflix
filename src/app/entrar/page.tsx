@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { AuthHeading, AuthPageShell, AuthSwitch, inlineLinkClass } from "@/components/auth/auth-ui";
-import { LoginForm } from "@/components/auth/login-form";
+import { AuthPageShell } from "@/components/auth/auth-ui";
+import { EntryFlow } from "@/components/auth/entry-flow";
 import { authCopy } from "@/content/auth";
 import { redirectIfSignedIn, safeNextPath } from "@/lib/auth";
 
@@ -10,8 +9,8 @@ export const metadata: Metadata = {
 };
 
 /**
- * Página isolada, sem header/rodapé do site (fica fora do grupo `(site)`).
- * `?next=/caminho` define para onde o usuário vai depois de entrar.
+ * Entrar e criar conta, numa tela só que começa pelo e-mail. Página isolada, sem header/rodapé
+ * do site (fica fora do grupo `(site)`). `?next=/caminho` define para onde o usuário vai depois.
  */
 export default async function EntrarPage(props: PageProps<"/entrar">) {
   const next = safeNextPath((await props.searchParams).next);
@@ -19,13 +18,7 @@ export default async function EntrarPage(props: PageProps<"/entrar">) {
 
   return (
     <AuthPageShell>
-      <AuthHeading title={authCopy.signIn.title} />
-      <LoginForm next={next} />
-      <AuthSwitch prompt={authCopy.signIn.switchPrompt}>
-        <Link href="/cadastrar" className={inlineLinkClass}>
-          {authCopy.signIn.switchLink}
-        </Link>
-      </AuthSwitch>
+      <EntryFlow next={next} />
     </AuthPageShell>
   );
 }

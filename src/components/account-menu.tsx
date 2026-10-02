@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { BookOpen, ChevronDown, LogOut, Receipt, Settings, type LucideIcon } from "lucide-react";
+import { BookOpen, ChevronDown, CircleUser, LogOut, type LucideIcon } from "lucide-react";
 import { cn, focusRing, ringOffset } from "@/components/ui";
 import { accountMenu, initials, type AccountIcon } from "@/content/account";
 import type { SessionUser } from "@/lib/auth";
@@ -10,8 +10,7 @@ import { signOut } from "@/lib/auth-actions";
 
 const accountIcons: Record<AccountIcon, LucideIcon> = {
   "book-open": BookOpen,
-  receipt: Receipt,
-  settings: Settings,
+  "circle-user": CircleUser,
 };
 
 const itemClass =
@@ -54,7 +53,6 @@ export function AccountMenu({ user }: { user: SessionUser }) {
   }, [open]);
 
   const close = () => setOpen(false);
-  const SettingsIcon = accountIcons[accountMenu.settings.icon];
 
   return (
     <div ref={rootRef} className="relative">
@@ -97,10 +95,6 @@ export function AccountMenu({ user }: { user: SessionUser }) {
             })}
           </div>
           <div className="mt-1.5 border-t border-line-subtle pt-1.5">
-            <Link href={accountMenu.settings.href} role="menuitem" onClick={close} className={itemClass}>
-              <SettingsIcon aria-hidden="true" className={itemIconClass} />
-              {accountMenu.settings.label}
-            </Link>
             <form action={signOut}>
               <button type="submit" role="menuitem" className={itemClass}>
                 <LogOut aria-hidden="true" className={itemIconClass} />
@@ -114,9 +108,8 @@ export function AccountMenu({ user }: { user: SessionUser }) {
   );
 }
 
-/** Rodapé do menu mobile com o usuário logado: dados da conta, Configurações e Sair. */
-export function MobileAccountPanel({ user, onNavigate }: { user: SessionUser; onNavigate: () => void }) {
-  const SettingsIcon = accountIcons[accountMenu.settings.icon];
+/** Rodapé do menu mobile com o usuário logado: nome, e-mail e Sair (os links da conta ficam no menu acima). */
+export function MobileAccountPanel({ user }: { user: SessionUser }) {
   const buttonClass =
     "inline-flex h-11 w-full items-center justify-center gap-2 rounded-control border border-line bg-surface px-4 text-[15px] font-bold text-ink transition-colors hover:border-line-strong hover:bg-section";
 
@@ -129,10 +122,6 @@ export function MobileAccountPanel({ user, onNavigate }: { user: SessionUser; on
           <p className="truncate text-[14px] text-ink-muted">{user.email}</p>
         </div>
       </div>
-      <Link href={accountMenu.settings.href} onClick={onNavigate} className={buttonClass}>
-        <SettingsIcon aria-hidden="true" className="size-4" />
-        {accountMenu.settings.label}
-      </Link>
       <form action={signOut}>
         <button type="submit" className={buttonClass}>
           <LogOut aria-hidden="true" className="size-4" />

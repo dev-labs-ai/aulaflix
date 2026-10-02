@@ -24,7 +24,7 @@ export const programacaoDoZero: OnSaleCourseDetail = {
     {
       title: "Primeiros passos",
       lessons: [
-        { title: "Como o computador executa um programa", duration: "12:40" },
+        { title: "Como o computador executa um programa", duration: "12:40", free: true },
         { title: "Instalando o Python e o editor", duration: "09:15" },
         { title: "Seu primeiro programa", duration: "14:02" },
       ],

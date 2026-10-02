@@ -9,11 +9,26 @@ export type CourseIcon = "code" | "pen-tool" | "chart-column" | "globe" | "megap
 /** Cor da faixa da ficha e da capa do curso (ver tokens em globals.css). */
 export type CourseTone = "coral" | "amarelo" | "salvia";
 
+/** Área do curso. A chave é o valor de `?area=` no catálogo (/cursos?area=dados). */
+export type CourseArea = "programacao" | "design" | "dados" | "negocios" | "fotografia" | "financas";
+
+/** Nome de cada área, na ordem em que aparecem nos filtros do catálogo. */
+export const areaLabel: Record<CourseArea, string> = {
+  programacao: "Programação",
+  design: "Design",
+  dados: "Dados",
+  negocios: "Negócios",
+  fotografia: "Fotografia",
+  financas: "Finanças",
+};
+
+export const areas = Object.keys(areaLabel) as CourseArea[];
+
 export type Course = {
   slug: string;
   title: string;
-  /** Área do curso, mostrada na ficha ao lado do ícone. */
-  subject: string;
+  /** Área do curso, mostrada na ficha ao lado do ícone e usada no filtro do catálogo. */
+  area: CourseArea;
   summary: string;
   status: CourseStatus;
   /** Ícone usado no placeholder da capa enquanto não há imagem própria. */
@@ -23,16 +38,11 @@ export type Course = {
   image?: string;
 };
 
-export const statusLabel: Record<CourseStatus, string> = {
-  "on-sale": "À venda",
-  waitlist: "Lista de espera",
-};
-
 export const courses: Course[] = [
   {
     slug: "programacao-do-zero",
     title: "Programação do Zero",
-    subject: "Programação",
+    area: "programacao",
     summary:
       "Aprenda lógica de programação e escreva seus primeiros programas em Python, com exercícios curtos que levam do primeiro comando a pequenos projetos completos.",
     status: "on-sale",
@@ -42,7 +52,7 @@ export const courses: Course[] = [
   {
     slug: "design-de-interfaces",
     title: "Design de Interfaces",
-    subject: "Design",
+    area: "design",
     summary:
       "Aprenda os fundamentos de layout, tipografia, cor e hierarquia visual para criar telas claras e agradáveis, do rascunho ao protótipo navegável.",
     status: "on-sale",
@@ -52,7 +62,7 @@ export const courses: Course[] = [
   {
     slug: "analise-de-dados-com-planilhas",
     title: "Análise de Dados com Planilhas",
-    subject: "Dados",
+    area: "dados",
     summary:
       "Organize, limpe e analise dados em planilhas, use fórmulas e tabelas dinâmicas e transforme números em gráficos que ajudam a tomar decisões.",
     status: "on-sale",
@@ -62,7 +72,7 @@ export const courses: Course[] = [
   {
     slug: "desenvolvimento-web",
     title: "Desenvolvimento Web",
-    subject: "Programação",
+    area: "programacao",
     summary:
       "Construa sites com HTML, CSS e JavaScript, entendendo como as páginas são estruturadas, estilizadas, deixadas interativas e publicadas na internet.",
     status: "waitlist",
@@ -72,7 +82,7 @@ export const courses: Course[] = [
   {
     slug: "marketing-digital",
     title: "Marketing Digital",
-    subject: "Negócios",
+    area: "negocios",
     summary:
       "Planeje sua presença online, produza conteúdo para redes sociais, crie campanhas simples e acompanhe os números que mostram o que está funcionando.",
     status: "waitlist",
@@ -82,7 +92,7 @@ export const courses: Course[] = [
   {
     slug: "fotografia-com-celular",
     title: "Fotografia com o Celular",
-    subject: "Fotografia",
+    area: "fotografia",
     summary:
       "Tire fotos melhores usando só o celular: composição, luz natural, recursos da câmera e edição rápida em aplicativos gratuitos.",
     status: "waitlist",
@@ -92,7 +102,7 @@ export const courses: Course[] = [
   {
     slug: "financas-pessoais",
     title: "Finanças Pessoais",
-    subject: "Finanças",
+    area: "financas",
     summary:
       "Monte um orçamento que funcione, organize as dívidas, crie uma reserva de emergência e dê os primeiros passos para investir com segurança.",
     status: "waitlist",

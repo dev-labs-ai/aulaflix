@@ -14,5 +14,5 @@ type NavItem = { label: string; href: string; /** Selo ao lado do link, ex.: "No
 
 export const mainNav: NavItem[] = [
   { label: "Cursos", href: "/cursos" },
-  { label: "Sobre", href: "/#sobre" },
+  { label: "Como funciona", href: "/#como-funciona" },
 ];

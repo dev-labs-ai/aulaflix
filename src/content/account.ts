@@ -1,7 +1,7 @@
-// Textos da área do aluno: menu do usuário, Meus cursos, Minhas compras e Configurações.
+// Textos da área do aluno: menu do usuário, Meus cursos e Conta (dados da conta e compras).
 
 /** Nome do ícone na biblioteca Lucide (https://lucide.dev/icons). */
-export type AccountIcon = "book-open" | "receipt" | "settings";
+export type AccountIcon = "book-open" | "circle-user";
 
 export type AccountLink = { label: string; href: string; icon: AccountIcon };
 
@@ -11,10 +11,19 @@ export const accountMenu = {
   /** Áreas da conta; no celular aparecem junto com os links do menu principal. */
   links: [
     { label: "Meus cursos", href: "/meus-cursos", icon: "book-open" },
-    { label: "Minhas compras", href: "/compras", icon: "receipt" },
+    { label: "Conta", href: "/conta", icon: "circle-user" },
   ] satisfies AccountLink[],
-  settings: { label: "Configurações", href: "/configuracoes", icon: "settings" } satisfies AccountLink,
   signOut: "Sair",
+};
+
+/** Página /conta: o título e as abas. */
+export const accountCopy = {
+  title: "Conta",
+  tabsLabel: "Seções da conta",
+  tabs: [
+    { label: "Dados da conta", href: "/conta" },
+    { label: "Compras", href: "/conta/compras" },
+  ],
 };
 
 /** Iniciais para o avatar: primeira e última palavra do nome ("Aluno Aulaflix" → "AA"). */
@@ -27,6 +36,12 @@ export function initials(name: string | null, email: string) {
 export const myCoursesCopy = {
   title: "Meus cursos",
   description: "Os cursos que você comprou e o andamento de cada um.",
+  /** Destaque no topo da página, com a aula onde o aluno parou. */
+  resume: {
+    title: "Continuar de onde parou",
+    position: (number: number, total: number) => `Aula ${number} de ${total}`,
+    cta: "Continuar aula",
+  },
   start: "Começar",
   continue: "Continuar",
   openCourse: "Rever aulas",
@@ -49,7 +64,7 @@ export const myCoursesCopy = {
 };
 
 export const purchasesCopy = {
-  title: "Minhas compras",
+  title: "Compras",
   description: "Seus pedidos no Aulaflix: pagamentos, valores e cursos incluídos.",
   status: { paid: "Pago" },
   paymentMethod: { pix: "Pix", card: "Cartão" },
@@ -63,7 +78,7 @@ export const purchasesCopy = {
 };
 
 export const settingsCopy = {
-  title: "Configurações",
+  title: "Dados da conta",
   description: "Seu nome, e-mail e senha no Aulaflix.",
   name: "Nome",
   email: "E-mail",
@@ -74,7 +89,6 @@ export const settingsCopy = {
   changePassword: "Trocar senha",
   codeSent: (email: string) => ["Digite o código que mandamos para ", email, " e escolha a nova senha."] as const,
   savePassword: "Salvar nova senha",
-  passwordSavedNotice:
-    "Protótipo: senha salva só nesta simulação. O login continua com a senha da conta de demonstração.",
+  passwordSavedNotice: "Protótipo: a senha não foi trocada de verdade. Continue entrando com a senha atual.",
   nameTooLong: "Use no máximo 80 caracteres.",
 };

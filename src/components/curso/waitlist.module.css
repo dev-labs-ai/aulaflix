@@ -10,18 +10,6 @@
   animation: draw 0.54s cubic-bezier(0.65, 0, 0.35, 1) 0.22s forwards;
 }
 
-.fadeUp {
-  opacity: 0;
-  transform: translateY(6px);
-  animation: fade-up 0.42s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-}
-.delayTitle {
-  animation-delay: 0.36s;
-}
-.delayBody {
-  animation-delay: 0.46s;
-}
-
 .email {
   position: relative;
   display: inline-block;
@@ -40,7 +28,7 @@
   background: var(--color-amarelo-300);
   transform: scaleX(0);
   transform-origin: 0;
-  animation: underline 0.52s cubic-bezier(0.22, 1, 0.36, 1) 0.78s forwards;
+  animation: underline 0.52s cubic-bezier(0.22, 1, 0.36, 1) 0.6s forwards;
 }
 
 @keyframes rise {
@@ -60,13 +48,6 @@
   }
 }
 
-@keyframes fade-up {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 @keyframes underline {
   to {
     transform: scaleX(1);
@@ -74,8 +55,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .success,
-  .fadeUp {
+  .success {
     opacity: 1;
     animation: none;
     transform: none;
