@@ -1,13 +1,6 @@
-import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
+import { SiteShell } from "@/components/site-shell";
 
 /** Páginas públicas com header e rodapé do site. */
 export default function SiteLayout({ children }: LayoutProps<"/">) {
-  return (
-    <div className="min-h-screen bg-canvas text-ink">
-      <SiteHeader />
-      <main>{children}</main>
-      <SiteFooter />
-    </div>
-  );
+  return <SiteShell>{children}</SiteShell>;
 }
