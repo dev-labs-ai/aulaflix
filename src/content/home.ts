@@ -4,7 +4,7 @@
 export const howItWorks = [
   {
     title: "Escolha o que aprender",
-    body: "Cada curso é independente. Escolha pelo tema, leia a ementa e assista à aula grátis antes de decidir.",
+    body: "Cada curso é independente. Escolha pela área, leia a ementa e assista à aula grátis antes de decidir.",
   },
   {
     title: "Compre uma vez",

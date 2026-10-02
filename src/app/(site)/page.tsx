@@ -29,16 +29,17 @@ function Hero() {
           id="hero-title"
           className="anim-giz mx-auto max-w-[900px] text-balance font-heading text-[38px] font-bold leading-[1.05] tracking-[-0.03em] sm:text-[56px] lg:text-[72px]"
         >
-          Aprenda no seu ritmo, com cursos feitos para a prática.
+          Evolua como dev com cursos feitos para a prática.
         </h1>
         <p className="anim-surge mx-auto mt-7 max-w-[52ch] text-pretty text-[17px] leading-[1.6] text-giz-apagado sm:text-[20px]">
-          Escolha o que quer aprender, assista quando quiser e volte às aulas sempre que precisar.
+          Cursos online para desenvolvedores de software. Escolha o que quer aprender, assista quando quiser e
+          volte às aulas sempre que precisar.
         </p>
         <nav aria-labelledby="areas-title" className="anim-surge anim-surge-tarde mt-10">
           <h2 id="areas-title" className="text-[15px] font-bold text-giz-apagado">
             Escolha uma área
           </h2>
-          <ul className="mx-auto mt-4 flex max-w-[940px] flex-wrap justify-center gap-2.5 sm:gap-3">
+          <ul className="mx-auto mt-4 flex max-w-[1080px] flex-wrap justify-center gap-2.5 sm:gap-3">
             {areas.map((area) => {
               const Icon = areaIcons[area];
               return (

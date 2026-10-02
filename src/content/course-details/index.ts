@@ -1,24 +1,24 @@
 // Conteúdo das páginas de curso (/cursos/[slug]).
 // Título, resumo e status ficam em src/content/courses.ts.
-import { programacaoDoZero } from "./programacao-do-zero";
-import { designDeInterfaces } from "./design-de-interfaces";
-import { analiseDeDadosComPlanilhas } from "./analise-de-dados-com-planilhas";
-import { desenvolvimentoWeb } from "./desenvolvimento-web";
-import { marketingDigital } from "./marketing-digital";
-import { fotografiaComCelular } from "./fotografia-com-celular";
-import { financasPessoais } from "./financas-pessoais";
+import { backendComNodeJs } from "./backend-com-node-js";
+import { frontendComReact } from "./frontend-com-react";
+import { sqlEModelagemDeDados } from "./sql-e-modelagem-de-dados";
+import { devopsNaPratica } from "./devops-na-pratica";
+import { iaParaDesenvolvedores } from "./ia-para-desenvolvedores";
+import { testesAutomatizados } from "./testes-automatizados";
+import { arquiteturaDeSoftware } from "./arquitetura-de-software";
 import type { CourseDetail, CourseModule, Lesson, OnSaleCourseDetail } from "./types";
 
 export type * from "./types";
 
 export const courseDetails: Record<string, CourseDetail> = {
-  "programacao-do-zero": programacaoDoZero,
-  "design-de-interfaces": designDeInterfaces,
-  "analise-de-dados-com-planilhas": analiseDeDadosComPlanilhas,
-  "desenvolvimento-web": desenvolvimentoWeb,
-  "marketing-digital": marketingDigital,
-  "fotografia-com-celular": fotografiaComCelular,
-  "financas-pessoais": financasPessoais,
+  "backend-com-node-js": backendComNodeJs,
+  "frontend-com-react": frontendComReact,
+  "sql-e-modelagem-de-dados": sqlEModelagemDeDados,
+  "devops-na-pratica": devopsNaPratica,
+  "ia-para-desenvolvedores": iaParaDesenvolvedores,
+  "testes-automatizados": testesAutomatizados,
+  "arquitetura-de-software": arquiteturaDeSoftware,
 };
 
 export function getCourseDetail(slug: string): CourseDetail | undefined {
@@ -28,7 +28,7 @@ export function getCourseDetail(slug: string): CourseDetail | undefined {
 /** Uma aula do curso, com o endereço dela, o número na ementa e o módulo (e o número dele) em que está. */
 export type LessonEntry = { lesson: Lesson; slug: string; number: number; module: CourseModule; moduleNumber: number };
 
-/** Endereço da aula em /aprender/[curso]/[aula], tirado do título ("Seu primeiro programa" → "seu-primeiro-programa"). */
+/** Endereço da aula em /aprender/[curso]/[aula], tirado do título ("Sua primeira rota" → "sua-primeira-rota"). */
 export function lessonSlug(title: string) {
   return title
     .normalize("NFD")

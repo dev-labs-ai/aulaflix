@@ -4,9 +4,9 @@ export const site = {
   name: "Aulaflix",
   /** Nome como aparece no logotipo, em minúsculas. */
   wordmark: "aulaflix",
-  title: "Aulaflix — Cursos online para aprender no seu ritmo",
+  title: "Aulaflix — Cursos online para desenvolvedores de software",
   description:
-    "Cursos online de programação, design, dados, negócios e outros temas. Aprenda no seu ritmo, com acesso vitalício.",
+    "Cursos online de backend, frontend, banco de dados, DevOps e IA para desenvolvedores de software. Aprenda no seu ritmo, com acesso vitalício.",
   legalName: "AULAFLIX TECNOLOGIA LTDA",
 };
 
