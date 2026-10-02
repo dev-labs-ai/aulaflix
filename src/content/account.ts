@@ -59,3 +59,20 @@ export const purchasesCopy = {
     cta: "Ver todos os cursos",
   },
 };
+
+export const settingsCopy = {
+  title: "Configurações",
+  description: "Seu nome, e-mail e senha no Aulaflix.",
+  name: "Nome",
+  email: "E-mail",
+  password: "Senha",
+  edit: "Editar",
+  save: "Salvar",
+  cancel: "Cancelar",
+  changePassword: "Alterar senha",
+  codeSent: (email: string) => ["Enviamos um código para ", email, "."] as const,
+  savePassword: "Salvar senha",
+  passwordSavedNotice:
+    "Protótipo: senha salva só nesta simulação. O login continua com a senha da conta de demonstração.",
+  nameTooLong: "Use no máximo 80 caracteres.",
+};

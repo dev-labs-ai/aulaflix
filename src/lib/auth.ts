@@ -12,14 +12,24 @@ const DEMO_ACCOUNT = {
 };
 
 const SESSION_COOKIE = "aulaflix_session";
-const SESSION_MAX_AGE = 60 * 60 * 24 * 7; // 7 dias
+/** Nome alterado em Configurações; sem ele, vale o nome da conta. */
+const NAME_COOKIE = "aulaflix_name";
+
+const cookieOptions = {
+  httpOnly: true,
+  sameSite: "lax",
+  secure: process.env.NODE_ENV === "production",
+  path: "/",
+  maxAge: 60 * 60 * 24 * 7, // 7 dias
+} as const;
 
 export type SessionUser = { name: string; email: string };
 
 /** Usuário da sessão atual, ou `null` se ninguém entrou. Só no servidor. */
 export async function getSessionUser(): Promise<SessionUser | null> {
-  const email = (await cookies()).get(SESSION_COOKIE)?.value;
-  return email === DEMO_ACCOUNT.email ? { name: DEMO_ACCOUNT.name, email: DEMO_ACCOUNT.email } : null;
+  const store = await cookies();
+  if (store.get(SESSION_COOKIE)?.value !== DEMO_ACCOUNT.email) return null;
+  return { name: store.get(NAME_COOKIE)?.value || DEMO_ACCOUNT.name, email: DEMO_ACCOUNT.email };
 }
 
 export function checkCredentials(email: string, password: string): SessionUser | null {
@@ -29,13 +39,12 @@ export function checkCredentials(email: string, password: string): SessionUser |
 
 /** Grava o cookie de sessão. Só funciona dentro de Server Functions. */
 export async function startSession(user: SessionUser) {
-  (await cookies()).set(SESSION_COOKIE, user.email, {
-    httpOnly: true,
-    sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
-    path: "/",
-    maxAge: SESSION_MAX_AGE,
-  });
+  (await cookies()).set(SESSION_COOKIE, user.email, cookieOptions);
+}
+
+/** Troca o nome exibido da conta. Só funciona dentro de Server Functions. */
+export async function setDisplayName(name: string) {
+  (await cookies()).set(NAME_COOKIE, name, cookieOptions);
 }
 
 export async function endSession() {
