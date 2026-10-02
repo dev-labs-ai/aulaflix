@@ -54,9 +54,7 @@ export const footerElsewhere = [
 ] as const;
 
 export const socialLinks = [
-  { icon: "github", label: "GitHub", href: "https://github.com/rafaelquintanilha" },
-  { icon: "linkedin", label: "LinkedIn", href: "https://www.linkedin.com/in/rafaelquintanilha" },
+  { icon: "github", label: "GitHub", href: "https://github.com/robsonoliveiradacosta" },
   { icon: "instagram", label: "Instagram", href: "https://www.instagram.com/quant_brasil/" },
   { icon: "telegram", label: "Telegram", href: "https://t.me/quantbrasil" },
-  { icon: "globe", label: "Blog", href: "https://rafaelquintanilha.com" },
 ] as const;
