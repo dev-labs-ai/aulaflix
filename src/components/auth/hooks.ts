@@ -21,7 +21,7 @@ export function useFieldValidation<T extends Record<string, string>>(values: T, 
   };
 }
 
-/** Contagem regressiva para liberar o "Reenviar código". */
+/** Contagem regressiva para liberar o "Pedir outro código". */
 export function useResendCountdown(seconds: number) {
   const [deadline, setDeadline] = useState(() => Date.now() + seconds * 1000);
   const [now, setNow] = useState(() => Date.now());

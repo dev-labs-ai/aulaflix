@@ -64,9 +64,9 @@ const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 function validate(values: { name: string; email: string; phone: string }) {
   const digits = values.phone.replace(/\D/g, "");
   return {
-    name: values.name.trim() ? null : "Informe seu nome.",
-    email: emailPattern.test(values.email.trim()) ? null : "Informe um e-mail válido.",
-    phone: !digits || (digits.length >= 8 && digits.length <= 15) ? null : "Informe um telefone válido.",
+    name: values.name.trim() ? null : "Digite seu nome.",
+    email: emailPattern.test(values.email.trim()) ? null : "Esse e-mail não parece válido.",
+    phone: !digits || (digits.length >= 8 && digits.length <= 15) ? null : "Esse telefone não parece válido.",
   };
 }
 
@@ -213,7 +213,7 @@ function WaitlistForm() {
         disabled={!canSubmit}
         className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-sm bg-surface-accent px-5 py-3 font-sans text-[15px] font-semibold text-ink-inverse transition-colors enabled:hover:bg-accent-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-4 focus-visible:ring-offset-surface-raised disabled:cursor-not-allowed disabled:bg-surface-muted disabled:text-ink-muted"
       >
-        {pending ? "Entrando…" : "Entrar na lista"}
+        {pending ? "Enviando…" : "Quero ser avisado"}
         <span aria-hidden="true">→</span>
       </button>
     </form>
@@ -243,7 +243,7 @@ function WaitlistConfirmed({ name, email, courseTitle }: Submission & { courseTi
           styles.delayTitle,
         )}
       >
-        {firstName ? `Obrigado, ${firstName}! Você está na lista.` : "Obrigado! Você está na lista."}
+        {firstName ? `Pronto, ${firstName}! Você vai ser avisado.` : "Pronto! Você vai ser avisado."}
       </h3>
       <p
         className={cn(

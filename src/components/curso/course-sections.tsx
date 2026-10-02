@@ -79,7 +79,7 @@ export function AudienceSection({ items }: { items: string[] }) {
 
 export function CoverageSection({ items }: { items: string[] }) {
   return (
-    <CourseSection title="O que o curso vai cobrir">
+    <CourseSection title="Conteúdo previsto">
       <ol className="border-y border-line-subtle">
         {items.map((item, i) => (
           <li key={item} className="grid grid-cols-[auto_1fr] gap-x-5 border-b border-line-subtle py-5 last:border-b-0">
@@ -99,7 +99,7 @@ export function SyllabusSection({ modules }: { modules: CourseModule[] }) {
   const lessonCount = modules.reduce((n, mod) => n + mod.lessons.length, 0);
 
   return (
-    <CourseSection eyebrow="Conteúdo do curso" title={`${lessonCount} aulas em ${modules.length} módulos`}>
+    <CourseSection eyebrow="Ementa" title={`${modules.length} módulos · ${lessonCount} aulas`}>
       <div className="space-y-10">
         {modules.map((mod, m) => (
           <div key={mod.title}>

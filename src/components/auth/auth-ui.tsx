@@ -117,7 +117,7 @@ export function BackLink({ onClick }: { onClick: () => void }) {
   );
 }
 
-/** Texto com o trecho do meio em negrito, ex.: "Enviamos um código para **email**." */
+/** Texto com o trecho do meio em negrito, ex.: "Mandamos um novo código para **email**." */
 export function Emphasis({ parts, inherit = false }: { parts: readonly [string, string, string]; inherit?: boolean }) {
   return (
     <>
@@ -128,7 +128,7 @@ export function Emphasis({ parts, inherit = false }: { parts: readonly [string, 
   );
 }
 
-/** "Não chegou?" + botão de reenvio, bloqueado enquanto a contagem não zera. */
+/** "Não recebeu?" + botão para pedir outro código, bloqueado enquanto a contagem não zera. */
 export function ResendCode({
   countdown,
   onResend,

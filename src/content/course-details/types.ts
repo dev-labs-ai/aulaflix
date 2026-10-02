@@ -40,7 +40,7 @@ export type OnSaleCourseDetail = CourseDetailBase & {
 /** Curso em lista de espera: formulário de inscrição e tópicos previstos. */
 export type WaitlistCourseDetail = CourseDetailBase & {
   kind: "waitlist";
-  /** Itens de "O que o curso vai cobrir". */
+  /** Itens de "Conteúdo previsto". */
   coverage: string[];
 };
 

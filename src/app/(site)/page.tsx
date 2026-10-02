@@ -51,7 +51,7 @@ function OnSaleSection() {
         <div className="reveal lg:grid lg:grid-cols-12 lg:gap-x-12">
           <header className="lg:col-span-9 lg:col-start-1">
             <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-accent sm:text-[12px] sm:tracking-[0.16em]">
-              Inscrições abertas
+              Disponíveis agora
             </p>
             <h2
               id="a-venda-title"

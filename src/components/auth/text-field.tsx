@@ -10,7 +10,7 @@ type TextFieldProps = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
   error?: ReactNode;
   hint?: string;
-  /** Conteúdo à direita do rótulo, ex.: "Esqueci minha senha". */
+  /** Conteúdo à direita do rótulo, ex.: "Esqueceu a senha?". */
   labelAside?: ReactNode;
   /** Campo de senha com botão de mostrar/ocultar. */
   password?: boolean;

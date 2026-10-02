@@ -75,7 +75,7 @@ function PurchaseCard({ purchase }: { purchase: Purchase }) {
         <p className="font-mono text-[18px] font-semibold tabular-nums text-ink">{brl.format(purchase.amount)}</p>
       </div>
 
-      {/* Com cursos avulsos, "Inclui" só aparece quando o pedido tem mais de um curso. */}
+      {/* Com cursos avulsos, a lista de cursos só aparece quando o pedido tem mais de um. */}
       {purchase.courses.length > 1 && (
         <div className="mt-5">
           <p className="font-sans text-[11px] font-semibold uppercase leading-[14px] tracking-[0.08em] text-ink-muted">

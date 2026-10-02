@@ -32,7 +32,7 @@ export default function CursosPage() {
 
       <CourseGroup
         id="group-on-sale"
-        eyebrow="Inscrições abertas."
+        eyebrow="Disponíveis agora."
         title="À venda"
         courses={onSaleCourses}
         variant="card"
@@ -40,7 +40,7 @@ export default function CursosPage() {
       />
       <CourseGroup
         id="group-waitlist"
-        eyebrow="Inscreva-se na lista de espera."
+        eyebrow="Avisamos quando lançar."
         title="Em breve"
         courses={waitlistCourses}
         className="pb-24 pt-16 sm:pb-32 sm:pt-20"

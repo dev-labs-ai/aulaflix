@@ -1,4 +1,4 @@
-// Menu da conta (header, com o usuário logado).
+// Textos da área do aluno: menu do usuário, Meus cursos, Minhas compras e Configurações.
 
 /** Nome do ícone na biblioteca Lucide (https://lucide.dev/icons). */
 export type AccountIcon = "book-open" | "receipt" | "settings";
@@ -6,8 +6,8 @@ export type AccountIcon = "book-open" | "receipt" | "settings";
 export type AccountLink = { label: string; href: string; icon: AccountIcon };
 
 export const accountMenu = {
-  open: "Abrir menu da conta",
-  label: "Menu da conta",
+  open: "Abrir menu do usuário",
+  label: "Menu do usuário",
   /** Áreas da conta; no celular aparecem junto com os links do menu principal. */
   links: [
     { label: "Meus cursos", href: "/meus-cursos", icon: "book-open" },
@@ -26,22 +26,24 @@ export function initials(name: string | null, email: string) {
 
 export const myCoursesCopy = {
   title: "Meus cursos",
-  description: "Continue de onde parou nos cursos que você comprou.",
+  description: "Os cursos que você comprou e o andamento de cada um.",
   start: "Começar",
   continue: "Continuar",
-  openCourse: "Abrir curso",
-  notStarted: (lessons: number) => `${lessons} ${lessons === 1 ? "aula" : "aulas"} · não iniciado`,
+  openCourse: "Rever aulas",
+  notStarted: (lessons: number) => `${lessons} ${lessons === 1 ? "aula" : "aulas"} · ainda não começou`,
   progress: (done: number, total: number, percent: number, status?: string) =>
-    [`${done} / ${total} aulas`, `${percent}%`, status].filter(Boolean).join(" · "),
-  completed: "concluído",
-  caughtUp: "em dia",
-  progressLabel: (title: string) => `Progresso em ${title}`,
-  onSale: (count: number) => `+ ${count} ${count === 1 ? "curso" : "cursos"} à venda.`,
-  waitlist: (count: number) => `+ ${count} ${count === 1 ? "curso" : "cursos"} em lista de espera.`,
-  catalog: "Ver catálogo",
+    [`${done} de ${total} aulas`, `${percent}%`, status].filter(Boolean).join(" · "),
+  completed: "finalizado",
+  caughtUp: "aguardando novas aulas",
+  progressLabel: (title: string) => `Andamento em ${title}`,
+  onSale: (count: number) =>
+    count === 1 ? "Mais 1 curso disponível." : `Mais ${count} cursos disponíveis.`,
+  waitlist: (count: number) =>
+    count === 1 ? "Mais 1 curso chegando em breve." : `Mais ${count} cursos chegando em breve.`,
+  catalog: "Conhecer o catálogo",
   empty: {
-    title: "Você ainda não tem nenhum curso",
-    body: "Explore os cursos e escolha por onde começar.",
+    title: "Nenhum curso por aqui ainda",
+    body: "Quando você comprar um curso, ele aparece nesta página.",
     cta: "Ver todos os cursos",
   },
 };
@@ -51,11 +53,11 @@ export const purchasesCopy = {
   description: "Seus pedidos no Aulaflix: pagamentos, valores e cursos incluídos.",
   status: { paid: "Pago" },
   paymentMethod: { pix: "Pix", card: "Cartão" },
-  order: (id: string) => `Pedido ${id}`,
-  includes: "Inclui",
+  order: (id: string) => `Pedido nº ${id}`,
+  includes: "Cursos do pedido",
   empty: {
-    title: "Você ainda não realizou nenhuma compra",
-    body: "Explore os cursos e escolha por onde começar.",
+    title: "Nenhuma compra ainda",
+    body: "Seus pedidos aparecem aqui depois da primeira compra.",
     cta: "Ver todos os cursos",
   },
 };
@@ -69,9 +71,9 @@ export const settingsCopy = {
   edit: "Editar",
   save: "Salvar",
   cancel: "Cancelar",
-  changePassword: "Alterar senha",
-  codeSent: (email: string) => ["Enviamos um código para ", email, "."] as const,
-  savePassword: "Salvar senha",
+  changePassword: "Trocar senha",
+  codeSent: (email: string) => ["Digite o código que mandamos para ", email, " e escolha a nova senha."] as const,
+  savePassword: "Salvar nova senha",
   passwordSavedNotice:
     "Protótipo: senha salva só nesta simulação. O login continua com a senha da conta de demonstração.",
   nameTooLong: "Use no máximo 80 caracteres.",
