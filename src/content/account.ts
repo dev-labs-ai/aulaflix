@@ -36,6 +36,12 @@ export function initials(name: string | null, email: string) {
 export const myCoursesCopy = {
   title: "Meus cursos",
   description: "Os cursos que você comprou e o andamento de cada um.",
+  /** Destaque no topo da página, com a aula onde o aluno parou. */
+  resume: {
+    title: "Continuar de onde parou",
+    position: (number: number, total: number) => `Aula ${number} de ${total}`,
+    cta: "Continuar aula",
+  },
   start: "Começar",
   continue: "Continuar",
   openCourse: "Rever aulas",

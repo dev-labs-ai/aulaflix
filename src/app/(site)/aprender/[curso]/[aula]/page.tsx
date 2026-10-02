@@ -4,6 +4,7 @@ import { notFound, redirect } from "next/navigation";
 import { ArrowLeft, ArrowRight, ChevronRight } from "lucide-react";
 import { CompleteLesson } from "@/components/aula/complete-lesson";
 import { LessonList } from "@/components/aula/lesson-list";
+import { RecordVisit } from "@/components/aula/record-visit";
 import { LessonPlayer } from "@/components/curso/lesson-player";
 import { cn, container, focusRing, ringOffset } from "@/components/ui";
 import { courseLessons, getCourseDetail, type LessonEntry } from "@/content/course-details";
@@ -48,6 +49,7 @@ export default async function LessonPage(props: PageProps<"/aprender/[curso]/[au
 
   return (
     <div className={cn(container, "pb-24 pt-6 sm:pb-32 sm:pt-8")}>
+      <RecordVisit course={curso} lesson={entry.slug} />
       <nav aria-label="Você está em" className="text-[15px] text-ink-tertiary">
         <ol className="flex flex-wrap items-center gap-x-1.5 gap-y-1">
           <li>
