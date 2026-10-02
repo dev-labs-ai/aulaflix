@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { Check, Lock, Play } from "lucide-react";
 import { LessonPlayer } from "@/components/curso/lesson-player";
+import { FaqList } from "@/components/faq-list";
 import { cn, focusRing, ringOffset } from "@/components/ui";
 import type { CourseModule, FaqEntry, Lesson } from "@/content/course-details";
 
@@ -200,26 +201,7 @@ export function FreeLessonSection({
 export function CourseFaqSection({ items }: { items: FaqEntry[] }) {
   return (
     <CourseSection title="Perguntas frequentes">
-      <ul className="divide-y divide-line border-y border-line">
-        {items.map((item) => (
-          <li key={item.question}>
-            <details className="group py-5">
-              <summary className="flex cursor-pointer list-none items-baseline justify-between gap-4 font-heading text-[18px] font-bold leading-[1.3] tracking-[-0.01em] text-ink sm:text-[19px] [&::-webkit-details-marker]:hidden">
-                <span>{item.question}</span>
-                <span
-                  aria-hidden="true"
-                  className="shrink-0 text-[22px] leading-none text-ink-muted transition-transform group-open:rotate-45"
-                >
-                  +
-                </span>
-              </summary>
-              <p className="mt-3 max-w-[60ch] text-[16px] leading-[1.65] text-ink-tertiary sm:text-[17px]">
-                {item.answer}
-              </p>
-            </details>
-          </li>
-        ))}
-      </ul>
+      <FaqList items={items} />
     </CourseSection>
   );
 }
