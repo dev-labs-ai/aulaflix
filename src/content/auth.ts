@@ -1,4 +1,4 @@
-// Textos e regras das telas de autenticação.
+// Textos e regras das telas de autenticação (/entrar e /cadastrar).
 
 export const AUTH_CODE_LENGTH = 6;
 export const AUTH_CODE_TTL_MINUTES = 10;
@@ -6,6 +6,13 @@ export const AUTH_PASSWORD_MIN_LENGTH = 8;
 export const AUTH_RESEND_SECONDS = 60;
 
 export const authCopy = {
+  signIn: {
+    title: "Entrar",
+    submit: "Entrar",
+    forgotPassword: "Esqueci minha senha",
+    switchPrompt: "Ainda não tem conta?",
+    switchLink: "Criar conta",
+  },
   signUp: {
     title: "Criar conta",
     submit: "Criar conta",
@@ -55,6 +62,7 @@ export const authErrors = {
   nameRequired: "Informe seu nome.",
   emailRequired: "Informe seu e-mail.",
   emailInvalid: "Use um e-mail válido.",
+  passwordRequired: "Informe sua senha.",
   passwordTooShort: `A senha precisa ter pelo menos ${AUTH_PASSWORD_MIN_LENGTH} caracteres.`,
   passwordMismatch: "As senhas não são iguais.",
 };

@@ -32,7 +32,7 @@ O grupo `(site)` aplica header e rodapé; `/entrar` e `/cadastrar` ficam fora de
 - **Lista de cursos (título, resumo, status, ícone/capa):** `src/content/courses.ts`
 - **Conteúdo de cada curso (ementa, preços, FAQ):** `src/content/course-details/<slug>.ts`
 - **Home (depoimentos, FAQ, vídeos/artigos):** `src/content/home.ts`
-- **Cadastro (textos, mensagens de erro, regras de senha e código):** `src/content/auth.ts`
+- **Login e cadastro (textos, mensagens de erro, regras de senha e código):** `src/content/auth.ts`
 - **Cores, raios, fontes, animações:** `src/app/globals.css` (tokens `@theme` do Tailwind)
 - **Imagens:** `src/components/placeholders.tsx` gera os placeholders. Para usar uma capa real de curso, coloque o arquivo em `public/` e preencha `image` no curso em `courses.ts`.
 
