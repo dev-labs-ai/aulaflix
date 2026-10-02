@@ -2,12 +2,11 @@ import Link from "next/link";
 import { CourseList } from "@/components/course-list";
 import { FaqList } from "@/components/faq-list";
 import { MediaFeed } from "@/components/media-feed";
-import { PortraitPlaceholder } from "@/components/placeholders";
 import { TestimonialsCarousel } from "@/components/testimonials-carousel";
 import { ButtonLink, Eyebrow, Highlight, cn, container, focusRing, ringOffset } from "@/components/ui";
 import { onSaleCourses, waitlistCourses } from "@/content/courses";
-import { homeFaq, howItWorks, recentArticles, recentVideos, testimonials } from "@/content/home";
-import { instructor, substack, youtubeChannel } from "@/content/site";
+import { about, homeFaq, howItWorks, recentArticles, recentVideos, testimonials } from "@/content/home";
+import { site, substack, youtubeChannel } from "@/content/site";
 
 export default function HomePage() {
   return (
@@ -28,7 +27,7 @@ export default function HomePage() {
 function Hero() {
   return (
     <section aria-labelledby="hero-title" className={cn(container, "pt-20 pb-24 sm:pt-28 sm:pb-28 lg:pt-32 lg:pb-32")}>
-      <div className="lg:grid lg:grid-cols-12 lg:items-center lg:gap-x-12">
+      <div className="lg:grid lg:grid-cols-12 lg:gap-x-12">
         <div className="lg:col-span-8 lg:col-start-1">
           <p className="anim-hero font-mono text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-accent sm:text-[12px] sm:tracking-[0.16em]">
             Cursos de Engenharia de IA
@@ -50,57 +49,8 @@ function Hero() {
             </ButtonLink>
           </div>
         </div>
-
-        <div className="anim-hero anim-hero-delay-4 mt-14 lg:col-span-4 lg:col-start-9 lg:mt-0">
-          <figure className="relative">
-            <div className="relative aspect-4/5 w-full max-w-[360px] overflow-hidden rounded-md border border-line">
-              <PortraitPlaceholder label="Foto do instrutor" />
-            </div>
-            <figcaption className="mt-4 max-w-[320px] font-sans text-[14px] leading-[1.4] text-ink-secondary">
-              {instructor.heroCaption}
-            </figcaption>
-            <a
-              href={youtubeChannel.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={cn(
-                "group mt-3 flex max-w-[320px] flex-col gap-1.5 border-t border-line-subtle pt-3 font-mono uppercase tracking-[0.12em] text-ink-muted transition-colors hover:text-ink",
-                focusRing,
-                ringOffset.canvas,
-              )}
-            >
-              <span className="flex items-baseline gap-2 text-[11px]">
-                <span className="font-heading text-[18px] font-semibold normal-case tracking-[-0.01em] tabular-nums text-ink group-hover:text-ink-accent sm:text-[20px]">
-                  {youtubeChannel.subscribers}
-                </span>
-                <span>inscritos no YouTube</span>
-                <span aria-hidden="true" className="ml-auto text-ink-muted transition-transform group-hover:translate-x-0.5">
-                  ↗
-                </span>
-              </span>
-              <span className="flex flex-wrap items-baseline gap-x-2 gap-y-1 text-[10px] text-ink-muted">
-                <Stat value={youtubeChannel.views} label="visualizações" />
-                <span aria-hidden="true" className="text-ink-muted/60">
-                  ·
-                </span>
-                <Stat value={youtubeChannel.videos} label="vídeos" />
-              </span>
-            </a>
-          </figure>
-        </div>
       </div>
     </section>
-  );
-}
-
-function Stat({ value, label }: { value: string; label: string }) {
-  return (
-    <span className="inline-flex items-baseline gap-1.5">
-      <span className="font-mono text-[13px] font-medium normal-case tracking-[-0.005em] tabular-nums text-ink-tertiary transition-colors group-hover:text-ink sm:text-[14px]">
-        {value}
-      </span>
-      <span>{label}</span>
-    </span>
   );
 }
 
@@ -246,24 +196,19 @@ function AboutSection() {
     <section id="sobre" aria-labelledby="sobre-title" className="scroll-mt-20 bg-section">
       <div className={cn(container, "py-24 sm:py-32 lg:py-36")}>
         <div className="lg:grid lg:grid-cols-12 lg:gap-x-14">
-          <div className="reveal lg:col-span-5 lg:col-start-1">
-            <div className="relative aspect-4/5 w-full max-w-[440px] overflow-hidden rounded-md border border-line-subtle">
-              <PortraitPlaceholder label={`Retrato de ${instructor.name}`} />
-            </div>
-          </div>
-          <div className="reveal mt-12 lg:col-span-7 lg:col-start-7 lg:mt-0">
+          <header className="reveal lg:col-span-5 lg:col-start-1">
             <p className="font-mono text-[12px] font-semibold uppercase tracking-[0.18em] text-ink-muted">Sobre</p>
             <h2
               id="sobre-title"
               className="mt-6 font-heading text-[40px] leading-[1.04] font-semibold tracking-[-0.025em] text-ink sm:text-[56px] sm:leading-none lg:text-[64px]"
             >
-              {instructor.name}
+              {site.name}
             </h2>
-            <div className="mt-10 space-y-6 font-sans text-[17px] leading-[1.65] text-ink-secondary sm:text-[18px]">
-              {instructor.bio.map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
-              ))}
-            </div>
+          </header>
+          <div className="reveal mt-10 space-y-6 font-sans text-[17px] leading-[1.65] text-ink-secondary sm:text-[18px] lg:col-span-7 lg:col-start-6 lg:mt-0">
+            {about.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
           </div>
         </div>
       </div>

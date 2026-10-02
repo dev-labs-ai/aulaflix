@@ -13,8 +13,7 @@ export function SiteFooter() {
         <div className="space-y-4">
           <Logo size={18} offset="section" />
           <p className="max-w-[42ch] font-sans text-[14px] leading-[1.6] text-ink-tertiary">
-            Formação em Engenharia de IA por {instructor.name}. Aprenda como sistemas com IA são projetados,
-            construídos e avaliados.
+            {site.description}
           </p>
         </div>
 

@@ -1,30 +1,7 @@
 // Placeholders visuais para as imagens da referência. Troque por <Image> quando
 // houver fotos e capas próprias em /public.
-import { Newspaper, Play, UserRound, type LucideIcon } from "lucide-react";
+import { Newspaper, Play, type LucideIcon } from "lucide-react";
 import { cn } from "@/components/ui";
-
-/** Retrato do instrutor: estúdio escuro com luz azul. */
-export function PortraitPlaceholder({ label, className }: { label: string; className?: string }) {
-  return (
-    <div
-      role="img"
-      aria-label={label}
-      className={cn(
-        "absolute inset-0 flex items-end bg-[#0c0e14] bg-[radial-gradient(120%_80%_at_85%_10%,#2f3fff_0%,#1a1f6b_35%,transparent_70%),radial-gradient(90%_60%_at_10%_100%,#3b2a1f_0%,transparent_70%)]",
-        className,
-      )}
-    >
-      <UserRound
-        aria-hidden="true"
-        strokeWidth={1}
-        className="absolute left-1/2 top-[55%] size-[58%] -translate-x-1/2 -translate-y-1/2 text-white/25"
-      />
-      <span className="relative m-4 rounded-xs bg-black/40 px-2 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-white/70">
-        {label}
-      </span>
-    </div>
-  );
-}
 
 /** Capa de curso: gravura em tons de cinza com o ícone do tema. */
 export function CourseCoverPlaceholder({ icon: Icon }: { icon: LucideIcon }) {
