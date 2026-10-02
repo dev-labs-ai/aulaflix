@@ -56,9 +56,5 @@ export const sqlEModelagemDeDados: OnSaleCourseDetail = {
       question: "Preciso instalar alguma coisa?",
       answer: "Só o PostgreSQL, que é gratuito. O curso mostra como rodá-lo na sua máquina em poucos minutos, com ou sem Docker.",
     },
-    {
-      question: "E se o curso não for para mim?",
-      answer: "Você tem 7 dias de garantia. Se não gostar, é só pedir o reembolso dentro desse prazo.",
-    },
   ],
 };

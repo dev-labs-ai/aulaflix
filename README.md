@@ -18,6 +18,7 @@ pnpm lint
 | Rota | Arquivo |
 | --- | --- |
 | `/` | `src/app/(site)/page.tsx` |
+| `/como-funciona` | `src/app/(site)/como-funciona/page.tsx` |
 | `/cursos` (filtros `?area=` e `?situacao=a-venda\|em-breve`) | `src/app/(site)/cursos/page.tsx` |
 | `/cursos/[slug]` (7 cursos) | `src/app/(site)/cursos/[slug]/page.tsx` |
 | `/cursos/[slug]/comprar` (cursos à venda) | `src/app/(site)/cursos/[slug]/comprar/page.tsx` |
@@ -35,8 +36,9 @@ O grupo `(site)` aplica header e rodapé; as telas de autenticação (`/entrar`,
 
 - **Marca, título e descrição do site, menu:** `src/content/site.ts`
 - **Lista de cursos (título, área, resumo, status, ícone, cor, capa) e áreas do filtro do catálogo:** `src/content/courses.ts`
-- **Conteúdo de cada curso (ementa, aula grátis, preços, FAQ):** `src/content/course-details/<slug>.ts`. A aula marcada com `free: true` aparece no player da página do curso. O endereço de cada aula em `/aprender` sai do título (`lessonSlug` em `src/content/course-details/index.ts`).
-- **Home (passos de "Como funciona"):** `src/content/home.ts`. Os botões de área da lousa saem de `areas` em `src/content/courses.ts`, com os ícones de `areaIcons` em `src/components/placeholders.tsx`.
+- **Conteúdo de cada curso (ementa, aula grátis, preços, FAQ do curso):** `src/content/course-details/<slug>.ts`. A aula marcada com `free: true` aparece no player da página do curso. O endereço de cada aula em `/aprender` sai do título (`lessonSlug` em `src/content/course-details/index.ts`).
+- **Como funciona (passos, lista de espera e dúvidas que valem para todos os cursos):** `src/content/how-it-works.ts`. Cada passo tem o resumo da home (`summary`) e o texto da página `/como-funciona` (`details`). As dúvidas de um curso só ficam no `faq` dele; as que valem para todos, em `platformFaq`.
+- **Home:** os botões de área da lousa saem de `areas` em `src/content/courses.ts`, com os ícones de `areaIcons` em `src/components/placeholders.tsx`.
 - **Login, cadastro e redefinição de senha (textos, mensagens de erro, regras de senha e código):** `src/content/auth.ts`
 - **Cores, raios, sombras, animações:** `src/app/globals.css` (tokens `@theme` do Tailwind)
 - **Fontes:** `src/app/layout.tsx` (Bricolage Grotesque nos títulos, Atkinson Hyperlegible Next no texto)

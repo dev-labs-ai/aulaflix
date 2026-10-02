@@ -27,18 +27,9 @@ export const arquiteturaDeSoftware: WaitlistCourseDetail = {
   ],
   faq: [
     {
-      question: "Quando o curso será lançado?",
-      answer:
-        "Ainda não há data definida. Quem entra na lista de espera recebe um aviso por e-mail assim que as inscrições abrirem.",
-    },
-    {
       question: "O curso é só teoria?",
       answer:
         "Não. Cada conceito é aplicado na reestruturação de um sistema de exemplo, com o código disponível para você acompanhar.",
-    },
-    {
-      question: "Entrar na lista de espera tem algum custo?",
-      answer: "Não. A lista de espera é gratuita e não obriga você a comprar o curso quando ele for lançado.",
     },
   ],
 };

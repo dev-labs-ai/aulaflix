@@ -65,9 +65,5 @@ export const frontendComReact: OnSaleCourseDetail = {
       answer:
         "Sim. Os tipos entram aos poucos, sempre que ajudam a evitar erros, e não é preciso conhecer TypeScript antes.",
     },
-    {
-      question: "Por quanto tempo tenho acesso ao curso?",
-      answer: "O acesso é vitalício. Depois da compra, você pode assistir às aulas quantas vezes quiser, no seu ritmo.",
-    },
   ],
 };
