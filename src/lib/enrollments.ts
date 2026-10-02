@@ -1,7 +1,7 @@
-import { cookies } from "next/headers";
 import { courseLessons, getCourseDetail, type LessonEntry } from "@/content/course-details";
 import { courses, type Course } from "@/content/courses";
 import type { SessionUser } from "@/lib/auth";
+import { isRecord, readJsonCookie, writeJsonCookie } from "@/lib/cookie-store";
 
 // Protótipo: cursos e progresso iniciais fixos por conta, até existir um backend.
 // Por e-mail da conta: slug do curso → quantas aulas (as primeiras do curso) o aluno já concluiu.
@@ -20,28 +20,13 @@ const PROGRESS_COOKIE = "aulaflix_progress";
 
 type ProgressStore = Record<string, Record<string, string[]>>;
 
-const cookieOptions = {
-  httpOnly: true,
-  sameSite: "lax",
-  secure: process.env.NODE_ENV === "production",
-  path: "/",
-  maxAge: 60 * 60 * 24 * 365, // 1 ano
-} as const;
-
 async function readStore(): Promise<ProgressStore> {
-  const raw = (await cookies()).get(PROGRESS_COOKIE)?.value;
-  if (!raw) return {};
-  try {
-    const value = JSON.parse(Buffer.from(raw, "base64url").toString("utf8"));
-    return value && typeof value === "object" ? value : {};
-  } catch {
-    return {};
-  }
+  const value = await readJsonCookie(PROGRESS_COOKIE);
+  return isRecord(value) ? (value as ProgressStore) : {};
 }
 
 async function writeStore(store: ProgressStore) {
-  const raw = Buffer.from(JSON.stringify(store), "utf8").toString("base64url");
-  (await cookies()).set(PROGRESS_COOKIE, raw, cookieOptions);
+  await writeJsonCookie(PROGRESS_COOKIE, store);
 }
 
 export type Enrollment = {

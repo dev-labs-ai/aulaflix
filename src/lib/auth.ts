@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { isRecord, readJsonCookie, writeJsonCookie } from "@/lib/cookie-store";
 
 // Autenticação do protótipo, sem banco de dados: a conta de demonstração e, no máximo,
 // uma conta criada no cadastro, guardada num cookie deste navegador.
@@ -27,8 +28,6 @@ const cookieOptions = {
   maxAge: 60 * 60 * 24 * 7, // 7 dias
 } as const;
 
-const accountCookieOptions = { ...cookieOptions, maxAge: 60 * 60 * 24 * 365 }; // 1 ano
-
 export type SessionUser = {
   name: string;
   email: string;
@@ -41,24 +40,17 @@ type Account = SessionUser & { passwordHash: string };
 const hashPassword = (password: string) => createHash("sha256").update(password).digest("hex");
 const normalizeEmail = (email: string) => email.trim().toLowerCase();
 
-/** Conta criada neste navegador, guardada como JSON em base64url. */
+/** Conta criada neste navegador. */
 async function readCreatedAccount(): Promise<Account | null> {
-  const raw = (await cookies()).get(ACCOUNT_COOKIE)?.value;
-  if (!raw) return null;
-  try {
-    const value = JSON.parse(Buffer.from(raw, "base64url").toString("utf8"));
-    if (typeof value?.name !== "string" || typeof value?.email !== "string" || typeof value?.passwordHash !== "string") {
-      return null;
-    }
-    return { name: value.name, email: value.email, passwordHash: value.passwordHash, verified: value.verified === true };
-  } catch {
-    return null;
-  }
+  const value = await readJsonCookie(ACCOUNT_COOKIE);
+  if (!isRecord(value)) return null;
+  const { name, email, passwordHash, verified } = value;
+  if (typeof name !== "string" || typeof email !== "string" || typeof passwordHash !== "string") return null;
+  return { name, email, passwordHash, verified: verified === true };
 }
 
 async function writeCreatedAccount(account: Account) {
-  const raw = Buffer.from(JSON.stringify(account), "utf8").toString("base64url");
-  (await cookies()).set(ACCOUNT_COOKIE, raw, accountCookieOptions);
+  await writeJsonCookie(ACCOUNT_COOKIE, account);
 }
 
 /** A conta com esse e-mail: a de demonstração ou a criada neste navegador. */
