@@ -83,7 +83,6 @@ export const settingsCopy = {
   changePassword: "Trocar senha",
   codeSent: (email: string) => ["Digite o código que mandamos para ", email, " e escolha a nova senha."] as const,
   savePassword: "Salvar nova senha",
-  passwordSavedNotice:
-    "Protótipo: senha salva só nesta simulação. O login continua com a senha da conta de demonstração.",
+  passwordSavedNotice: "Protótipo: a senha não foi trocada de verdade. Continue entrando com a senha atual.",
   nameTooLong: "Use no máximo 80 caracteres.",
 };
