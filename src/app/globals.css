@@ -112,7 +112,7 @@ body {
     opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
     transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.reveal.is-visible {
+.reveal[data-visible] {
   opacity: 1;
   transform: translateY(0);
 }
@@ -124,38 +124,38 @@ body {
     opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
     transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.reveal-stagger.is-visible > * {
+.reveal-stagger[data-visible] > * {
   opacity: 1;
   transform: translateY(0);
 }
-.reveal-stagger.is-visible > :nth-child(2) {
+.reveal-stagger[data-visible] > :nth-child(2) {
   transition-delay: 60ms;
 }
-.reveal-stagger.is-visible > :nth-child(3) {
+.reveal-stagger[data-visible] > :nth-child(3) {
   transition-delay: 110ms;
 }
-.reveal-stagger.is-visible > :nth-child(4) {
+.reveal-stagger[data-visible] > :nth-child(4) {
   transition-delay: 160ms;
 }
-.reveal-stagger.is-visible > :nth-child(5) {
+.reveal-stagger[data-visible] > :nth-child(5) {
   transition-delay: 210ms;
 }
-.reveal-stagger.is-visible > :nth-child(6) {
+.reveal-stagger[data-visible] > :nth-child(6) {
   transition-delay: 260ms;
 }
-.reveal-stagger.is-visible > :nth-child(7) {
+.reveal-stagger[data-visible] > :nth-child(7) {
   transition-delay: 300ms;
 }
-.reveal-stagger.is-visible > :nth-child(8) {
+.reveal-stagger[data-visible] > :nth-child(8) {
   transition-delay: 335ms;
 }
-.reveal-stagger.is-visible > :nth-child(9) {
+.reveal-stagger[data-visible] > :nth-child(9) {
   transition-delay: 370ms;
 }
-.reveal-stagger.is-visible > :nth-child(10) {
+.reveal-stagger[data-visible] > :nth-child(10) {
   transition-delay: 400ms;
 }
-.reveal-stagger.is-visible > :nth-child(n + 11) {
+.reveal-stagger[data-visible] > :nth-child(n + 11) {
   transition-delay: 430ms;
 }
 
