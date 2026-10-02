@@ -22,7 +22,7 @@ export default function CursosPage() {
               >
                 Todos os cursos.
               </h1>
-              <p className="mt-6 max-w-[60ch] font-sans text-[17px] leading-[1.6] text-ink-tertiary sm:text-[18px]">
+              <p className="mt-6 max-w-[70ch] text-pretty font-sans text-[17px] leading-[1.6] text-ink-tertiary sm:text-[18px]">
                 Conheça os cursos do {site.name}: os que já estão à venda e os que estão chegando.
               </p>
             </header>
