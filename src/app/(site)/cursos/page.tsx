@@ -20,10 +20,10 @@ export default function CursosPage() {
                 id="cursos-title"
                 className="mt-5 font-heading text-[40px] font-semibold leading-[1.06] tracking-[-0.025em] text-ink sm:text-[56px] sm:leading-[1.02] lg:text-[64px]"
               >
-                A grade completa.
+                Todos os cursos.
               </h1>
               <p className="mt-6 max-w-[60ch] font-sans text-[17px] leading-[1.6] text-ink-tertiary sm:text-[18px]">
-                Todos os cursos que compõem a formação em Engenharia de IA do {site.name}.
+                Conheça os cursos do {site.name}: os que já estão à venda e os que estão chegando.
               </p>
             </header>
           </div>
@@ -41,7 +41,7 @@ export default function CursosPage() {
       <CourseGroup
         id="group-waitlist"
         eyebrow="Inscreva-se na lista de espera."
-        title="Listas abertas"
+        title="Em breve"
         courses={waitlistCourses}
         className="pb-24 pt-16 sm:pb-32 sm:pt-20"
       />

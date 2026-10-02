@@ -2,7 +2,7 @@ import { Check } from "lucide-react";
 import { BuyButton } from "@/components/curso/buy-button";
 import type { CoursePricing } from "@/content/course-details";
 
-const perks = ["Curso completo, com skills e materiais", "Acesso vitalício", "Garantia de 7 dias"];
+const perks = ["Curso completo, com materiais de apoio", "Acesso vitalício", "Garantia de 7 dias"];
 
 /** "R$ 1.797" para valores inteiros, "R$ 179,70" para valores com centavos. */
 function brl(value: number) {

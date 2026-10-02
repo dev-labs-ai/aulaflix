@@ -1,32 +1,24 @@
-// Conteúdo das páginas de curso (/cursos/[slug]), extraído da referência.
+// Conteúdo das páginas de curso (/cursos/[slug]).
 // Título, resumo e status ficam em src/content/courses.ts.
-import { harnessEngineering } from "./harness-engineering";
-import { programacaoAgentica } from "./programacao-agentica";
-import { fundamentosDaEngenhariaDeIa } from "./fundamentos-da-engenharia-de-ia";
-import { orquestracaoDeAgentes } from "./orquestracao-de-agentes";
-import { assistentesPessoaisComIa } from "./assistentes-pessoais-com-ia";
-import { segundoCerebroComObsidian } from "./segundo-cerebro-com-obsidian";
-import { vibeCodingParaProfissionais } from "./vibe-coding-para-profissionais";
-import { dominandoCodex } from "./dominando-codex";
-import { dominandoClaudeCode } from "./dominando-claude-code";
-import { dominandoAgentSkills } from "./dominando-agent-skills";
-import { automacaoComIa } from "./automacao-com-ia";
+import { programacaoDoZero } from "./programacao-do-zero";
+import { designDeInterfaces } from "./design-de-interfaces";
+import { analiseDeDadosComPlanilhas } from "./analise-de-dados-com-planilhas";
+import { desenvolvimentoWeb } from "./desenvolvimento-web";
+import { marketingDigital } from "./marketing-digital";
+import { fotografiaComCelular } from "./fotografia-com-celular";
+import { financasPessoais } from "./financas-pessoais";
 import type { CourseDetail } from "./types";
 
 export type * from "./types";
 
 export const courseDetails: Record<string, CourseDetail> = {
-  "harness-engineering": harnessEngineering,
-  "programacao-agentica": programacaoAgentica,
-  "fundamentos-da-engenharia-de-ia": fundamentosDaEngenhariaDeIa,
-  "orquestracao-de-agentes": orquestracaoDeAgentes,
-  "assistentes-pessoais-com-ia": assistentesPessoaisComIa,
-  "segundo-cerebro-com-obsidian": segundoCerebroComObsidian,
-  "vibe-coding-para-profissionais": vibeCodingParaProfissionais,
-  "dominando-codex": dominandoCodex,
-  "dominando-claude-code": dominandoClaudeCode,
-  "dominando-agent-skills": dominandoAgentSkills,
-  "automacao-com-ia": automacaoComIa,
+  "programacao-do-zero": programacaoDoZero,
+  "design-de-interfaces": designDeInterfaces,
+  "analise-de-dados-com-planilhas": analiseDeDadosComPlanilhas,
+  "desenvolvimento-web": desenvolvimentoWeb,
+  "marketing-digital": marketingDigital,
+  "fotografia-com-celular": fotografiaComCelular,
+  "financas-pessoais": financasPessoais,
 };
 
 export function getCourseDetail(slug: string): CourseDetail | undefined {

@@ -29,7 +29,7 @@ const pad = (n: number) => String(n).padStart(2, "0");
 
 export function WhySection({ paragraphs }: { paragraphs: string[] }) {
   return (
-    <CourseSection title="Por que este curso existe">
+    <CourseSection title="Sobre o curso">
       <div className="space-y-5 font-sans text-[17px] leading-[1.65] text-ink-secondary sm:text-[18px]">
         {paragraphs.map((p) => (
           <p key={p}>{p}</p>
@@ -59,7 +59,7 @@ export function LearnSection({ items }: { items: string[] }) {
 
 export function AudienceSection({ items }: { items: string[] }) {
   return (
-    <CourseSection title="Pra quem é este curso">
+    <CourseSection title="Para quem é">
       <ul className="space-y-3">
         {items.map((item) => (
           <li

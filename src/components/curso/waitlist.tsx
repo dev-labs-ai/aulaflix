@@ -36,11 +36,10 @@ export function WaitlistCard({ courseTitle }: { courseTitle: string }) {
         <>
           <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-accent">Lista de espera</p>
           <p className="mt-4 font-heading text-[20px] font-semibold leading-[1.2] tracking-[-0.012em] text-ink sm:text-[22px]">
-            Entre na lista deste curso.
+            Seja avisado do lançamento.
           </p>
           <p className="mt-3 font-sans text-[13px] leading-[1.55] text-ink-tertiary">
-            Você recebe as próximas atualizações por e-mail e ajuda a mostrar quais temas devem entrar primeiro em
-            produção.
+            Entre na lista de espera e receba um e-mail quando as inscrições abrirem.
           </p>
           <div className="mt-6">
             <WaitlistForm />
@@ -253,8 +252,8 @@ function WaitlistConfirmed({ name, email, courseTitle }: Submission & { courseTi
           styles.delayBody,
         )}
       >
-        Registrei seu interesse em <span className="text-ink">{courseTitle}</span>. Vou enviar as próximas atualizações
-        para <span className={cn("font-mono text-[13.5px] text-ink", styles.email)}>{email}</span>.
+        Registramos seu interesse em <span className="text-ink">{courseTitle}</span>. Vamos avisar você em{" "}
+        <span className={cn("font-mono text-[13.5px] text-ink", styles.email)}>{email}</span> quando as inscrições abrirem.
       </p>
     </output>
   );

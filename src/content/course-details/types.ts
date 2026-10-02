@@ -21,11 +21,11 @@ export type CoursePricing = {
 export type FaqEntry = { question: string; answer: string };
 
 type CourseDetailBase = {
-  /** Parágrafos de "Por que este curso existe". */
+  /** Parágrafos de "Sobre o curso". */
   why: string[];
   /** Itens numerados de "O que você vai aprender". */
   learn: string[];
-  /** Itens de "Pra quem é este curso". */
+  /** Itens de "Para quem é". */
   audience: string[];
   faq: FaqEntry[];
 };
