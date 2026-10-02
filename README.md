@@ -23,8 +23,9 @@ pnpm lint
 | `/privacidade` | `src/app/(site)/privacidade/page.tsx` |
 | `/entrar` | `src/app/entrar/page.tsx` (sem header/rodapé) |
 | `/cadastrar` | `src/app/cadastrar/page.tsx` (sem header/rodapé) |
+| `/redefinir-senha` | `src/app/redefinir-senha/page.tsx` (sem header/rodapé) |
 
-O grupo `(site)` aplica header e rodapé; `/entrar` e `/cadastrar` ficam fora dele.
+O grupo `(site)` aplica header e rodapé; as telas de autenticação (`/entrar`, `/cadastrar`, `/redefinir-senha`) ficam fora dele.
 
 ## Onde mudar as coisas
 
@@ -32,10 +33,10 @@ O grupo `(site)` aplica header e rodapé; `/entrar` e `/cadastrar` ficam fora de
 - **Lista de cursos (título, resumo, status, ícone/capa):** `src/content/courses.ts`
 - **Conteúdo de cada curso (ementa, preços, FAQ):** `src/content/course-details/<slug>.ts`
 - **Home (depoimentos, FAQ, vídeos/artigos):** `src/content/home.ts`
-- **Login e cadastro (textos, mensagens de erro, regras de senha e código):** `src/content/auth.ts`
+- **Login, cadastro e redefinição de senha (textos, mensagens de erro, regras de senha e código):** `src/content/auth.ts`
 - **Cores, raios, fontes, animações:** `src/app/globals.css` (tokens `@theme` do Tailwind)
 - **Imagens:** `src/components/placeholders.tsx` gera os placeholders. Para usar uma capa real de curso, coloque o arquivo em `public/` e preencha `image` no curso em `courses.ts`.
 
 ## Limitações do protótipo
 
-Formulários (login, cadastro, compra, lista de espera) são só visuais: validam no navegador e mostram um estado de confirmação, mas não enviam nada. No cadastro, a etapa de confirmação aceita qualquer código de 6 dígitos. `/redefinir-senha` ainda não existe.
+Formulários (login, cadastro, redefinição de senha, compra, lista de espera) são só visuais: validam no navegador e mostram um estado de confirmação, mas não enviam nada. No cadastro e na redefinição de senha, qualquer código de 6 dígitos é aceito.

@@ -1,4 +1,4 @@
-// Textos e regras das telas de autenticação (/entrar e /cadastrar).
+// Textos e regras das telas de autenticação (/entrar, /cadastrar e /redefinir-senha).
 
 export const AUTH_CODE_LENGTH = 6;
 export const AUTH_CODE_TTL_MINUTES = 10;
@@ -28,6 +28,15 @@ export const authCopy = {
     wrongEmail: "E-mail errado?",
     changeEmail: "Corrigir e-mail",
   },
+  forgot: {
+    title: "Redefina sua senha",
+    submit: "Enviar código",
+  },
+  reset: {
+    title: "Crie uma nova senha",
+    body: (email: string) => ["Enviamos um código para ", email, "."] as const,
+    submit: "Salvar senha e entrar",
+  },
   back: "Voltar",
   divider: "ou",
   google: "Continuar com Google",
@@ -39,6 +48,8 @@ export const authCopy = {
     emailPlaceholder: "seu@email.com",
     password: "Senha",
     confirmPassword: "Confirmar senha",
+    newPassword: "Nova senha",
+    confirmNewPassword: "Confirmar nova senha",
     passwordHint: `Use pelo menos ${AUTH_PASSWORD_MIN_LENGTH} caracteres.`,
     code: "Código",
     codeGroup: `Código de ${AUTH_CODE_LENGTH} dígitos`,
@@ -54,6 +65,7 @@ export const authCopy = {
   prototype: {
     unavailable: "Protótipo: a autenticação ainda não está disponível.",
     verified: "Protótipo: código aceito. Com o backend conectado, a conta seria criada e você já entraria.",
+    passwordSaved: "Protótipo: senha redefinida. Com o backend conectado, você já entraria na sua conta.",
     goHome: "Ir para a página inicial",
   },
 };
