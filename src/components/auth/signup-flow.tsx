@@ -11,6 +11,7 @@ import {
   BackLink,
   Emphasis,
   PrototypeNotice,
+  ResendCode,
   fieldLabelClass,
   inlineLinkClass,
   submitButtonClass,
@@ -192,25 +193,7 @@ function EmailCodeStep({ email, onChangeEmail }: { email: string; onChangeEmail:
             {authCopy.verify.submit}
           </button>
         </form>
-        {status !== "verified" && (
-          <div className="flex flex-col gap-0.5">
-            <p className="font-sans text-[14px] leading-[22px] text-ink-tertiary">{authCopy.resend.notReceived}</p>
-            <button
-              type="button"
-              onClick={resend}
-              disabled={countdown.remaining > 0}
-              className="self-start rounded-sm font-sans text-[14px] font-semibold leading-[22px] text-ink-accent hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:cursor-default disabled:text-ink-muted disabled:no-underline"
-            >
-              {countdown.remaining > 0 ? (
-                <>
-                  {authCopy.resend.countdown} <span className="font-mono text-[13px]">{countdown.label}</span>
-                </>
-              ) : (
-                authCopy.resend.action
-              )}
-            </button>
-          </div>
-        )}
+        {status !== "verified" && <ResendCode countdown={countdown} onResend={resend} />}
       </AuthCard>
       <AuthSwitch prompt={authCopy.verify.wrongEmail}>
         <button type="button" onClick={onChangeEmail} className={inlineLinkClass}>

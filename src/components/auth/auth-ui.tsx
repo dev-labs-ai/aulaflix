@@ -128,6 +128,35 @@ export function Emphasis({ parts, inherit = false }: { parts: readonly [string, 
   );
 }
 
+/** "Não chegou?" + botão de reenvio, bloqueado enquanto a contagem não zera. */
+export function ResendCode({
+  countdown,
+  onResend,
+}: {
+  countdown: { remaining: number; label: string };
+  onResend: () => void;
+}) {
+  return (
+    <div className="flex flex-col gap-0.5">
+      <p className="font-sans text-[14px] leading-[22px] text-ink-tertiary">{authCopy.resend.notReceived}</p>
+      <button
+        type="button"
+        onClick={onResend}
+        disabled={countdown.remaining > 0}
+        className="self-start rounded-sm font-sans text-[14px] font-semibold leading-[22px] text-ink-accent hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:cursor-default disabled:text-ink-muted disabled:no-underline"
+      >
+        {countdown.remaining > 0 ? (
+          <>
+            {authCopy.resend.countdown} <span className="font-mono text-[13px]">{countdown.label}</span>
+          </>
+        ) : (
+          authCopy.resend.action
+        )}
+      </button>
+    </div>
+  );
+}
+
 export function AuthSwitch({ prompt, children }: { prompt: string; children: ReactNode }) {
   return (
     <p className="font-sans text-[14px] leading-[22px] text-ink-tertiary">
