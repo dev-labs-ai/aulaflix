@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { CourseCoverPlaceholder, courseIcons, toneClasses } from "@/components/placeholders";
-import { Badge, cn, focusRing, ringOffset } from "@/components/ui";
+import { cn, focusRing, ringOffset } from "@/components/ui";
 import { getCourseDetail } from "@/content/course-details";
-import { areaLabel, statusLabel, type Course } from "@/content/courses";
+import { areaLabel, type Course } from "@/content/courses";
 import { brl } from "@/lib/format";
 
 /** Capa do curso: a imagem própria, quando houver, ou o placeholder na cor do curso. */
@@ -82,48 +82,6 @@ export function CourseCards({
                   </p>
                 )}
               </div>
-            </Link>
-          </li>
-        );
-      })}
-    </ul>
-  );
-}
-
-/** Cursos em lista de espera: linhas com o ícone na cor do curso e o selo de status. */
-export function CourseRows({ courses, label, className }: { courses: Course[]; label: string; className?: string }) {
-  return (
-    <ul aria-label={label} className={cn("border-y border-line", className)}>
-      {courses.map((course) => {
-        const Icon = courseIcons[course.icon];
-        const tone = toneClasses[course.tone];
-        return (
-          <li key={course.slug} className="border-b border-line last:border-b-0">
-            <Link
-              href={`/cursos/${course.slug}`}
-              className={cn(
-                "group grid grid-cols-[48px_minmax(0,1fr)] items-start gap-x-5 gap-y-3 py-6 sm:grid-cols-[56px_minmax(0,1fr)_auto] sm:items-center sm:gap-x-8 sm:py-8",
-                focusRing,
-                ringOffset.canvas,
-              )}
-            >
-              <span
-                aria-hidden="true"
-                className={cn("flex size-12 items-center justify-center rounded-card sm:size-14", tone.soft, tone.ink)}
-              >
-                <Icon className="size-6" strokeWidth={1.75} />
-              </span>
-              <div className="min-w-0">
-                <h3 className="font-heading text-[20px] font-bold leading-[1.2] tracking-[-0.015em] text-ink transition-colors group-hover:text-ink-accent sm:text-[24px]">
-                  {course.title}
-                </h3>
-                <p className="mt-1.5 max-w-[62ch] text-[15px] leading-[1.6] text-ink-tertiary sm:text-[16px]">
-                  {course.summary}
-                </p>
-              </div>
-              <Badge className="col-start-2 justify-self-start sm:col-start-3 sm:justify-self-end">
-                {statusLabel[course.status]}
-              </Badge>
             </Link>
           </li>
         );

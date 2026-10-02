@@ -36,7 +36,7 @@ O grupo `(site)` aplica header e rodapé; as telas de autenticação (`/entrar`,
 - **Marca, título e descrição do site, menu:** `src/content/site.ts`
 - **Lista de cursos (título, área, resumo, status, ícone, cor, capa) e áreas do filtro do catálogo:** `src/content/courses.ts`
 - **Conteúdo de cada curso (ementa, aula grátis, preços, FAQ):** `src/content/course-details/<slug>.ts`. A aula marcada com `free: true` aparece no player da página do curso. O endereço de cada aula em `/aprender` sai do título (`lessonSlug` em `src/content/course-details/index.ts`).
-- **Home (texto da seção Sobre):** `src/content/home.ts`
+- **Home (passos de "Como funciona"):** `src/content/home.ts`. Os botões de área da lousa saem de `areas` em `src/content/courses.ts`, com os ícones de `areaIcons` em `src/components/placeholders.tsx`.
 - **Login, cadastro e redefinição de senha (textos, mensagens de erro, regras de senha e código):** `src/content/auth.ts`
 - **Cores, raios, sombras, animações:** `src/app/globals.css` (tokens `@theme` do Tailwind)
 - **Fontes:** `src/app/layout.tsx` (Bricolage Grotesque nos títulos, Atkinson Hyperlegible Next no texto)
@@ -47,7 +47,7 @@ O grupo `(site)` aplica header e rodapé; as telas de autenticação (`/entrar`,
 
 Direção "Lousa": a sala de aula como referência. Fundo de papel, texto em grafite e verde de quadro-negro como cor principal.
 
-- **Lousa:** painel verde com a régua de madeira embaixo (`Board` em `src/components/ui.tsx`), usado no topo da home e da página de curso, onde ficam o título, o preço e o botão de compra. Os títulos aparecem como se fossem escritos a giz.
+- **Lousa:** painel verde com a régua de madeira embaixo (`Board` em `src/components/ui.tsx`), usado no topo da home (com os botões de área, que abrem o catálogo filtrado), da página de curso (com o título, o preço e o botão de compra) e no "Continuar de onde parou" de Meus cursos. Os títulos aparecem como se fossem escritos a giz.
 - **Fichas pautadas:** os cursos são fichas com linhas a cada 28px (`pautado`) e uma faixa no topo na cor do curso (`tone` em `courses.ts`: coral, amarelo ou sálvia). Nos cursos em lista de espera, a faixa é tracejada (`tracejado`).
 - **Giz amarelo:** botão principal sobre a lousa, avatar, marcadores e selos de destaque.
 

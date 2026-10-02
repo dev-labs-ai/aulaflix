@@ -38,11 +38,6 @@ export type Course = {
   image?: string;
 };
 
-export const statusLabel: Record<CourseStatus, string> = {
-  "on-sale": "À venda",
-  waitlist: "Lista de espera",
-};
-
 export const courses: Course[] = [
   {
     slug: "programacao-do-zero",

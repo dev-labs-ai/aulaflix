@@ -1,8 +1,17 @@
 // Conteúdo da página inicial.
 
-/** Texto da seção Sobre. */
-export const about = [
-  "O Aulaflix é uma plataforma de cursos online para quem quer aprender algo novo ou se aprofundar no que já faz. Os cursos são divididos em módulos curtos, com aulas em vídeo e materiais de apoio.",
-  "Cada curso é independente: você escolhe os temas que fazem sentido para você, sem assinatura e sem uma ordem obrigatória.",
-  "Depois da compra, o curso é seu para sempre. Os cursos que ainda estão em produção ficam em lista de espera, e quem se inscreve é avisado por e-mail no lançamento.",
+/** Os passos de "Como funciona", da escolha do curso ao estudo. */
+export const howItWorks = [
+  {
+    title: "Escolha o que aprender",
+    body: "Cada curso é independente. Escolha pelo tema, leia a ementa e assista à aula grátis antes de decidir.",
+  },
+  {
+    title: "Compre uma vez",
+    body: "Sem assinatura: você paga o curso uma vez, no Pix ou em até 10x no cartão, e ele fica seu para sempre.",
+  },
+  {
+    title: "Estude no seu ritmo",
+    body: "Assista quando quiser, marque as aulas concluídas e volte de onde parou, no computador ou no celular.",
+  },
 ];
