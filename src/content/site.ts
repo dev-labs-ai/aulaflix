@@ -22,19 +22,8 @@ export const instructor = {
   name: "Instrutor",
 };
 
-export const youtubeChannel = {
-  name: "QuantBrasil",
-  href: "https://www.youtube.com/@quantbrasil",
-};
-
-export const substack = {
-  name: "Code Capital",
-  href: "https://codecapital.substack.com",
-};
-
 export const footerNav = [
   { label: "Cursos", href: "/cursos" },
-  { label: "Como funciona", href: "/#como-funciona" },
   { label: "Sobre", href: "/#sobre" },
 ];
 

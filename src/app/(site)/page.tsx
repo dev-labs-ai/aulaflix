@@ -1,25 +1,17 @@
 import Link from "next/link";
 import { CourseList } from "@/components/course-list";
-import { FaqList } from "@/components/faq-list";
-import { MediaFeed } from "@/components/media-feed";
-import { TestimonialsCarousel } from "@/components/testimonials-carousel";
 import { ButtonLink, Eyebrow, Highlight, cn, container, focusRing, ringOffset } from "@/components/ui";
 import { onSaleCourses, waitlistCourses } from "@/content/courses";
-import { about, homeFaq, howItWorks, recentArticles, recentVideos, testimonials } from "@/content/home";
-import { site, substack, youtubeChannel } from "@/content/site";
+import { about } from "@/content/home";
+import { site } from "@/content/site";
 
 export default function HomePage() {
   return (
     <>
       <Hero />
       <OnSaleSection />
-      <TestimonialsSection />
       <WaitlistSection />
-      <HowItWorksSection />
       <AboutSection />
-      <PublicWorkSection />
-      <FaqSection />
-      <FinalCta />
     </>
   );
 }
@@ -80,31 +72,6 @@ function OnSaleSection() {
   );
 }
 
-function TestimonialsSection() {
-  return (
-    <section aria-labelledby="testimonials-title" className="bg-canvas">
-      <div className={cn(container, "py-24 sm:py-28")}>
-        <div className="reveal">
-          <header className="lg:grid lg:grid-cols-12 lg:gap-x-12">
-            <div className="lg:col-span-9 lg:col-start-1">
-              <Eyebrow>Comentários públicos no YouTube</Eyebrow>
-              <h2
-                id="testimonials-title"
-                className="mt-5 font-heading text-[32px] leading-[1.1] font-semibold tracking-[-0.02em] text-ink sm:text-[44px] sm:leading-[1.06]"
-              >
-                O que dizem sobre o que eu venho ensinando.
-              </h2>
-            </div>
-          </header>
-        </div>
-        <div className="reveal">
-          <TestimonialsCarousel items={testimonials} />
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function WaitlistSection() {
   return (
     <section id="cursos" aria-labelledby="cursos-title" className={cn(container, "scroll-mt-20 py-20 sm:py-28 lg:py-32")}>
@@ -149,48 +116,6 @@ function WaitlistSection() {
   );
 }
 
-function HowItWorksSection() {
-  return (
-    <section id="como-funciona" aria-labelledby="como-funciona-title" className="scroll-mt-20">
-      <div className={cn(container, "py-20 sm:py-28 lg:py-32")}>
-        <div className="lg:grid lg:grid-cols-12 lg:gap-x-12">
-          <div className="reveal lg:col-span-9 lg:col-start-2">
-            <header>
-              <Eyebrow>Por dentro</Eyebrow>
-              <h2
-                id="como-funciona-title"
-                className="mt-5 font-heading text-[32px] leading-[1.1] font-semibold tracking-[-0.02em] text-ink sm:text-[42px] sm:leading-[1.08]"
-              >
-                Como a formação funciona
-              </h2>
-            </header>
-          </div>
-          <div className="reveal mt-12 border-y border-line lg:col-span-10 lg:col-start-2 lg:mt-16">
-            <dl className="grid grid-cols-1 lg:grid-cols-2">
-              {howItWorks.map((item, i) => (
-                <div
-                  key={item.term}
-                  className={cn(
-                    "py-8 sm:py-9 lg:py-11",
-                    i % 2 === 0 ? "lg:pr-10" : "lg:border-l lg:border-line lg:pl-10",
-                    i > 0 && "border-t border-line",
-                    i === 1 && "lg:border-t-0",
-                  )}
-                >
-                  <dt className="font-mono text-[12px] font-semibold uppercase tracking-[0.16em] text-ink-accent">{item.term}</dt>
-                  <dd className="mt-3 max-w-[46ch] font-sans text-[16px] leading-[1.6] text-ink-secondary sm:mt-4 sm:text-[17px]">
-                    {item.description}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function AboutSection() {
   return (
     <section id="sobre" aria-labelledby="sobre-title" className="scroll-mt-20 bg-section">
@@ -209,96 +134,6 @@ function AboutSection() {
             {about.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function PublicWorkSection() {
-  return (
-    <section aria-labelledby="trabalho-title" className="scroll-mt-20">
-      <div className={cn(container, "py-24 sm:py-32 lg:py-36")}>
-        <div className="reveal lg:grid lg:grid-cols-12 lg:gap-x-12">
-          <header className="lg:col-span-9 lg:col-start-1">
-            <Eyebrow>Trabalho público</Eyebrow>
-            <h2
-              id="trabalho-title"
-              className="mt-5 font-heading text-[32px] leading-[1.1] font-semibold tracking-[-0.02em] text-ink sm:text-[44px] sm:leading-[1.06]"
-            >
-              Vídeos e artigos recentes.
-            </h2>
-          </header>
-        </div>
-        <MediaFeed
-          className="mt-14 sm:mt-16"
-          source="YouTube"
-          name={youtubeChannel.name}
-          linkLabel="Ver o canal"
-          href={youtubeChannel.href}
-          items={recentVideos}
-          kind="video"
-        />
-        <MediaFeed
-          className="mt-20 sm:mt-24"
-          source="Substack"
-          name={substack.name}
-          linkLabel="Ver o Substack"
-          href={substack.href}
-          items={recentArticles}
-          kind="article"
-        />
-      </div>
-    </section>
-  );
-}
-
-function FaqSection() {
-  return (
-    <section id="faq" aria-labelledby="faq-title" className="scroll-mt-20 bg-section">
-      <div className={cn(container, "py-24 sm:py-32")}>
-        <div className="lg:grid lg:grid-cols-12 lg:gap-x-12">
-          <div className="reveal lg:col-span-4 lg:col-start-1">
-            <header className="lg:sticky lg:top-24">
-              <Eyebrow>FAQ</Eyebrow>
-              <h2
-                id="faq-title"
-                className="mt-5 font-heading text-[32px] leading-[1.1] font-semibold tracking-[-0.02em] text-ink sm:text-[40px] sm:leading-[1.06]"
-              >
-                Dúvidas frequentes.
-              </h2>
-            </header>
-          </div>
-          <div className="reveal mt-10 lg:col-span-7 lg:col-start-6 lg:mt-0">
-            <FaqList items={homeFaq} />
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function FinalCta() {
-  return (
-    <section aria-labelledby="final-cta-title" className="border-t border-line-accent bg-surface-muted">
-      <div className={cn(container, "py-24 sm:py-32 lg:py-36")}>
-        <div className="reveal lg:grid lg:grid-cols-12 lg:gap-x-12">
-          <div className="lg:col-span-9 lg:col-start-1">
-            <p className="font-mono text-[12px] font-semibold uppercase tracking-[0.18em] text-ink-accent">
-              Acesso vitalício
-            </p>
-            <h2
-              id="final-cta-title"
-              className="mt-5 font-heading text-[36px] leading-[1.04] font-semibold tracking-[-0.02em] text-ink sm:text-[48px] sm:leading-[1.04] lg:text-[56px]"
-            >
-              Compre uma vez, assista quantas vezes quiser.
-            </h2>
-            <div className="mt-10">
-              <ButtonLink href="/cursos" offset="muted">
-                Ver os cursos
-              </ButtonLink>
-            </div>
           </div>
         </div>
       </div>

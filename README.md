@@ -31,7 +31,7 @@ O grupo `(site)` aplica header e rodapé; as telas de autenticação (`/entrar`,
 - **Marca, menu, rodapé, redes, instrutor:** `src/content/site.ts`
 - **Lista de cursos (título, resumo, status, ícone/capa):** `src/content/courses.ts`
 - **Conteúdo de cada curso (ementa, preços, FAQ):** `src/content/course-details/<slug>.ts`
-- **Home (depoimentos, FAQ, vídeos/artigos):** `src/content/home.ts`
+- **Home (texto da seção Sobre):** `src/content/home.ts`
 - **Login, cadastro e redefinição de senha (textos, mensagens de erro, regras de senha e código):** `src/content/auth.ts`
 - **Cores, raios, fontes, animações:** `src/app/globals.css` (tokens `@theme` do Tailwind)
 - **Imagens:** `src/components/placeholders.tsx` gera os placeholders. Para usar uma capa real de curso, coloque o arquivo em `public/` e preencha `image` no curso em `courses.ts`.

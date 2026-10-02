@@ -97,25 +97,4 @@ export function ButtonLink({
   );
 }
 
-/** Link de texto sublinhado usado nos cabeçalhos de lista ("Ver o canal ↗"). */
-export function UnderlineLink({ href, children }: { href: string; children: ReactNode }) {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={cn(
-        "inline-flex items-center gap-1.5 font-sans text-[14px] font-medium text-ink underline decoration-line-strong decoration-2 underline-offset-[6px] transition-colors hover:decoration-ink",
-        focusRing,
-        ringOffset.canvas,
-      )}
-    >
-      {children}
-      <span aria-hidden="true" className="font-mono text-[12px] text-ink-muted">
-        ↗
-      </span>
-    </a>
-  );
-}
-
 export { focusRing };
