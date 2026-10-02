@@ -14,7 +14,7 @@ export const howItWorksCopy = {
 export const howItWorksSteps = [
   {
     title: "Escolha o que aprender",
-    summary: "Cada curso é independente. Escolha pelo tema, leia a ementa e assista à aula grátis antes de decidir.",
+    summary: "Cada curso é independente. Escolha pela área, leia a ementa e assista à aula grátis antes de decidir.",
     details:
       "Cada curso é independente: não há pacote nem trilha obrigatória. No catálogo, você filtra por área e vê o que já está à venda e o que está chegando. Nos cursos à venda, a página mostra a ementa completa, com a duração de cada aula, e uma aula grátis para assistir ali mesmo, sem precisar de conta.",
   },

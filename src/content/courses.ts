@@ -1,25 +1,26 @@
-// Catálogo de exemplo: cursos genéricos para o protótipo.
+// Catálogo de exemplo: cursos para desenvolvedores de software.
 // Sem dependência de framework: só dados e tipos, reaproveitáveis em outro front-end.
 
 export type CourseStatus = "on-sale" | "waitlist";
 
 /** Nome do ícone na biblioteca Lucide (https://lucide.dev/icons). */
-export type CourseIcon = "code" | "pen-tool" | "chart-column" | "globe" | "megaphone" | "camera" | "piggy-bank";
+export type CourseIcon = "server" | "app-window" | "database" | "container" | "bot" | "flask-conical" | "blocks";
 
 /** Cor da faixa da ficha e da capa do curso (ver tokens em globals.css). */
 export type CourseTone = "coral" | "amarelo" | "salvia";
 
-/** Área do curso. A chave é o valor de `?area=` no catálogo (/cursos?area=dados). */
-export type CourseArea = "programacao" | "design" | "dados" | "negocios" | "fotografia" | "financas";
+/** Área do curso. A chave é o valor de `?area=` no catálogo (/cursos?area=backend). */
+export type CourseArea = "backend" | "frontend" | "banco-de-dados" | "devops" | "ia" | "qualidade" | "arquitetura";
 
 /** Nome de cada área, na ordem em que aparecem nos filtros do catálogo. */
 export const areaLabel: Record<CourseArea, string> = {
-  programacao: "Programação",
-  design: "Design",
-  dados: "Dados",
-  negocios: "Negócios",
-  fotografia: "Fotografia",
-  financas: "Finanças",
+  backend: "Backend",
+  frontend: "Frontend",
+  "banco-de-dados": "Banco de dados",
+  devops: "DevOps",
+  ia: "IA",
+  qualidade: "Qualidade",
+  arquitetura: "Arquitetura",
 };
 
 export const areas = Object.keys(areaLabel) as CourseArea[];
@@ -40,73 +41,73 @@ export type Course = {
 
 export const courses: Course[] = [
   {
-    slug: "programacao-do-zero",
-    title: "Programação do Zero",
-    area: "programacao",
+    slug: "backend-com-node-js",
+    title: "Backend com Node.js",
+    area: "backend",
     summary:
-      "Aprenda lógica de programação e escreva seus primeiros programas em Python, com exercícios curtos que levam do primeiro comando a pequenos projetos completos.",
+      "Construa APIs REST com Node.js e TypeScript: rotas, validação, banco de dados, autenticação e testes, até colocar o serviço no ar.",
     status: "on-sale",
-    icon: "code",
+    icon: "server",
     tone: "coral",
   },
   {
-    slug: "design-de-interfaces",
-    title: "Design de Interfaces",
-    area: "design",
+    slug: "frontend-com-react",
+    title: "Frontend com React",
+    area: "frontend",
     summary:
-      "Aprenda os fundamentos de layout, tipografia, cor e hierarquia visual para criar telas claras e agradáveis, do rascunho ao protótipo navegável.",
+      "Crie interfaces com React e TypeScript: componentes, estado, consumo de APIs, formulários e rotas, com um código que continua fácil de mudar.",
     status: "on-sale",
-    icon: "pen-tool",
+    icon: "app-window",
     tone: "amarelo",
   },
   {
-    slug: "analise-de-dados-com-planilhas",
-    title: "Análise de Dados com Planilhas",
-    area: "dados",
+    slug: "sql-e-modelagem-de-dados",
+    title: "SQL e Modelagem de Dados",
+    area: "banco-de-dados",
     summary:
-      "Organize, limpe e analise dados em planilhas, use fórmulas e tabelas dinâmicas e transforme números em gráficos que ajudam a tomar decisões.",
+      "Modele bancos relacionais, escreva consultas SQL do filtro simples às junções e agregações e use índices para manter tudo rápido no PostgreSQL.",
     status: "on-sale",
-    icon: "chart-column",
+    icon: "database",
     tone: "salvia",
   },
   {
-    slug: "desenvolvimento-web",
-    title: "Desenvolvimento Web",
-    area: "programacao",
+    slug: "devops-na-pratica",
+    title: "DevOps na Prática",
+    area: "devops",
     summary:
-      "Construa sites com HTML, CSS e JavaScript, entendendo como as páginas são estruturadas, estilizadas, deixadas interativas e publicadas na internet.",
+      "Empacote aplicações com Docker, automatize testes e deploys com pipelines de CI/CD e acompanhe o que acontece em produção com logs e métricas.",
     status: "waitlist",
-    icon: "globe",
+    icon: "container",
     tone: "salvia",
   },
   {
-    slug: "marketing-digital",
-    title: "Marketing Digital",
-    area: "negocios",
+    slug: "ia-para-desenvolvedores",
+    title: "IA para Desenvolvedores",
+    area: "ia",
     summary:
-      "Planeje sua presença online, produza conteúdo para redes sociais, crie campanhas simples e acompanhe os números que mostram o que está funcionando.",
+      "Integre modelos de linguagem às suas aplicações: chamadas de API, prompts, respostas estruturadas, busca em documentos próprios e avaliação dos resultados.",
     status: "waitlist",
-    icon: "megaphone",
+    icon: "bot",
     tone: "coral",
   },
   {
-    slug: "fotografia-com-celular",
-    title: "Fotografia com o Celular",
-    area: "fotografia",
+    slug: "testes-automatizados",
+    title: "Testes Automatizados",
+    area: "qualidade",
     summary:
-      "Tire fotos melhores usando só o celular: composição, luz natural, recursos da câmera e edição rápida em aplicativos gratuitos.",
+      "Escreva testes de unidade, integração e ponta a ponta que dão confiança para mudar o código, sem deixar a suíte lenta ou frágil.",
     status: "waitlist",
-    icon: "camera",
+    icon: "flask-conical",
     tone: "amarelo",
   },
   {
-    slug: "financas-pessoais",
-    title: "Finanças Pessoais",
-    area: "financas",
+    slug: "arquitetura-de-software",
+    title: "Arquitetura de Software",
+    area: "arquitetura",
     summary:
-      "Monte um orçamento que funcione, organize as dívidas, crie uma reserva de emergência e dê os primeiros passos para investir com segurança.",
+      "Organize sistemas que crescem sem virar um emaranhado: camadas, módulos, limites entre domínios e como tomar e registrar decisões de arquitetura.",
     status: "waitlist",
-    icon: "piggy-bank",
+    icon: "blocks",
     tone: "salvia",
   },
 ];
