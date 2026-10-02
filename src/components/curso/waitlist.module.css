@@ -1,0 +1,93 @@
+/* Animação de confirmação da lista de espera (equivalente à da referência). */
+
+.success {
+  animation: rise 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.mark path {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: draw 0.54s cubic-bezier(0.65, 0, 0.35, 1) 0.22s forwards;
+}
+
+.fadeUp {
+  opacity: 0;
+  transform: translateY(6px);
+  animation: fade-up 0.42s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.delayTitle {
+  animation-delay: 0.36s;
+}
+.delayBody {
+  animation-delay: 0.46s;
+}
+.delayNote {
+  animation-delay: 0.54s;
+}
+
+.email {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+.email::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1.5px;
+  background: var(--color-accent-500);
+  transform: scaleX(0);
+  transform-origin: 0;
+  animation: underline 0.52s cubic-bezier(0.22, 1, 0.36, 1) 0.78s forwards;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes fade-up {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes underline {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .success,
+  .fadeUp {
+    opacity: 1;
+    animation: none;
+    transform: none;
+  }
+  .mark path {
+    stroke-dashoffset: 0;
+    animation: none;
+  }
+  .email::after {
+    animation: none;
+    transform: scaleX(1);
+  }
+}
