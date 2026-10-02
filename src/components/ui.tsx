@@ -76,23 +76,26 @@ const buttonVariants = {
   "chalk-outline": "border-2 border-salvia-400 font-bold text-giz hover:border-giz-apagado",
 } as const;
 
+export type ButtonVariant = keyof typeof buttonVariants;
+
+/** Classes de botão, para usar tanto em links (`ButtonLink`) quanto em `<button>`. */
+export function buttonClass(variant: ButtonVariant = "primary", offset: Offset = "canvas") {
+  return cn(
+    "inline-flex h-12 items-center justify-center gap-2 rounded-control px-6 font-sans text-[16px] transition-colors",
+    buttonVariants[variant],
+    focusRing,
+    ringOffset[offset],
+  );
+}
+
 type ButtonLinkProps = ComponentProps<typeof Link> & {
-  variant?: keyof typeof buttonVariants;
+  variant?: ButtonVariant;
   offset?: Offset;
 };
 
 export function ButtonLink({ variant = "primary", offset = "canvas", className, children, ...props }: ButtonLinkProps) {
   return (
-    <Link
-      className={cn(
-        "inline-flex h-12 items-center justify-center rounded-control px-6 font-sans text-[16px] transition-colors",
-        buttonVariants[variant],
-        focusRing,
-        ringOffset[offset],
-        className,
-      )}
-      {...props}
-    >
+    <Link className={cn(buttonClass(variant, offset), className)} {...props}>
       {children}
     </Link>
   );

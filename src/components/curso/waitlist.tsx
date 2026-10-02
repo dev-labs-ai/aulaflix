@@ -1,36 +1,22 @@
 "use client";
 
-import { createContext, useContext, useId, useState, type ChangeEvent, type FormEvent, type ReactNode } from "react";
+import { useId, useState, type ChangeEvent, type FormEvent, type ReactNode } from "react";
 import { ChevronDown, Globe } from "lucide-react";
 import { cn } from "@/components/ui";
 import styles from "./waitlist.module.css";
 
-// Protótipo: nada é enviado a um backend. A inscrição fica só no estado do cliente
-// e é compartilhada entre os cards da página (mobile e lateral).
+// Protótipo: nada é enviado a um backend. A inscrição fica só no estado do cliente.
 
 type Submission = { name: string; email: string };
 
-const WaitlistContext = createContext<{
-  submission: Submission | null;
-  setSubmission: (s: Submission) => void;
-} | null>(null);
-
-export function WaitlistProvider({ children }: { children: ReactNode }) {
+export function WaitlistCard({ courseTitle, id, className }: { courseTitle: string; id?: string; className?: string }) {
   const [submission, setSubmission] = useState<Submission | null>(null);
-  return <WaitlistContext.Provider value={{ submission, setSubmission }}>{children}</WaitlistContext.Provider>;
-}
-
-function useWaitlist() {
-  const ctx = useContext(WaitlistContext);
-  if (!ctx) throw new Error("WaitlistCard precisa estar dentro de <WaitlistProvider>.");
-  return ctx;
-}
-
-export function WaitlistCard({ courseTitle }: { courseTitle: string }) {
-  const { submission } = useWaitlist();
   return (
-    <div className="overflow-hidden rounded-card border border-line bg-surface-raised shadow-(--shadow-raised)">
-      <span aria-hidden="true" className="block h-3 bg-salvia-400" />
+    <div
+      id={id}
+      className={cn("overflow-hidden rounded-card border border-line bg-surface-raised shadow-(--shadow-raised)", className)}
+    >
+      <span aria-hidden="true" className="block h-3 tracejado text-salvia-400" />
       <div className="p-6 sm:p-7">
         {submission ? (
           <WaitlistConfirmed courseTitle={courseTitle} {...submission} />
@@ -43,7 +29,7 @@ export function WaitlistCard({ courseTitle }: { courseTitle: string }) {
               Entre na lista de espera e receba um e-mail quando as inscrições abrirem.
             </p>
             <div className="mt-6">
-              <WaitlistForm />
+              <WaitlistForm onSubmitted={setSubmission} />
             </div>
           </>
         )}
@@ -88,8 +74,7 @@ function FieldError({ id, children }: { id: string; children: ReactNode }) {
   );
 }
 
-function WaitlistForm() {
-  const { setSubmission } = useWaitlist();
+function WaitlistForm({ onSubmitted }: { onSubmitted: (submission: Submission) => void }) {
   const id = useId();
   const [values, setValues] = useState({ name: "", email: "", phone: "" });
   const [country, setCountry] = useState<CountryCode>("BR");
@@ -110,7 +95,7 @@ function WaitlistForm() {
     if (!canSubmit) return;
     setPending(true);
     // Simula a latência de uma requisição.
-    setTimeout(() => setSubmission({ name: values.name.trim(), email: values.email.trim() }), 600);
+    setTimeout(() => onSubmitted({ name: values.name.trim(), email: values.email.trim() }), 600);
   }
 
   return (

@@ -24,7 +24,7 @@ export const analiseDeDadosComPlanilhas: OnSaleCourseDetail = {
     {
       title: "Organizando os dados",
       lessons: [
-        { title: "Como estruturar uma tabela de dados", duration: "11:48" },
+        { title: "Como estruturar uma tabela de dados", duration: "11:48", free: true },
         { title: "Formatos de número, data e texto", duration: "13:05" },
         { title: "Limpeza e remoção de duplicados", duration: "17:32" },
       ],

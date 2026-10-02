@@ -24,7 +24,7 @@ export const designDeInterfaces: OnSaleCourseDetail = {
     {
       title: "Fundamentos visuais",
       lessons: [
-        { title: "O que torna uma interface clara", duration: "13:20" },
+        { title: "O que torna uma interface clara", duration: "13:20", free: true },
         { title: "Espaçamento, alinhamento e grid", duration: "19:45" },
         { title: "Hierarquia visual", duration: "16:10" },
       ],

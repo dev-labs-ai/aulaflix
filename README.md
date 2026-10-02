@@ -33,7 +33,7 @@ O grupo `(site)` aplica header e rodapé; as telas de autenticação (`/entrar`,
 
 - **Marca, título e descrição do site, menu:** `src/content/site.ts`
 - **Lista de cursos (título, área, resumo, status, ícone, cor, capa) e áreas do filtro do catálogo:** `src/content/courses.ts`
-- **Conteúdo de cada curso (ementa, preços, FAQ):** `src/content/course-details/<slug>.ts`
+- **Conteúdo de cada curso (ementa, aula grátis, preços, FAQ):** `src/content/course-details/<slug>.ts`. A aula marcada com `free: true` aparece no player da página do curso.
 - **Home (texto da seção Sobre):** `src/content/home.ts`
 - **Login, cadastro e redefinição de senha (textos, mensagens de erro, regras de senha e código):** `src/content/auth.ts`
 - **Cores, raios, sombras, animações:** `src/app/globals.css` (tokens `@theme` do Tailwind)
@@ -45,7 +45,7 @@ O grupo `(site)` aplica header e rodapé; as telas de autenticação (`/entrar`,
 
 Direção "Lousa": a sala de aula como referência. Fundo de papel, texto em grafite e verde de quadro-negro como cor principal.
 
-- **Lousa:** painel verde com a régua de madeira embaixo (`Board` em `src/components/ui.tsx`), usado no topo da home e na capa da página de curso. O título da home aparece como se fosse escrito a giz.
+- **Lousa:** painel verde com a régua de madeira embaixo (`Board` em `src/components/ui.tsx`), usado no topo da home e da página de curso, onde ficam o título, o preço e o botão de compra. Os títulos aparecem como se fossem escritos a giz.
 - **Fichas pautadas:** os cursos são fichas com linhas a cada 28px (`pautado`) e uma faixa no topo na cor do curso (`tone` em `courses.ts`: coral, amarelo ou sálvia). Nos cursos em lista de espera, a faixa é tracejada (`tracejado`).
 - **Giz amarelo:** botão principal sobre a lousa, avatar, marcadores e selos de destaque.
 
@@ -57,4 +57,4 @@ A conta e a sessão ficam em `src/lib/auth.ts`; os cursos e o progresso da conta
 
 ## Limitações do protótipo
 
-Fora o login com a conta de demonstração, os formulários (Google/GitHub, cadastro, redefinição de senha, compra, lista de espera) são só visuais: validam no navegador e mostram um estado de confirmação, mas não enviam nada. No cadastro e na redefinição de senha, qualquer código de 6 dígitos é aceito.
+Fora o login com a conta de demonstração, os formulários (Google/GitHub, cadastro, redefinição de senha, compra, lista de espera) são só visuais: validam no navegador e mostram um estado de confirmação, mas não enviam nada. O player da aula grátis também é só visual: ainda não há vídeos. No cadastro e na redefinição de senha, qualquer código de 6 dígitos é aceito.

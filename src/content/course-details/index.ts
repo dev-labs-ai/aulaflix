@@ -7,7 +7,7 @@ import { desenvolvimentoWeb } from "./desenvolvimento-web";
 import { marketingDigital } from "./marketing-digital";
 import { fotografiaComCelular } from "./fotografia-com-celular";
 import { financasPessoais } from "./financas-pessoais";
-import type { CourseDetail } from "./types";
+import type { CourseDetail, OnSaleCourseDetail } from "./types";
 
 export type * from "./types";
 
@@ -23,5 +23,17 @@ export const courseDetails: Record<string, CourseDetail> = {
 
 export function getCourseDetail(slug: string): CourseDetail | undefined {
   return courseDetails[slug];
+}
+
+/** A aula aberta do curso (`free: true`), com o número dela na ementa e o módulo em que está. */
+export function getFreeLesson(detail: OnSaleCourseDetail) {
+  let number = 0;
+  for (const mod of detail.modules) {
+    for (const lesson of mod.lessons) {
+      number += 1;
+      if (lesson.free) return { lesson, number, module: mod };
+    }
+  }
+  return undefined;
 }
 
