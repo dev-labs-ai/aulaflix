@@ -16,16 +16,3 @@ export const mainNav: NavItem[] = [
   { label: "Cursos", href: "/cursos" },
   { label: "Sobre", href: "/#sobre" },
 ];
-
-export const instructor = {
-  name: "Instrutor",
-};
-
-export const footerNav = [
-  { label: "Cursos", href: "/cursos" },
-  { label: "Sobre", href: "/#sobre" },
-];
-
-export const socialLinks = [
-  { icon: "github", label: "GitHub", href: "https://github.com/robsonoliveiradacosta" },
-] as const;
