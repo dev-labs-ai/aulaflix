@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Aulaflix
 
-## Getting Started
+Protótipo do site do Aulaflix, construído inicialmente como réplica visual de [programe.ai](https://programe.ai/). Os textos ainda são os da referência (exceto a marca) e as imagens são placeholders — tudo pensado para ser trocado.
 
-First, run the development server:
+Stack: Next.js 16 (App Router, Turbopack) · React 19 · Tailwind CSS v4 · TypeScript · lucide-react.
+
+## Rodando
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
+pnpm dev        # http://localhost:3000
+pnpm build      # build de produção (todas as páginas são estáticas)
+pnpm lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Rotas
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Rota | Arquivo |
+| --- | --- |
+| `/` | `src/app/(site)/page.tsx` |
+| `/cursos` | `src/app/(site)/cursos/page.tsx` |
+| `/cursos/[slug]` (11 cursos) | `src/app/(site)/cursos/[slug]/page.tsx` |
+| `/trilha-do-engenheiro-de-ia` | `src/app/(site)/trilha-do-engenheiro-de-ia/page.tsx` |
+| `/privacidade` | `src/app/(site)/privacidade/page.tsx` |
+| `/entrar` | `src/app/entrar/page.tsx` (sem header/rodapé) |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+O grupo `(site)` aplica header e rodapé; `/entrar` fica fora dele.
 
-## Learn More
+## Onde mudar as coisas
 
-To learn more about Next.js, take a look at the following resources:
+- **Marca, menu, rodapé, redes, instrutor:** `src/content/site.ts`
+- **Lista de cursos (título, resumo, status, ícone/capa):** `src/content/courses.ts`
+- **Conteúdo de cada curso (ementa, preços, FAQ):** `src/content/course-details/<slug>.ts`
+- **Home (depoimentos, FAQ, vídeos/artigos):** `src/content/home.ts`
+- **Trilha (preços, seções, FAQ):** `src/content/trilha.ts`
+- **Cores, raios, fontes, animações:** `src/app/globals.css` (tokens `@theme` do Tailwind)
+- **Imagens:** `src/components/placeholders.tsx` gera os placeholders. Para usar uma capa real de curso, coloque o arquivo em `public/` e preencha `image` no curso em `courses.ts`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Limitações do protótipo
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Formulários (login, compra, lista de espera) são só visuais: validam no navegador e mostram um estado de confirmação, mas não enviam nada. `/cadastrar` e `/redefinir-senha` ainda não existem.
