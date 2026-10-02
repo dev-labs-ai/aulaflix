@@ -42,7 +42,7 @@ export const analiseDeDadosComPlanilhas: OnSaleCourseDetail = {
       lessons: [
         { title: "Tabelas dinâmicas na prática", duration: "23:41" },
         { title: "Escolhendo o gráfico certo", duration: "15:19" },
-        { title: "Montando um painel simples" },
+        { title: "Montando um painel simples", duration: "21:30" },
       ],
     },
   ],

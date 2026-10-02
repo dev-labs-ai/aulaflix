@@ -23,3 +23,25 @@ export function initials(name: string | null, email: string) {
   if (words.length >= 2) return `${words[0][0]}${words[words.length - 1][0]}`.toUpperCase();
   return (words[0]?.[0] ?? email[0] ?? "?").toUpperCase();
 }
+
+export const myCoursesCopy = {
+  title: "Meus cursos",
+  description: "Continue de onde parou nos cursos que você comprou.",
+  start: "Começar",
+  continue: "Continuar",
+  openCourse: "Abrir curso",
+  notStarted: (lessons: number) => `${lessons} ${lessons === 1 ? "aula" : "aulas"} · não iniciado`,
+  progress: (done: number, total: number, percent: number, status?: string) =>
+    [`${done} / ${total} aulas`, `${percent}%`, status].filter(Boolean).join(" · "),
+  completed: "concluído",
+  caughtUp: "em dia",
+  progressLabel: (title: string) => `Progresso em ${title}`,
+  onSale: (count: number) => `+ ${count} ${count === 1 ? "curso" : "cursos"} à venda.`,
+  waitlist: (count: number) => `+ ${count} ${count === 1 ? "curso" : "cursos"} em lista de espera.`,
+  catalog: "Ver catálogo",
+  empty: {
+    title: "Você ainda não tem nenhum curso",
+    body: "Explore os cursos e escolha por onde começar.",
+    cta: "Ver todos os cursos",
+  },
+};

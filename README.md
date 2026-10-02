@@ -20,6 +20,7 @@ pnpm lint
 | `/` | `src/app/(site)/page.tsx` |
 | `/cursos` | `src/app/(site)/cursos/page.tsx` |
 | `/cursos/[slug]` (7 cursos) | `src/app/(site)/cursos/[slug]/page.tsx` |
+| `/meus-cursos` (só logado) | `src/app/(site)/meus-cursos/page.tsx` |
 | `/entrar` | `src/app/entrar/page.tsx` (sem header/rodapé) |
 | `/cadastrar` | `src/app/cadastrar/page.tsx` (sem header/rodapé) |
 | `/redefinir-senha` | `src/app/redefinir-senha/page.tsx` (sem header/rodapé) |
@@ -40,7 +41,7 @@ O grupo `(site)` aplica header e rodapé; as telas de autenticação (`/entrar`,
 
 Em `/entrar`, use **aulaflix@email.com** com a senha **aulaflix**. As credenciais são conferidas no servidor (Server Action em `src/lib/auth-actions.ts`) e a sessão fica num cookie `httpOnly` por 7 dias; o header passa a mostrar o usuário e o botão Sair. `/entrar?next=/caminho` define para onde ir depois de entrar.
 
-A conta e a sessão ficam em `src/lib/auth.ts`. É uma simulação: o cookie guarda só o e-mail e não é protegido contra falsificação, então deve ser substituído por um backend de autenticação real.
+A conta e a sessão ficam em `src/lib/auth.ts`; os cursos e o progresso da conta de demonstração, em `src/lib/enrollments.ts`. Páginas só para quem está logado usam `requireUser()`, que manda para `/entrar?next=…`. É uma simulação: o cookie guarda só o e-mail e não é protegido contra falsificação, então deve ser substituído por um backend de autenticação real.
 
 ## Limitações do protótipo
 

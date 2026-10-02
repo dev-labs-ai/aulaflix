@@ -51,3 +51,10 @@ export function safeNextPath(value: unknown): string {
 export async function redirectIfSignedIn(next: unknown = "/") {
   if (await getSessionUser()) redirect(safeNextPath(next));
 }
+
+/** Páginas da conta: sem sessão, manda para o login e volta para `path` depois de entrar. */
+export async function requireUser(path: string): Promise<SessionUser> {
+  const user = await getSessionUser();
+  if (!user) redirect(`/entrar?next=${encodeURIComponent(path)}`);
+  return user;
+}
