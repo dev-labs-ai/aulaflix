@@ -38,7 +38,6 @@ export const authCopy = {
     body: (email: string) => ["Enviamos um código para ", email, "."] as const,
     submit: "Salvar senha e entrar",
   },
-  signOut: "Sair",
   back: "Voltar",
   divider: "ou",
   google: "Continuar com Google",
