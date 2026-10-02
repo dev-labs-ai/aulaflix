@@ -2,19 +2,20 @@ import Link from "next/link";
 import { site } from "@/content/site";
 import { cn, focusRing, ringOffset } from "@/components/ui";
 
-/** Marca provisória: quadrado creme com um "play" estilizado. */
+/** Marca: uma lousinha com duas linhas de giz e a régua de madeira (igual a src/app/icon.svg). */
 export function LogoMark({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 32 32" aria-hidden="true" className={cn("block size-8 rounded-sm", className)}>
-      <rect width="32" height="32" rx="10" fill="#f3eee4" />
-      <path d="M12 9.5v13l10.5-6.5z" fill="#111318" />
-      <path d="M8.5 23.5h15" stroke="#2457ff" strokeWidth="2" strokeLinecap="round" />
+    <svg viewBox="0 0 32 32" aria-hidden="true" className={cn("block size-8", className)}>
+      <rect width="32" height="32" rx="8" fill="#8a6a4a" />
+      <path d="M8 0h16a8 8 0 0 1 8 8v16H0V8a8 8 0 0 1 8-8z" fill="#22392e" />
+      <path d="M7.5 10.5h13" stroke="#f2d06b" strokeWidth="3" strokeLinecap="round" />
+      <path d="M7.5 17h8.5" stroke="#f1f3ee" strokeWidth="3" strokeLinecap="round" />
     </svg>
   );
 }
 
 export function Logo({
-  size = 17,
+  size = 22,
   offset = "canvas",
 }: {
   size?: number;
@@ -23,13 +24,12 @@ export function Logo({
   return (
     <Link
       href="/"
-      aria-label={`${site.name} — página inicial`}
-      className={cn("inline-flex items-center gap-2.5 rounded-sm", focusRing, ringOffset[offset])}
+      aria-label={`${site.name}, página inicial`}
+      className={cn("inline-flex items-center gap-2.5 rounded-control", focusRing, ringOffset[offset])}
     >
       <LogoMark />
-      <span className="font-heading font-semibold tracking-[-0.015em] text-ink" style={{ fontSize: size }}>
-        {site.brand.base}
-        <span className="text-ink-accent">{site.brand.accent}</span>
+      <span className="font-heading font-extrabold tracking-[-0.03em] text-ink" style={{ fontSize: size }}>
+        {site.wordmark}
       </span>
     </Link>
   );

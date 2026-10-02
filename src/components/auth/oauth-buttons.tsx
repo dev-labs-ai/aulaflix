@@ -3,7 +3,7 @@
 import { authCopy } from "@/content/auth";
 
 const buttonClass =
-  "inline-flex h-11 w-full items-center justify-center gap-2.5 whitespace-nowrap rounded-sm border border-line bg-surface px-5 py-2 font-sans text-[15px] font-semibold text-ink transition-colors duration-150 hover:bg-surface-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-4 focus-visible:ring-offset-canvas";
+  "inline-flex h-12 w-full items-center justify-center gap-2.5 whitespace-nowrap rounded-control border border-line bg-surface px-5 py-2 text-[16px] font-bold text-ink transition-colors duration-150 hover:bg-surface-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-4 focus-visible:ring-offset-canvas";
 
 function GoogleIcon() {
   return (

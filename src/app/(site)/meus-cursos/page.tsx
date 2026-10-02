@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { AccountEmptyState, AccountPage } from "@/components/account-page";
-import { CourseCoverPlaceholder } from "@/components/placeholders";
+import { CourseCover } from "@/components/course-list";
 import { cn, focusRing, ringOffset } from "@/components/ui";
 import { myCoursesCopy as copy } from "@/content/account";
 import { onSaleCourses, waitlistCourses } from "@/content/courses";
@@ -35,12 +34,12 @@ export default async function MeusCursosPage() {
             ))}
           </ul>
           {more.length > 0 && (
-            <p className="mt-8 font-sans text-[14px] leading-[1.6] text-ink-muted">
+            <p className="mt-8 text-[16px] leading-[1.6] text-ink-muted">
               {more.join(" ")}{" "}
               <Link
                 href="/cursos"
                 className={cn(
-                  "text-ink underline decoration-line-strong underline-offset-4 transition-colors hover:decoration-ink",
+                  "rounded-control font-bold text-ink-accent underline decoration-2 underline-offset-4 transition-colors hover:text-ink-accent-hover",
                   focusRing,
                   ringOffset.canvas,
                 )}
@@ -73,13 +72,11 @@ function EnrollmentCard({ enrollment }: { enrollment: Enrollment }) {
   const percent = Math.round((completed / total) * 100);
 
   return (
-    <li className="flex flex-col gap-5 rounded-md border border-line bg-surface p-5 sm:flex-row sm:items-center sm:gap-6 sm:p-6">
-      <div className="relative aspect-video w-full shrink-0 overflow-hidden rounded-sm sm:w-[240px]">
-        <CourseCoverPlaceholder icon={course.icon} tone="light" />
-      </div>
+    <li className="flex flex-col gap-5 rounded-card border border-line bg-surface p-5 shadow-(--shadow-raised) sm:flex-row sm:items-center sm:gap-6 sm:p-6">
+      <CourseCover course={course} className="shrink-0 rounded-card sm:w-[220px]" />
       <div className="min-w-0 flex-1">
-        <h2 className="font-heading text-[20px] font-semibold leading-[1.3] tracking-[-0.012em] text-ink">{course.title}</h2>
-        <p className="mt-2 font-mono text-[12px] text-ink-muted">{meta}</p>
+        <h2 className="font-heading text-[22px] font-bold leading-[1.25] tracking-[-0.015em] text-ink">{course.title}</h2>
+        <p className="mt-1.5 text-[15px] tabular-nums text-ink-muted">{meta}</p>
         {completed > 0 && (
           <div
             role="progressbar"
@@ -87,22 +84,21 @@ function EnrollmentCard({ enrollment }: { enrollment: Enrollment }) {
             aria-valuemin={0}
             aria-valuemax={100}
             aria-valuenow={percent}
-            className="mt-3 h-1.5 w-full max-w-[240px] overflow-hidden rounded-full bg-line-subtle"
+            className="mt-3 h-2 w-full max-w-[240px] overflow-hidden rounded-full bg-surface-muted"
           >
-            <div className="h-full rounded-full bg-surface-accent" style={{ width: `${percent}%` }} />
+            <div className="h-full rounded-full bg-lousa-400" style={{ width: `${percent}%` }} />
           </div>
         )}
       </div>
       <Link
         href={`/cursos/${course.slug}`}
         className={cn(
-          "inline-flex h-12 shrink-0 items-center justify-center gap-2 self-start rounded-sm border border-line bg-surface px-5 font-sans text-[15px] font-semibold text-ink transition-colors hover:border-line-strong hover:bg-section sm:self-center",
+          "inline-flex h-12 shrink-0 items-center justify-center self-start rounded-control border border-line bg-surface px-5 text-[16px] font-bold text-ink transition-colors hover:border-line-strong hover:bg-section sm:self-center",
           focusRing,
           ringOffset.canvas,
         )}
       >
         {cta}
-        <ArrowRight aria-hidden="true" className="size-4" />
       </Link>
     </li>
   );

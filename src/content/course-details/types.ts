@@ -23,7 +23,7 @@ export type FaqEntry = { question: string; answer: string };
 type CourseDetailBase = {
   /** Parágrafos de "Sobre o curso". */
   why: string[];
-  /** Itens numerados de "O que você vai aprender". */
+  /** Itens de "O que você vai aprender". */
   learn: string[];
   /** Itens de "Para quem é". */
   audience: string[];

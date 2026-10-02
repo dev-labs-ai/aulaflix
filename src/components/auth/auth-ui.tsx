@@ -6,13 +6,13 @@ import { Logo } from "@/components/logo";
 import { cn } from "@/components/ui";
 import { authCopy } from "@/content/auth";
 
-export const fieldLabelClass = "block font-mono text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-muted";
+export const fieldLabelClass = "block text-[15px] font-bold text-ink-secondary";
 
 export const inlineLinkClass =
-  "rounded-sm font-semibold text-ink-accent underline-offset-4 hover:text-accent-700 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus";
+  "rounded-control font-bold text-ink-accent underline decoration-2 underline-offset-4 hover:text-ink-accent-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus";
 
 export const submitButtonClass =
-  "inline-flex h-12 w-full items-center justify-center gap-2 whitespace-nowrap rounded-sm bg-surface-accent px-6 font-sans text-[15px] font-semibold text-ink-inverse transition-colors duration-150 hover:bg-accent-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-4 focus-visible:ring-offset-canvas disabled:pointer-events-none disabled:opacity-50";
+  "inline-flex h-12 w-full items-center justify-center gap-2 whitespace-nowrap rounded-control bg-surface-accent px-6 text-[16px] font-bold text-ink-inverse transition-colors duration-150 hover:bg-surface-accent-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-4 focus-visible:ring-offset-canvas disabled:pointer-events-none disabled:opacity-50";
 
 /** Página isolada, sem header/rodapé do site: só o logo e o conteúdo centralizado. */
 export function AuthPageShell({ children }: { children: ReactNode }) {
@@ -34,20 +34,20 @@ export function AuthPageShell({ children }: { children: ReactNode }) {
 export function AuthHeading({ title, body }: { title: string; body?: ReactNode }) {
   return (
     <div className="flex flex-col gap-3">
-      <h1 className="font-heading text-[28px] font-semibold leading-9 tracking-[-0.02em] text-ink sm:text-[32px] sm:leading-10">
+      <h1 className="font-heading text-[32px] font-bold leading-[1.15] tracking-[-0.025em] text-ink sm:text-[38px]">
         {title}
       </h1>
-      {body && <p className="font-sans text-[16px] leading-[26px] text-ink-tertiary">{body}</p>}
+      {body && <p className="text-[17px] leading-[1.6] text-ink-tertiary">{body}</p>}
     </div>
   );
 }
 
-/** Cartão branco no desktop; no mobile o conteúdo fica solto na página. */
+/** Ficha branca com a faixa da lousa no topo (desktop); no mobile o conteúdo fica solto na página. */
 export function AuthCard({ label, children }: { label: string; children: ReactNode }) {
   return (
     <section
       aria-label={label}
-      className="flex flex-col gap-5 sm:rounded-lg sm:border sm:border-line-subtle sm:bg-surface-raised sm:p-8 sm:shadow-(--shadow-raised)"
+      className="flex flex-col gap-5 sm:rounded-card sm:border sm:border-t-[6px] sm:border-line sm:border-t-lousa-500 sm:bg-surface-raised sm:p-8 sm:shadow-(--shadow-raised)"
     >
       {children}
     </section>
@@ -58,7 +58,7 @@ export function AuthDivider() {
   return (
     <div className="flex items-center gap-3">
       <div className="h-px grow bg-line" />
-      <span className="font-mono text-[11px] font-semibold uppercase leading-[14px] tracking-[0.12em] text-ink-muted">
+      <span className="text-[14px] text-ink-muted">
         {authCopy.divider}
       </span>
       <div className="h-px grow bg-line" />
@@ -72,8 +72,8 @@ export function AuthAlert({ tone, children }: { tone: "info" | "error"; children
     <p
       role={tone === "error" ? "alert" : "status"}
       className={cn(
-        "flex items-start gap-2 rounded-sm px-3.5 py-3 font-sans text-[14px] leading-[22px]",
-        tone === "error" ? "bg-error-bg text-error-text" : "bg-surface-accent-soft text-ink-accent",
+        "flex items-start gap-2 rounded-control px-3.5 py-3 text-[15px] leading-[22px]",
+        tone === "error" ? "bg-error-bg text-error-text" : "bg-surface-accent-soft text-lousa-500",
       )}
     >
       <Icon aria-hidden="true" className="mt-[3px] size-4 shrink-0" />
@@ -87,7 +87,7 @@ export function PrototypeNotice({ children }: { children: ReactNode }) {
   return (
     <p
       role="status"
-      className="flex items-start gap-2 rounded-sm bg-warning-100 px-3.5 py-3 font-sans text-[14px] leading-[22px] text-warning-500"
+      className="flex items-start gap-2 rounded-control bg-warning-100 px-3.5 py-3 text-[15px] leading-[22px] text-warning-500"
     >
       <TriangleAlert aria-hidden="true" className="mt-[3px] size-4 shrink-0" />
       <span>{children}</span>
@@ -97,7 +97,7 @@ export function PrototypeNotice({ children }: { children: ReactNode }) {
 
 export function FieldError({ id, children }: { id: string; children: ReactNode }) {
   return (
-    <p id={id} className="flex items-start gap-1.5 font-sans text-[13px] leading-5 text-error-text">
+    <p id={id} className="flex items-start gap-1.5 text-[14px] leading-5 text-error-text">
       <CircleAlert aria-hidden="true" className="mt-0.5 size-4 shrink-0" />
       <span>{children}</span>
     </p>
@@ -109,7 +109,7 @@ export function BackLink({ onClick }: { onClick: () => void }) {
     <button
       type="button"
       onClick={onClick}
-      className="inline-flex items-center gap-2 self-start rounded-sm font-sans text-[14px] font-semibold leading-[22px] text-ink-tertiary transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-4 focus-visible:ring-offset-canvas"
+      className="inline-flex items-center gap-2 self-start rounded-control text-[15px] font-bold leading-[22px] text-ink-tertiary transition-colors hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-4 focus-visible:ring-offset-canvas"
     >
       <ArrowLeft aria-hidden="true" className="size-4" />
       {authCopy.back}
@@ -122,7 +122,7 @@ export function Emphasis({ parts, inherit = false }: { parts: readonly [string, 
   return (
     <>
       {parts[0]}
-      <strong className={cn("font-semibold", !inherit && "text-ink")}>{parts[1]}</strong>
+      <strong className={cn("font-bold", !inherit && "text-ink")}>{parts[1]}</strong>
       {parts[2]}
     </>
   );
@@ -138,16 +138,16 @@ export function ResendCode({
 }) {
   return (
     <div className="flex flex-col gap-0.5">
-      <p className="font-sans text-[14px] leading-[22px] text-ink-tertiary">{authCopy.resend.notReceived}</p>
+      <p className="text-[15px] leading-[22px] text-ink-tertiary">{authCopy.resend.notReceived}</p>
       <button
         type="button"
         onClick={onResend}
         disabled={countdown.remaining > 0}
-        className="self-start rounded-sm font-sans text-[14px] font-semibold leading-[22px] text-ink-accent hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:cursor-default disabled:text-ink-muted disabled:no-underline"
+        className="self-start rounded-control text-[15px] font-bold leading-[22px] text-ink-accent underline decoration-2 underline-offset-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:cursor-default disabled:text-ink-muted disabled:no-underline"
       >
         {countdown.remaining > 0 ? (
           <>
-            {authCopy.resend.countdown} <span className="font-mono text-[13px]">{countdown.label}</span>
+            {authCopy.resend.countdown} <span className="tabular-nums">{countdown.label}</span>
           </>
         ) : (
           authCopy.resend.action
@@ -159,7 +159,7 @@ export function ResendCode({
 
 export function AuthSwitch({ prompt, children }: { prompt: string; children: ReactNode }) {
   return (
-    <p className="font-sans text-[14px] leading-[22px] text-ink-tertiary">
+    <p className="text-[15px] leading-[22px] text-ink-tertiary">
       {prompt} {children}
     </p>
   );

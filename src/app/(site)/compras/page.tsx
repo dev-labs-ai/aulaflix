@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { AccountEmptyState, AccountPage } from "@/components/account-page";
+import { Badge } from "@/components/ui";
 import { purchasesCopy as copy } from "@/content/account";
 import { requireUser } from "@/lib/auth";
 import { getPurchases, type Purchase } from "@/lib/purchases";
@@ -59,29 +60,29 @@ function PurchaseCard({ purchase }: { purchase: Purchase }) {
   const meta = [copy.paymentMethod[purchase.method], formatDate(purchase.createdAt), copy.order(purchase.id)];
 
   return (
-    <li className="rounded-md border border-line bg-surface p-5 sm:p-6">
+    <li className="rounded-card border border-line bg-surface p-5 shadow-(--shadow-raised) sm:p-6">
       <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-2">
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
-            <h2 className="font-heading text-[18px] font-semibold leading-[1.3] tracking-[-0.01em] text-ink">
+            <h2 className="font-heading text-[20px] font-bold leading-[1.3] tracking-[-0.015em] text-ink">
               {purchase.title}
             </h2>
-            <span className="inline-flex items-center rounded-full bg-preview-bg px-2.5 py-1 font-sans text-[11px] font-semibold uppercase leading-[14px] tracking-[0.08em] text-preview-text">
-              {copy.status[purchase.status]}
-            </span>
+            <Badge tone="lousa">{copy.status[purchase.status]}</Badge>
           </div>
-          <p className="mt-2 font-mono text-[12px] text-ink-muted">{meta.join(" · ")}</p>
+          <ul className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-[14px] tabular-nums text-ink-muted">
+            {meta.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
         </div>
-        <p className="font-mono text-[18px] font-semibold tabular-nums text-ink">{brl.format(purchase.amount)}</p>
+        <p className="font-heading text-[22px] font-bold tabular-nums text-ink">{brl.format(purchase.amount)}</p>
       </div>
 
       {/* Com cursos avulsos, a lista de cursos só aparece quando o pedido tem mais de um. */}
       {purchase.courses.length > 1 && (
         <div className="mt-5">
-          <p className="font-sans text-[11px] font-semibold uppercase leading-[14px] tracking-[0.08em] text-ink-muted">
-            {copy.includes}
-          </p>
-          <p className="mt-2 font-sans text-[14px] leading-[1.6] text-ink-tertiary">
+          <p className="text-[14px] font-bold text-ink-secondary">{copy.includes}</p>
+          <p className="mt-1 text-[15px] leading-[1.6] text-ink-tertiary">
             {listCourses(purchase.courses.map((course) => course.title))}
           </p>
         </div>

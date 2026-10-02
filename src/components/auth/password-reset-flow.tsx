@@ -48,7 +48,7 @@ export function PasswordResetFlow() {
             savedNotice={
               <>
                 {authCopy.prototype.passwordSaved}{" "}
-                <Link href="/" className="font-semibold underline underline-offset-2">
+                <Link href="/" className="font-bold underline underline-offset-2">
                   {authCopy.prototype.goHome}
                 </Link>
               </>

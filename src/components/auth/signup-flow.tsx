@@ -157,7 +157,7 @@ function EmailCodeStep({ email, onChangeEmail }: { email: string; onChangeEmail:
         {status === "verified" ? (
           <PrototypeNotice>
             {authCopy.prototype.verified}{" "}
-            <Link href="/" className="font-semibold underline underline-offset-2">
+            <Link href="/" className="font-bold underline underline-offset-2">
               {authCopy.prototype.goHome}
             </Link>
           </PrototypeNotice>

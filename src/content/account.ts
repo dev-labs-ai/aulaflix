@@ -30,9 +30,9 @@ export const myCoursesCopy = {
   start: "Começar",
   continue: "Continuar",
   openCourse: "Rever aulas",
-  notStarted: (lessons: number) => `${lessons} ${lessons === 1 ? "aula" : "aulas"} · ainda não começou`,
+  notStarted: (lessons: number) => `${lessons} ${lessons === 1 ? "aula" : "aulas"}, ainda não começou`,
   progress: (done: number, total: number, percent: number, status?: string) =>
-    [`${done} de ${total} aulas`, `${percent}%`, status].filter(Boolean).join(" · "),
+    `${done} de ${total} aulas (${percent}%)${status ? `, ${status}` : ""}`,
   completed: "finalizado",
   caughtUp: "aguardando novas aulas",
   progressLabel: (title: string) => `Andamento em ${title}`,

@@ -2,8 +2,8 @@
 
 export const site = {
   name: "Aulaflix",
-  // O logotipo renderiza `brand.base` + `brand.accent` (este último na cor de destaque).
-  brand: { base: "Aula", accent: "flix" },
+  /** Nome como aparece no logotipo, em minúsculas. */
+  wordmark: "aulaflix",
   title: "Aulaflix — Cursos online para aprender no seu ritmo",
   description:
     "Cursos online de programação, design, dados, negócios e outros temas. Aprenda no seu ritmo, com acesso vitalício.",

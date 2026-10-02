@@ -12,10 +12,10 @@ import { authCopy } from "@/content/auth";
 import { mainNav } from "@/content/site";
 import type { SessionUser } from "@/lib/auth";
 
-const navLink = cn("font-sans text-[14px] text-ink-tertiary transition-colors hover:text-ink", focusRing, ringOffset.canvas);
+const navLink = cn("rounded-control text-[16px] text-ink-secondary transition-colors hover:text-ink", focusRing, ringOffset.canvas);
 
 const NavBadge = ({ children }: { children: string }) => (
-  <span className="ml-2 inline-flex rounded-full bg-preview-bg px-2 py-0.5 align-middle font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-preview-text">
+  <span className="ml-2 inline-flex rounded-full bg-amarelo-100 px-2 py-0.5 align-middle text-[12px] font-bold text-amarelo-700">
     {children}
   </span>
 );
@@ -33,7 +33,7 @@ export function SiteHeader({ user }: { user: SessionUser | null }) {
 
   return (
     <header className="sticky top-0 z-50 border-b border-line-subtle bg-canvas/90 backdrop-blur">
-      <div className={cn(container, "flex h-16 items-center justify-between")}>
+      <div className={cn(container, "flex h-[72px] items-center justify-between")}>
         <Logo />
 
         <nav aria-label="Principal" className="hidden items-center gap-8 md:flex">
@@ -52,7 +52,7 @@ export function SiteHeader({ user }: { user: SessionUser | null }) {
             <Link
               href="/entrar"
               className={cn(
-                "inline-flex h-10 items-center justify-center whitespace-nowrap rounded-sm bg-surface-accent px-5 py-2 font-sans text-[14px] font-medium text-ink-inverse transition-colors duration-150 hover:bg-accent-600",
+                "inline-flex h-11 items-center justify-center whitespace-nowrap rounded-control bg-surface-accent px-5 text-[16px] font-bold text-ink-inverse transition-colors duration-150 hover:bg-surface-accent-hover",
                 focusRing,
                 ringOffset.canvas,
               )}
@@ -68,7 +68,7 @@ export function SiteHeader({ user }: { user: SessionUser | null }) {
           aria-expanded={open}
           aria-controls="mobile-menu"
           onClick={() => setOpenPath(open ? null : pathname)}
-          className="inline-flex size-10 items-center justify-center rounded-sm border border-line text-ink md:hidden"
+          className="inline-flex size-11 items-center justify-center rounded-control border border-line text-ink md:hidden"
         >
           {open ? <X aria-hidden="true" className="size-5" /> : <Menu aria-hidden="true" className="size-5" />}
         </button>
@@ -79,7 +79,7 @@ export function SiteHeader({ user }: { user: SessionUser | null }) {
           <div className={cn(container, "py-4")}>
             <nav aria-label="Principal (mobile)" className="flex flex-col gap-1">
               {mobileLinks.map((item) => (
-                <Link key={item.href} href={item.href} onClick={closeMenu} className={cn(navLink, "py-2.5 text-[15px]")}>
+                <Link key={item.href} href={item.href} onClick={closeMenu} className={cn(navLink, "py-2.5 text-[17px]")}>
                   {item.label}
                   {"badge" in item && item.badge && <NavBadge>{item.badge}</NavBadge>}
                 </Link>
@@ -92,7 +92,7 @@ export function SiteHeader({ user }: { user: SessionUser | null }) {
                 <Link
                   href="/entrar"
                   onClick={closeMenu}
-                  className="inline-flex h-11 w-full items-center justify-center rounded-sm bg-surface-accent font-sans text-[15px] font-medium text-ink-inverse"
+                  className="inline-flex h-12 w-full items-center justify-center rounded-control bg-surface-accent text-[16px] font-bold text-ink-inverse"
                 >
                   {authCopy.signIn.title}
                 </Link>

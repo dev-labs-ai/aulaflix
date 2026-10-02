@@ -15,47 +15,50 @@ export const ringOffset = {
   canvas: "focus-visible:ring-offset-canvas",
   section: "focus-visible:ring-offset-section",
   muted: "focus-visible:ring-offset-surface-muted",
+  /** Na lousa o anel fica amarelo, para aparecer sobre o verde. */
+  board: "focus-visible:ring-amarelo-300 focus-visible:ring-offset-lousa-500",
 } as const;
 
 type Offset = keyof typeof ringOffset;
 
-/** Rótulo mono em caixa alta acima dos títulos. */
-export function Eyebrow({
+/**
+ * Painel de quadro-negro com a régua de madeira embaixo: o elemento-assinatura
+ * do Aulaflix (hero da home e capa da página de curso).
+ */
+export function Board({ children, className }: { children: ReactNode; className?: string }) {
+  return (
+    <div>
+      <div className={cn("rounded-t-board rounded-b-card bg-lousa-500 text-giz", className)}>{children}</div>
+      <div aria-hidden="true" className="-mx-1.5 h-3 rounded-b-[10px] bg-madeira sm:-mx-2 sm:h-4" />
+    </div>
+  );
+}
+
+const badgeTones = {
+  /** Destaque em giz amarelo, ex.: "À venda". */
+  amarelo: "bg-amarelo-100 text-amarelo-700",
+  /** Confirmação, ex.: "Pago". */
+  lousa: "bg-lousa-100 text-lousa-500",
+  /** Neutro, ex.: "Lista de espera". */
+  neutro: "bg-surface-muted text-ink-tertiary",
+} as const;
+
+export type BadgeTone = keyof typeof badgeTones;
+
+export function Badge({
   children,
-  tone = "muted",
+  tone = "neutro",
   className,
 }: {
   children: ReactNode;
-  tone?: "muted" | "accent";
+  tone?: BadgeTone;
   className?: string;
 }) {
   return (
-    <p
-      className={cn(
-        "font-mono text-[12px] font-semibold uppercase tracking-[0.16em]",
-        tone === "accent" ? "text-ink-accent" : "text-ink-muted",
-        className,
-      )}
-    >
-      {children}
-    </p>
-  );
-}
-
-/** Marca-texto azul atrás de palavras em destaque nos títulos. */
-export function Highlight({ children }: { children: ReactNode }) {
-  return (
-    <mark className="-mx-[0.06em] rounded-[3px] bg-transparent px-[0.06em] text-inherit [background-image:linear-gradient(transparent_58%,var(--color-accent-100)_58%)] [box-decoration-break:clone] [-webkit-box-decoration-break:clone]">
-      {children}
-    </mark>
-  );
-}
-
-export function Badge({ children, className }: { children: ReactNode; className?: string }) {
-  return (
     <span
       className={cn(
-        "inline-flex items-center rounded-full bg-preview-bg px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-widest text-preview-text sm:text-[11px]",
+        "inline-flex items-center rounded-full px-2.5 py-0.5 font-sans text-[13px] font-bold leading-5",
+        badgeTones[tone],
         className,
       )}
     >
@@ -64,27 +67,26 @@ export function Badge({ children, className }: { children: ReactNode; className?
   );
 }
 
+const buttonVariants = {
+  primary: "bg-surface-accent font-bold text-ink-inverse hover:bg-surface-accent-hover",
+  secondary: "border border-line bg-surface font-bold text-ink hover:border-line-strong hover:bg-section",
+  /** Botão principal sobre a lousa: giz amarelo. */
+  chalk: "bg-amarelo-300 font-bold text-ink hover:bg-amarelo-400",
+  /** Botão secundário sobre a lousa: só o contorno. */
+  "chalk-outline": "border-2 border-salvia-400 font-bold text-giz hover:border-giz-apagado",
+} as const;
+
 type ButtonLinkProps = ComponentProps<typeof Link> & {
-  variant?: "primary" | "secondary";
+  variant?: keyof typeof buttonVariants;
   offset?: Offset;
-  arrow?: boolean;
 };
 
-export function ButtonLink({
-  variant = "primary",
-  offset = "canvas",
-  arrow = true,
-  className,
-  children,
-  ...props
-}: ButtonLinkProps) {
+export function ButtonLink({ variant = "primary", offset = "canvas", className, children, ...props }: ButtonLinkProps) {
   return (
     <Link
       className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-sm px-5 py-3 font-sans text-[15px] transition-colors",
-        variant === "primary"
-          ? "bg-surface-accent font-semibold text-ink-inverse hover:bg-accent-600"
-          : "border border-line bg-canvas font-medium text-ink hover:border-line-strong hover:bg-section",
+        "inline-flex h-12 items-center justify-center rounded-control px-6 font-sans text-[16px] transition-colors",
+        buttonVariants[variant],
         focusRing,
         ringOffset[offset],
         className,
@@ -92,7 +94,6 @@ export function ButtonLink({
       {...props}
     >
       {children}
-      {arrow && <span aria-hidden="true">→</span>}
     </Link>
   );
 }

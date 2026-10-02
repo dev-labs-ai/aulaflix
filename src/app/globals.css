@@ -1,32 +1,49 @@
 @import "tailwindcss";
 
 @theme inline {
-  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
-  --font-heading: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+  --font-sans: var(--font-atkinson), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
 }
 
 @theme {
-  /* Paleta base */
+  /* Paleta base: papel e grafite */
   --color-neutral-0: #ffffff;
-  --color-neutral-25: #fcfbf9;
-  --color-neutral-50: #f7f5f0;
-  --color-neutral-100: #f0ede6;
-  --color-neutral-200: #e2ded5;
-  --color-neutral-300: #cfc8bc;
-  --color-neutral-600: #6c665b;
-  --color-neutral-700: #4d4a44;
-  --color-neutral-850: #262b35;
-  --color-neutral-950: #111318;
+  --color-neutral-25: #f6f7f3;
+  --color-neutral-50: #eef1ea;
+  --color-neutral-100: #e4e9e1;
+  --color-neutral-200: #d9ded6;
+  --color-neutral-300: #bcc6bd;
+  --color-neutral-600: #56685d;
+  --color-neutral-700: #3e5146;
+  --color-neutral-850: #2a3830;
+  --color-neutral-950: #1f2a24;
 
-  --color-accent-100: #dce5ff;
-  --color-accent-300: #8eafff;
-  --color-accent-500: #2457ff;
-  --color-accent-600: #1f4ae0;
-  --color-accent-700: #193dba;
+  /* Sala de aula: lousa, giz, borracha (coral), sálvia e a madeira da régua */
+  --color-lousa-100: #dfe8e1;
+  --color-lousa-300: #8fa898;
+  --color-lousa-400: #2e6b4e;
+  --color-lousa-500: #22392e;
+  --color-lousa-600: #1a2d24;
 
-  --color-success-100: #ddf5e8;
-  --color-success-500: #176b47;
+  --color-giz: #f1f3ee;
+  --color-giz-apagado: #c9d6cc;
+
+  --color-amarelo-100: #fbf0c9;
+  --color-amarelo-300: #f2d06b;
+  --color-amarelo-400: #e8c04f;
+  --color-amarelo-700: #6b5512;
+
+  --color-coral-100: #fbe3dc;
+  --color-coral-400: #e98c7a;
+  --color-coral-700: #8a3b2c;
+
+  --color-salvia-100: #e1eae3;
+  --color-salvia-400: #6f8c7b;
+  --color-salvia-700: #2f4a3c;
+
+  --color-madeira: #8a6a4a;
+  --color-pauta: #e3e9f0;
+
   --color-warning-100: #fff0cc;
   --color-warning-500: #714b13;
   --color-danger-100: #ffe2de;
@@ -38,34 +55,36 @@
   --color-surface: var(--color-neutral-0);
   --color-surface-raised: var(--color-neutral-0);
   --color-surface-muted: var(--color-neutral-100);
-  --color-surface-accent: var(--color-accent-500);
-  --color-surface-accent-soft: var(--color-accent-100);
+  --color-surface-accent: var(--color-lousa-500);
+  --color-surface-accent-hover: var(--color-lousa-600);
+  --color-surface-accent-soft: var(--color-lousa-100);
 
   --color-ink: var(--color-neutral-950);
   --color-ink-secondary: var(--color-neutral-850);
   --color-ink-tertiary: var(--color-neutral-700);
   --color-ink-muted: var(--color-neutral-600);
-  --color-ink-inverse: var(--color-neutral-0);
-  --color-ink-accent: var(--color-accent-600);
+  --color-ink-inverse: var(--color-giz);
+  --color-ink-accent: var(--color-lousa-400);
+  --color-ink-accent-hover: var(--color-lousa-500);
 
   --color-line: var(--color-neutral-200);
   --color-line-subtle: var(--color-neutral-100);
   --color-line-strong: var(--color-neutral-300);
-  --color-line-accent: var(--color-accent-300);
+  --color-line-accent: var(--color-lousa-300);
 
   --color-error-text: var(--color-danger-500);
   --color-error-bg: var(--color-danger-100);
 
-  --color-focus: var(--color-accent-500);
-  --color-preview-bg: var(--color-success-100);
-  --color-preview-text: var(--color-success-500);
+  --color-focus: var(--color-lousa-400);
 
-  --radius-xs: 6px;
-  --radius-sm: 10px;
-  --radius-md: 14px;
-  --radius-lg: 18px;
+  /* Raios: controles arredondados, fichas quase retas, lousa bem redonda no topo */
+  --radius-control: 12px;
+  --radius-card: 6px;
+  --radius-board: 28px;
 
-  --shadow-raised: 0 1px 2px #1113180a, 0 8px 24px #1113180f;
+  /* Sombra de papel: uma borda dura embaixo, sem desfoque */
+  --shadow-raised: 0 2px 0 var(--color-neutral-200);
+  --shadow-pop: 0 0 0 1px var(--color-neutral-200), 0 18px 40px -20px rgb(31 42 36 / 0.45);
 }
 
 body {
@@ -75,100 +94,52 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Entrada do hero */
-@keyframes anim-hero-reveal {
+::selection {
+  background-color: var(--color-amarelo-300);
+  color: var(--color-neutral-950);
+}
+
+/* Ficha pautada: uma linha a cada 28px, alinhada com o texto em leading-7. */
+@utility pautado {
+  background-color: var(--color-surface);
+  background-image: repeating-linear-gradient(to bottom, transparent 0 27px, var(--color-pauta) 27px 28px);
+}
+
+/* Entrada do hero: o título aparece como se fosse escrito a giz, da esquerda para a direita. */
+@keyframes giz-escrita {
+  from {
+    clip-path: inset(-0.25em 100% -0.25em 0);
+  }
+  to {
+    clip-path: inset(-0.25em 0 -0.25em 0);
+  }
+}
+
+@keyframes giz-surge {
   from {
     opacity: 0;
-    transform: translateY(14px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
-.anim-hero {
+.anim-giz {
+  animation: giz-escrita 0.9s cubic-bezier(0.45, 0, 0.2, 1) both;
+}
+.anim-surge {
   opacity: 0;
-  animation: anim-hero-reveal 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: giz-surge 0.5s ease-out 0.7s forwards;
 }
-.anim-hero-delay-1 {
-  animation-delay: 80ms;
-}
-.anim-hero-delay-2 {
-  animation-delay: 200ms;
-}
-.anim-hero-delay-3 {
-  animation-delay: 340ms;
-}
-.anim-hero-delay-4 {
-  animation-delay: 480ms;
-}
-
-/* Revelação ao rolar (ativada por RevealObserver) */
-.reveal {
-  opacity: 0;
-  transform: translateY(18px);
-  transition:
-    opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.reveal[data-visible] {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.reveal-stagger > * {
-  opacity: 0;
-  transform: translateY(14px);
-  transition:
-    opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.reveal-stagger[data-visible] > * {
-  opacity: 1;
-  transform: translateY(0);
-}
-.reveal-stagger[data-visible] > :nth-child(2) {
-  transition-delay: 60ms;
-}
-.reveal-stagger[data-visible] > :nth-child(3) {
-  transition-delay: 110ms;
-}
-.reveal-stagger[data-visible] > :nth-child(4) {
-  transition-delay: 160ms;
-}
-.reveal-stagger[data-visible] > :nth-child(5) {
-  transition-delay: 210ms;
-}
-.reveal-stagger[data-visible] > :nth-child(6) {
-  transition-delay: 260ms;
-}
-.reveal-stagger[data-visible] > :nth-child(7) {
-  transition-delay: 300ms;
-}
-.reveal-stagger[data-visible] > :nth-child(8) {
-  transition-delay: 335ms;
-}
-.reveal-stagger[data-visible] > :nth-child(9) {
-  transition-delay: 370ms;
-}
-.reveal-stagger[data-visible] > :nth-child(10) {
-  transition-delay: 400ms;
-}
-.reveal-stagger[data-visible] > :nth-child(n + 11) {
-  transition-delay: 430ms;
+.anim-surge-tarde {
+  animation-delay: 0.85s;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .anim-hero {
+  .anim-giz,
+  .anim-surge {
     opacity: 1;
     animation: none;
-    transform: none;
-  }
-  .reveal,
-  .reveal-stagger > * {
-    opacity: 1;
-    transition: none;
-    transform: none;
+    clip-path: none;
   }
 }

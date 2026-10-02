@@ -29,23 +29,25 @@ function useWaitlist() {
 export function WaitlistCard({ courseTitle }: { courseTitle: string }) {
   const { submission } = useWaitlist();
   return (
-    <div className="rounded-md border border-line-subtle bg-surface-raised p-6 shadow-(--shadow-raised) sm:p-7">
-      {submission ? (
-        <WaitlistConfirmed courseTitle={courseTitle} {...submission} />
-      ) : (
-        <>
-          <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-accent">Lista de espera</p>
-          <p className="mt-4 font-heading text-[20px] font-semibold leading-[1.2] tracking-[-0.012em] text-ink sm:text-[22px]">
-            Seja avisado do lançamento.
-          </p>
-          <p className="mt-3 font-sans text-[13px] leading-[1.55] text-ink-tertiary">
-            Entre na lista de espera e receba um e-mail quando as inscrições abrirem.
-          </p>
-          <div className="mt-6">
-            <WaitlistForm />
-          </div>
-        </>
-      )}
+    <div className="overflow-hidden rounded-card border border-line bg-surface-raised shadow-(--shadow-raised)">
+      <span aria-hidden="true" className="block h-3 bg-salvia-400" />
+      <div className="p-6 sm:p-7">
+        {submission ? (
+          <WaitlistConfirmed courseTitle={courseTitle} {...submission} />
+        ) : (
+          <>
+            <p className="font-heading text-[22px] font-bold leading-[1.2] tracking-[-0.015em] text-ink sm:text-[24px]">
+              Seja avisado do lançamento
+            </p>
+            <p className="mt-3 text-[15px] leading-[1.55] text-ink-tertiary">
+              Entre na lista de espera e receba um e-mail quando as inscrições abrirem.
+            </p>
+            <div className="mt-6">
+              <WaitlistForm />
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 }
@@ -72,15 +74,15 @@ function validate(values: { name: string; email: string; phone: string }) {
 
 const inputClass = (invalid: boolean) =>
   cn(
-    "block w-full rounded-sm border bg-surface px-3.5 py-2.5 font-sans text-[15px] text-ink placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-surface-raised disabled:opacity-60",
+    "block w-full rounded-control border bg-surface px-3.5 py-2.5 font-sans text-[16px] text-ink placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-surface-raised disabled:opacity-60",
     invalid ? "border-danger-500 focus:ring-danger-100" : "border-line focus:border-line-accent focus:ring-focus",
   );
 
-const labelClass = "block font-mono text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-muted";
+const labelClass = "block text-[14px] font-bold text-ink-secondary";
 
 function FieldError({ id, children }: { id: string; children: ReactNode }) {
   return (
-    <p id={id} className="font-sans text-[12px] leading-[1.45] text-danger-500">
+    <p id={id} className="text-[13px] leading-[1.45] text-error-text">
       {children}
     </p>
   );
@@ -160,12 +162,12 @@ function WaitlistForm() {
       <div className="space-y-1.5">
         <label htmlFor={`${id}-phone`} className={cn(labelClass, "flex items-baseline justify-between")}>
           <span>Telefone</span>
-          <span className="font-mono text-[10px] normal-case tracking-[0.08em] text-ink-muted">opcional</span>
+          <span className="text-[13px] font-normal text-ink-muted">opcional</span>
         </label>
         <div
           className={cn(
             "flex w-full items-center border bg-surface px-3.5 py-2.5 font-sans focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-offset-surface-raised",
-            "rounded-sm",
+            "rounded-control",
             show("phone")
               ? "border-danger-500 focus-within:ring-danger-100"
               : "border-line focus-within:border-line-accent focus-within:ring-focus",
@@ -202,7 +204,7 @@ function WaitlistForm() {
             disabled={pending}
             aria-invalid={Boolean(show("phone"))}
             aria-describedby={show("phone") ? `${id}-phone-error` : undefined}
-            className="min-w-0 flex-1 border-0 bg-transparent p-0 font-sans text-[15px] text-ink outline-none placeholder:text-ink-muted disabled:cursor-not-allowed"
+            className="min-w-0 flex-1 border-0 bg-transparent p-0 font-sans text-[16px] text-ink outline-none placeholder:text-ink-muted disabled:cursor-not-allowed"
           />
         </div>
         {show("phone") && <FieldError id={`${id}-phone-error`}>{show("phone")}</FieldError>}
@@ -211,10 +213,9 @@ function WaitlistForm() {
       <button
         type="submit"
         disabled={!canSubmit}
-        className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-sm bg-surface-accent px-5 py-3 font-sans text-[15px] font-semibold text-ink-inverse transition-colors enabled:hover:bg-accent-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-4 focus-visible:ring-offset-surface-raised disabled:cursor-not-allowed disabled:bg-surface-muted disabled:text-ink-muted"
+        className="mt-2 inline-flex h-12 w-full items-center justify-center rounded-control bg-surface-accent px-5 text-[16px] font-bold text-ink-inverse transition-colors enabled:hover:bg-surface-accent-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-4 focus-visible:ring-offset-surface-raised disabled:cursor-not-allowed disabled:bg-surface-muted disabled:text-ink-muted"
       >
         {pending ? "Enviando…" : "Quero ser avisado"}
-        <span aria-hidden="true">→</span>
       </button>
     </form>
   );
@@ -238,7 +239,7 @@ function WaitlistConfirmed({ name, email, courseTitle }: Submission & { courseTi
       </svg>
       <h3
         className={cn(
-          "mt-5 font-heading text-[26px] font-semibold leading-[1.1] tracking-[-0.02em] text-ink sm:text-[28px]",
+          "mt-5 font-heading text-[26px] font-bold leading-[1.1] tracking-[-0.02em] text-ink sm:text-[28px]",
           styles.fadeUp,
           styles.delayTitle,
         )}
@@ -247,13 +248,13 @@ function WaitlistConfirmed({ name, email, courseTitle }: Submission & { courseTi
       </h3>
       <p
         className={cn(
-          "mt-3 max-w-[44ch] font-sans text-[15px] leading-[1.6] text-ink-secondary",
+          "mt-3 max-w-[44ch] text-[16px] leading-[1.6] text-ink-secondary",
           styles.fadeUp,
           styles.delayBody,
         )}
       >
         Registramos seu interesse em <span className="text-ink">{courseTitle}</span>. Vamos avisar você em{" "}
-        <span className={cn("font-mono text-[13.5px] text-ink", styles.email)}>{email}</span> quando as inscrições abrirem.
+        <span className={cn("font-bold text-ink", styles.email)}>{email}</span> quando as inscrições abrirem.
       </p>
     </output>
   );

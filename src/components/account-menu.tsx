@@ -15,14 +15,14 @@ const accountIcons: Record<AccountIcon, LucideIcon> = {
 };
 
 const itemClass =
-  "flex w-full items-center gap-2.5 rounded-sm px-3 py-2.5 text-left font-sans text-[14px] text-ink-secondary transition-colors hover:bg-section focus-visible:bg-section focus-visible:outline-none";
+  "flex w-full items-center gap-2.5 rounded-control px-3 py-2.5 text-left text-[15px] text-ink-secondary transition-colors hover:bg-section focus-visible:bg-section focus-visible:outline-none";
 const itemIconClass = "size-[18px] shrink-0 text-ink-tertiary";
 
 export function UserAvatar({ user }: { user: SessionUser }) {
   return (
     <span
       aria-hidden="true"
-      className="inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-surface-accent-soft font-sans text-[12px] font-bold text-ink-accent"
+      className="inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-amarelo-300 text-[13px] font-bold text-ink"
     >
       {initials(user.name, user.email)}
     </span>
@@ -66,7 +66,7 @@ export function AccountMenu({ user }: { user: SessionUser }) {
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
         className={cn(
-          "inline-flex h-10 items-center gap-1.5 rounded-full border border-line bg-surface pl-1 pr-2 transition-colors hover:bg-section",
+          "inline-flex h-11 items-center gap-1.5 rounded-full border border-line bg-surface pl-1.5 pr-2.5 transition-colors hover:bg-section",
           focusRing,
           ringOffset.canvas,
         )}
@@ -79,11 +79,11 @@ export function AccountMenu({ user }: { user: SessionUser }) {
         <div
           role="menu"
           aria-label={accountMenu.label}
-          className="absolute right-0 top-[calc(100%+8px)] z-50 w-[260px] rounded-md border border-line-subtle bg-surface-raised p-2 shadow-(--shadow-raised)"
+          className="absolute right-0 top-[calc(100%+8px)] z-50 w-[272px] rounded-card bg-surface-raised p-2 shadow-(--shadow-pop)"
         >
           <div className="border-b border-line-subtle px-3 pb-3 pt-2.5">
-            <p className="truncate font-sans text-[14px] font-semibold text-ink">{user.name}</p>
-            <p className="truncate font-sans text-[13px] text-ink-muted">{user.email}</p>
+            <p className="truncate text-[15px] font-bold text-ink">{user.name}</p>
+            <p className="truncate text-[14px] text-ink-muted">{user.email}</p>
           </div>
           <div className="flex flex-col pt-1.5">
             {accountMenu.links.map((link) => {
@@ -118,15 +118,15 @@ export function AccountMenu({ user }: { user: SessionUser }) {
 export function MobileAccountPanel({ user, onNavigate }: { user: SessionUser; onNavigate: () => void }) {
   const SettingsIcon = accountIcons[accountMenu.settings.icon];
   const buttonClass =
-    "inline-flex h-10 w-full items-center justify-center gap-2 rounded-sm border border-line bg-canvas px-4 font-sans text-[14px] font-medium text-ink transition-colors hover:border-line-strong hover:bg-section";
+    "inline-flex h-11 w-full items-center justify-center gap-2 rounded-control border border-line bg-surface px-4 text-[15px] font-bold text-ink transition-colors hover:border-line-strong hover:bg-section";
 
   return (
     <div className="grid gap-3">
       <div className="flex items-center gap-2.5">
         <UserAvatar user={user} />
         <div className="min-w-0">
-          <p className="truncate font-sans text-[14px] font-medium text-ink">{user.name}</p>
-          <p className="truncate font-mono text-[11px] text-ink-muted">{user.email}</p>
+          <p className="truncate text-[15px] font-bold text-ink">{user.name}</p>
+          <p className="truncate text-[14px] text-ink-muted">{user.email}</p>
         </div>
       </div>
       <Link href={accountMenu.settings.href} onClick={onNavigate} className={buttonClass}>

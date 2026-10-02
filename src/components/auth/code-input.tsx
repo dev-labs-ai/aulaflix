@@ -58,7 +58,7 @@ export function CodeInput({
           <div
             key={i}
             className={cn(
-              "flex h-[52px] items-center justify-center rounded-sm border bg-surface font-mono text-[24px] font-semibold text-ink sm:h-[60px]",
+              "flex h-[52px] items-center justify-center rounded-control border bg-surface font-heading text-[26px] font-bold tabular-nums text-ink sm:h-[60px]",
               invalid ? "border-error-text" : "border-line",
               focused && !invalid && i === activeIndex && "border-line-accent ring-2 ring-focus ring-offset-2 ring-offset-surface-raised",
               disabled && "opacity-60",

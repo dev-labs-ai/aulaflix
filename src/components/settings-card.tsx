@@ -10,8 +10,8 @@ import { updateName } from "@/lib/auth-actions";
 
 const textButton = (tone: "accent" | "muted") =>
   cn(
-    "-my-1 rounded-sm px-2 py-1 font-sans text-[14px] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50",
-    tone === "accent" ? "font-semibold text-ink-accent hover:text-accent-700" : "font-medium text-ink-tertiary hover:text-ink",
+    "-my-1 rounded-control px-2 py-1 text-[15px] font-bold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus disabled:opacity-50",
+    tone === "accent" ? "text-ink-accent hover:text-ink-accent-hover" : "text-ink-tertiary hover:text-ink",
   );
 
 /**
@@ -36,7 +36,7 @@ function Row({
   const content = (
     <>
       <div className="grid min-h-16 grid-cols-[minmax(0,1fr)_auto] items-center gap-x-6 gap-y-1.5 px-6 py-3 sm:grid-cols-[140px_minmax(0,1fr)_auto]">
-        <span className="col-start-1 row-start-1 font-sans text-[14px] font-medium text-ink-secondary">{label}</span>
+        <span className="col-start-1 row-start-1 text-[15px] font-bold text-ink-secondary">{label}</span>
         {value !== undefined && (
           <div className="col-span-2 row-start-2 min-w-0 sm:col-span-1 sm:col-start-2 sm:row-start-1">{value}</div>
         )}
@@ -50,14 +50,14 @@ function Row({
   return formAction ? <form action={formAction}>{content}</form> : <div>{content}</div>;
 }
 
-const valueText = "block truncate font-sans text-[14px] text-ink";
+const valueText = "block truncate text-[15px] text-ink";
 
 export function SettingsCard({ user }: { user: SessionUser }) {
   const [editingName, setEditingName] = useState(false);
   const [changingPassword, setChangingPassword] = useState(false);
 
   return (
-    <div className="mt-8 max-w-[640px] divide-y divide-line-subtle rounded-md border border-line bg-surface">
+    <div className="mt-8 max-w-[640px] divide-y divide-line rounded-card border border-line bg-surface shadow-(--shadow-raised)">
       {editingName ? (
         <NameEditor current={user.name} onClose={() => setEditingName(false)} />
       ) : (
@@ -86,7 +86,7 @@ export function SettingsCard({ user }: { user: SessionUser }) {
               type="button"
               onClick={() => setChangingPassword(true)}
               className={cn(
-                "inline-flex h-9 items-center rounded-sm border border-line bg-surface px-4 font-sans text-[14px] font-semibold text-ink transition-colors hover:border-line-strong hover:bg-section",
+                "inline-flex h-10 items-center rounded-control border border-line bg-surface px-4 text-[15px] font-bold text-ink transition-colors hover:border-line-strong hover:bg-section",
                 focusRing,
                 ringOffset.canvas,
               )}
@@ -100,7 +100,7 @@ export function SettingsCard({ user }: { user: SessionUser }) {
           <div className="px-6 pb-6">
             {/* Protótipo: o "envio" do código é imediato e qualquer código de 6 dígitos é aceito. */}
             <div className="flex max-w-[440px] flex-col gap-5">
-              <p className="font-sans text-[15px] leading-[1.6] text-ink-tertiary">
+              <p className="text-[16px] leading-[1.6] text-ink-tertiary">
                 <Emphasis parts={copy.codeSent(user.email)} />
               </p>
               <NewPasswordForm
@@ -142,7 +142,7 @@ function NameEditor({ current, onClose }: { current: string; onClose: () => void
             aria-invalid={state.error ? true : undefined}
             aria-describedby={state.error ? "name-error" : undefined}
             className={cn(
-              "h-9 w-full max-w-72 rounded-sm border bg-surface px-3 font-sans text-[14px] text-ink focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-surface",
+              "h-10 w-full max-w-72 rounded-control border bg-surface px-3 text-[15px] text-ink focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-surface",
               state.error ? "border-error-text focus:ring-error-bg" : "border-line focus:border-line-accent focus:ring-focus",
             )}
           />

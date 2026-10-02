@@ -1,76 +1,125 @@
 import Image from "next/image";
 import Link from "next/link";
-import { CourseCoverPlaceholder } from "@/components/placeholders";
-import { Badge, cn } from "@/components/ui";
+import { CourseCoverPlaceholder, courseIcons, toneClasses } from "@/components/placeholders";
+import { Badge, cn, focusRing, ringOffset } from "@/components/ui";
+import { getCourseDetail } from "@/content/course-details";
 import { statusLabel, type Course } from "@/content/courses";
+import { brl } from "@/lib/format";
 
-export function CourseCover({ course }: { course: Course }) {
+/** Capa do curso: a imagem própria, quando houver, ou o placeholder na cor do curso. */
+export function CourseCover({ course, className }: { course: Course; className?: string }) {
   return (
-    <div
-      aria-hidden="true"
-      className="relative aspect-video w-full overflow-hidden rounded-md border border-line-subtle transition-[filter,transform] duration-300 group-hover:brightness-[1.04] group-focus-visible:brightness-[1.04]"
-    >
+    <div aria-hidden="true" className={cn("relative aspect-video w-full overflow-hidden", className)}>
       {course.image ? (
-        <Image src={course.image} alt="" fill sizes="200px" className="object-cover" />
+        <Image src={course.image} alt="" fill sizes="240px" className="object-cover" />
       ) : (
-        <CourseCoverPlaceholder icon={course.icon} />
+        <CourseCoverPlaceholder course={course} />
       )}
-      <div className="absolute inset-0 bg-linear-to-tr from-[#0c0e14]/80 via-[#1a1e26]/50 to-[#262b35]/25" />
     </div>
   );
 }
 
+/** Número de aulas e preço, para cursos à venda. */
+function saleFacts(course: Course) {
+  const detail = getCourseDetail(course.slug);
+  if (detail?.kind !== "on-sale") return null;
+  const lessons = detail.modules.reduce((n, mod) => n + mod.lessons.length, 0);
+  return { lessons: `${lessons} ${lessons === 1 ? "aula" : "aulas"}`, price: brl(detail.pricing.price) };
+}
+
 /**
- * Lista de cursos com capa, título, resumo e status.
- * - `card`: dentro de um cartão branco elevado (cursos à venda).
- * - `plain`: linhas soltas separadas por divisórias (lista de espera).
+ * Cursos à venda como fichas pautadas, com a faixa do topo na cor do curso.
+ * Todo o texto da ficha usa leading-7 e espaços múltiplos de 28px, para cair nas linhas da pauta.
  */
-export function CourseList({
+export function CourseCards({
   courses,
-  variant = "plain",
   label,
+  offset = "canvas",
   className,
 }: {
   courses: Course[];
-  variant?: "card" | "plain";
   label: string;
+  offset?: keyof typeof ringOffset;
   className?: string;
 }) {
-  const card = variant === "card";
   return (
-    <ol
-      aria-label={label}
-      className={cn(
-        "reveal-stagger",
-        card && "overflow-hidden rounded-lg border border-line-subtle bg-surface-raised shadow-(--shadow-raised)",
-        className,
-      )}
-    >
-      {courses.map((course) => (
-        <li key={course.slug} className="border-b border-line-subtle last:border-b-0">
-          <Link
-            href={`/cursos/${course.slug}`}
-            aria-label={course.title}
-            className={cn(
-              "group grid gap-x-5 py-7 transition-colors duration-200 hover:bg-section focus-visible:bg-section focus-visible:outline-none sm:grid-cols-[140px_1fr_auto] sm:items-center sm:gap-x-8 sm:py-9 lg:grid-cols-[200px_minmax(0,1fr)_auto] lg:gap-x-12 lg:py-12",
-              card ? "grid-cols-[minmax(0,1fr)] items-start gap-y-4 px-4 sm:px-8" : "grid-cols-[100px_1fr] items-center gap-y-3",
-            )}
-          >
-            <CourseCover course={course} />
-            <div className="min-w-0">
-              <h3 className="font-heading text-[20px] font-semibold tracking-[-0.012em] text-ink transition-colors duration-200 group-hover:text-ink-accent group-focus-visible:text-ink-accent sm:text-[24px]">
-                {course.title}
-              </h3>
-              <p className="mt-1.5 max-w-[60ch] font-sans text-[14px] leading-[1.55] text-ink-tertiary sm:mt-2 sm:text-[15px]">
-                {course.summary}
-              </p>
-            </div>
-            <div className="col-span-full flex items-center gap-4 sm:col-span-1 sm:justify-end sm:self-center">
-              <Badge>{statusLabel[course.status]}</Badge>
-            </div>
-          </Link>
-        </li>
-      ))}
-    </ol>
+    <ul aria-label={label} className={cn("grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-7", className)}>
+      {courses.map((course) => {
+        const Icon = courseIcons[course.icon];
+        const facts = saleFacts(course);
+        return (
+          <li key={course.slug}>
+            <Link
+              href={`/cursos/${course.slug}`}
+              className={cn(
+                "group flex h-full flex-col overflow-hidden rounded-card border border-line shadow-(--shadow-raised) transition-colors hover:border-line-strong",
+                focusRing,
+                ringOffset[offset],
+              )}
+            >
+              <span aria-hidden="true" className={cn("h-3 shrink-0", toneClasses[course.tone].stripe)} />
+              <div className="flex flex-1 flex-col pautado px-6 py-7">
+                <p className="flex items-center gap-2.5 text-[15px] font-bold leading-7 text-ink-tertiary">
+                  <Icon aria-hidden="true" className="size-5" />
+                  {course.subject}
+                </p>
+                <h3 className="mt-7 font-heading text-[26px] font-bold leading-7 tracking-[-0.02em] text-ink transition-colors group-hover:text-ink-accent">
+                  {course.title}
+                </h3>
+                <p className="mt-7 flex-1 text-[16px] leading-7 text-ink-tertiary">{course.summary}</p>
+                {facts && (
+                  <p className="mt-7 flex justify-between gap-4 text-[16px] font-bold leading-7 tabular-nums text-ink">
+                    <span>{facts.lessons}</span>
+                    <span>{facts.price}</span>
+                  </p>
+                )}
+              </div>
+            </Link>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
+/** Cursos em lista de espera: linhas com o ícone na cor do curso e o selo de status. */
+export function CourseRows({ courses, label, className }: { courses: Course[]; label: string; className?: string }) {
+  return (
+    <ul aria-label={label} className={cn("border-y border-line", className)}>
+      {courses.map((course) => {
+        const Icon = courseIcons[course.icon];
+        const tone = toneClasses[course.tone];
+        return (
+          <li key={course.slug} className="border-b border-line last:border-b-0">
+            <Link
+              href={`/cursos/${course.slug}`}
+              className={cn(
+                "group grid grid-cols-[48px_minmax(0,1fr)] items-start gap-x-5 gap-y-3 py-6 sm:grid-cols-[56px_minmax(0,1fr)_auto] sm:items-center sm:gap-x-8 sm:py-8",
+                focusRing,
+                ringOffset.canvas,
+              )}
+            >
+              <span
+                aria-hidden="true"
+                className={cn("flex size-12 items-center justify-center rounded-card sm:size-14", tone.soft, tone.ink)}
+              >
+                <Icon className="size-6" strokeWidth={1.75} />
+              </span>
+              <div className="min-w-0">
+                <h3 className="font-heading text-[20px] font-bold leading-[1.2] tracking-[-0.015em] text-ink transition-colors group-hover:text-ink-accent sm:text-[24px]">
+                  {course.title}
+                </h3>
+                <p className="mt-1.5 max-w-[62ch] text-[15px] leading-[1.6] text-ink-tertiary sm:text-[16px]">
+                  {course.summary}
+                </p>
+              </div>
+              <Badge className="col-start-2 justify-self-start sm:col-start-3 sm:justify-self-end">
+                {statusLabel[course.status]}
+              </Badge>
+            </Link>
+          </li>
+        );
+      })}
+    </ul>
   );
 }

@@ -37,7 +37,7 @@ export function TextField({ label, error, hint, labelAside, password = false, cl
           aria-invalid={error ? true : undefined}
           aria-describedby={describedBy || undefined}
           className={cn(
-            "block h-11 w-full rounded-sm border bg-surface px-3.5 font-sans text-[15px] text-ink placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-surface-raised disabled:opacity-60",
+            "block h-12 w-full rounded-control border bg-surface px-3.5 text-[16px] text-ink placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-surface-raised disabled:opacity-60",
             error ? "border-error-text focus:border-error-text focus:ring-error-bg" : "border-line focus:border-line-accent focus:ring-focus",
             password && "pr-12",
             className,
@@ -50,7 +50,7 @@ export function TextField({ label, error, hint, labelAside, password = false, cl
             onClick={() => setVisible((v) => !v)}
             aria-label={visible ? authCopy.fields.hidePassword : authCopy.fields.showPassword}
             aria-pressed={visible}
-            className="absolute right-0 top-0 flex size-11 items-center justify-center rounded-sm text-ink-tertiary hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
+            className="absolute right-0 top-0 flex size-12 items-center justify-center rounded-control text-ink-tertiary hover:text-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
           >
             {visible ? <EyeOff aria-hidden="true" className="size-5" /> : <Eye aria-hidden="true" className="size-5" />}
           </button>
@@ -58,7 +58,7 @@ export function TextField({ label, error, hint, labelAside, password = false, cl
       </div>
       {error ? <FieldError id={`${inputId}-error`}>{error}</FieldError> : null}
       {hint && !error ? (
-        <p id={`${inputId}-hint`} className="font-sans text-[13px] leading-5 text-ink-muted">
+        <p id={`${inputId}-hint`} className="text-[14px] leading-5 text-ink-muted">
           {hint}
         </p>
       ) : null}
