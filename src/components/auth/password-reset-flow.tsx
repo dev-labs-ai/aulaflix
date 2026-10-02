@@ -3,29 +3,12 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
-import {
-  AuthAlert,
-  AuthCard,
-  AuthHeading,
-  BackLink,
-  Emphasis,
-  PrototypeNotice,
-  ResendCode,
-  fieldLabelClass,
-  submitButtonClass,
-} from "@/components/auth/auth-ui";
-import { CodeInput } from "@/components/auth/code-input";
-import { simulateRequest, useFieldValidation, useResendCountdown } from "@/components/auth/hooks";
+import { AuthCard, AuthHeading, BackLink, Emphasis, submitButtonClass } from "@/components/auth/auth-ui";
+import { simulateRequest, useFieldValidation } from "@/components/auth/hooks";
+import { NewPasswordForm } from "@/components/auth/new-password-form";
 import { TextField } from "@/components/auth/text-field";
 import { cn } from "@/components/ui";
-import {
-  AUTH_CODE_LENGTH,
-  AUTH_PASSWORD_MIN_LENGTH,
-  AUTH_RESEND_SECONDS,
-  authCopy,
-  authErrors,
-  isEmail,
-} from "@/content/auth";
+import { authCopy, authErrors, isEmail } from "@/content/auth";
 
 // Protótipo: nada é enviado a um backend. O pedido de código é simulado e qualquer
 // código de 6 dígitos é aceito na troca de senha.
@@ -59,7 +42,18 @@ export function PasswordResetFlow() {
           <AuthHeading title={authCopy.reset.title} body={<Emphasis parts={authCopy.reset.body(email.trim())} />} />
         </div>
         <AuthCard label={authCopy.reset.title}>
-          <NewPasswordForm email={email.trim()} />
+          <NewPasswordForm
+            email={email.trim()}
+            submitLabel={authCopy.reset.submit}
+            savedNotice={
+              <>
+                {authCopy.prototype.passwordSaved}{" "}
+                <Link href="/" className="font-semibold underline underline-offset-2">
+                  {authCopy.prototype.goHome}
+                </Link>
+              </>
+            }
+          />
         </AuthCard>
       </>
     );
@@ -89,91 +83,6 @@ export function PasswordResetFlow() {
           </button>
         </form>
       </AuthCard>
-    </>
-  );
-}
-
-function NewPasswordForm({ email }: { email: string }) {
-  const [code, setCode] = useState("");
-  const [values, setValues] = useState({ password: "", confirm: "" });
-  const [status, setStatus] = useState<"idle" | "pending" | "saved">("idle");
-  const [resent, setResent] = useState(false);
-  const countdown = useResendCountdown(AUTH_RESEND_SECONDS);
-
-  const validation = useFieldValidation(values, {
-    password: values.password.length < AUTH_PASSWORD_MIN_LENGTH ? authErrors.passwordTooShort : undefined,
-    confirm: values.confirm !== values.password ? authErrors.passwordMismatch : undefined,
-  });
-  const field = (name: keyof typeof values) => ({
-    value: values[name],
-    onChange: (event: { target: { value: string } }) => setValues((v) => ({ ...v, [name]: event.target.value })),
-    onBlur: validation.touch(name),
-    error: validation.errorFor(name),
-  });
-
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (status !== "idle" || !validation.submit() || code.length !== AUTH_CODE_LENGTH) return;
-    setStatus("pending");
-    await simulateRequest();
-    setStatus("saved");
-  }
-
-  function resend() {
-    setCode("");
-    setResent(true);
-    countdown.restart();
-  }
-
-  return (
-    <>
-      {status === "saved" ? (
-        <PrototypeNotice>
-          {authCopy.prototype.passwordSaved}{" "}
-          <Link href="/" className="font-semibold underline underline-offset-2">
-            {authCopy.prototype.goHome}
-          </Link>
-        </PrototypeNotice>
-      ) : (
-        resent && (
-          <AuthAlert tone="info">
-            <Emphasis parts={authCopy.resend.sent(email)} inherit />
-          </AuthAlert>
-        )
-      )}
-      <form onSubmit={handleSubmit} className="flex flex-col gap-5" noValidate>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="password-code" className={fieldLabelClass}>
-            {authCopy.fields.code}
-          </label>
-          <CodeInput id="password-code" value={code} onChange={setCode} disabled={status !== "idle"} autoFocus />
-        </div>
-        <TextField
-          label={authCopy.fields.newPassword}
-          name="new-password"
-          autoComplete="new-password"
-          password
-          hint={authCopy.fields.passwordHint}
-          disabled={status === "saved"}
-          {...field("password")}
-        />
-        <TextField
-          label={authCopy.fields.confirmNewPassword}
-          name="confirm-password"
-          autoComplete="new-password"
-          password
-          disabled={status === "saved"}
-          {...field("confirm")}
-        />
-        <button
-          type="submit"
-          disabled={status !== "idle" || code.length !== AUTH_CODE_LENGTH}
-          className={cn(submitButtonClass, "mt-1")}
-        >
-          {authCopy.reset.submit}
-        </button>
-      </form>
-      {status !== "saved" && <ResendCode countdown={countdown} onResend={resend} />}
     </>
   );
 }
