@@ -2,18 +2,47 @@
 
 import { useState } from "react";
 import { Play } from "lucide-react";
+import { cn } from "@/components/ui";
 
-/** Player de aula do protótipo: a tela com o botão de play. Ainda não há vídeos, então só avisa. */
-export function LessonPlayer({ title, label, duration }: { title: string; label: string; duration: string }) {
+/**
+ * Player de aula do protótipo: a tela com o botão de play. Ainda não há vídeos, então só avisa.
+ * Com `caption`, vira uma ficha com o número e o título da aula embaixo (aula grátis da página de curso);
+ * sem ela, é só a tela (página de aula, onde o título fica no h1).
+ */
+export function LessonPlayer({
+  title,
+  duration,
+  caption,
+}: {
+  title: string;
+  duration: string;
+  caption?: { label: string };
+}) {
   const [clicked, setClicked] = useState(false);
 
+  const notice = (
+    // A região fica sempre no DOM, para o aviso ser anunciado quando aparecer.
+    <div role="status">
+      {clicked && (
+        <p className="mt-3 rounded-control bg-warning-100 px-3 py-2 text-[14px] text-warning-500">
+          Protótipo: o vídeo da aula ainda não está disponível.
+        </p>
+      )}
+    </div>
+  );
+
   return (
-    <figure className="overflow-hidden rounded-card border border-line bg-surface-raised shadow-(--shadow-raised)">
+    <figure
+      className={cn(caption && "overflow-hidden rounded-card border border-line bg-surface-raised shadow-(--shadow-raised)")}
+    >
       <button
         type="button"
         onClick={() => setClicked(true)}
         aria-label={`Assistir à aula: ${title}`}
-        className="group relative flex aspect-video w-full items-center justify-center bg-lousa-500 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-amarelo-300"
+        className={cn(
+          "group relative flex aspect-video w-full items-center justify-center bg-lousa-500 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-amarelo-300",
+          !caption && "rounded-card",
+        )}
       >
         <span
           aria-hidden="true"
@@ -25,18 +54,15 @@ export function LessonPlayer({ title, label, duration }: { title: string; label:
           {duration}
         </span>
       </button>
-      <figcaption className="px-5 py-4 sm:px-6">
-        <p className="text-[14px] font-bold text-ink-muted">{label}</p>
-        <p className="mt-1 font-heading text-[19px] font-bold leading-[1.3] tracking-[-0.01em] text-ink">{title}</p>
-        {/* A região fica sempre no DOM, para o aviso ser anunciado quando aparecer. */}
-        <div role="status">
-          {clicked && (
-            <p className="mt-3 rounded-control bg-warning-100 px-3 py-2 text-[14px] text-warning-500">
-              Protótipo: o vídeo da aula ainda não está disponível.
-            </p>
-          )}
-        </div>
-      </figcaption>
+      {caption ? (
+        <figcaption className="px-5 py-4 sm:px-6">
+          <p className="text-[14px] font-bold text-ink-muted">{caption.label}</p>
+          <p className="mt-1 font-heading text-[19px] font-bold leading-[1.3] tracking-[-0.01em] text-ink">{title}</p>
+          {notice}
+        </figcaption>
+      ) : (
+        notice
+      )}
     </figure>
   );
 }

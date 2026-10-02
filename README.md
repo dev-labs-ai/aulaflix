@@ -21,6 +21,8 @@ pnpm lint
 | `/cursos` (filtros `?area=` e `?situacao=a-venda\|em-breve`) | `src/app/(site)/cursos/page.tsx` |
 | `/cursos/[slug]` (7 cursos) | `src/app/(site)/cursos/[slug]/page.tsx` |
 | `/meus-cursos` (só logado) | `src/app/(site)/meus-cursos/page.tsx` |
+| `/aprender/[curso]` (só para quem tem o curso) | `src/app/(site)/aprender/[curso]/page.tsx`, que leva à aula onde o aluno parou |
+| `/aprender/[curso]/[aula]` (só para quem tem o curso) | `src/app/(site)/aprender/[curso]/[aula]/page.tsx` |
 | `/compras` (só logado) | `src/app/(site)/compras/page.tsx` |
 | `/configuracoes` (só logado) | `src/app/(site)/configuracoes/page.tsx` |
 | `/entrar` (entrar e criar conta) | `src/app/entrar/page.tsx` (sem header/rodapé) |
@@ -32,7 +34,7 @@ O grupo `(site)` aplica header e rodapé; as telas de autenticação (`/entrar`,
 
 - **Marca, título e descrição do site, menu:** `src/content/site.ts`
 - **Lista de cursos (título, área, resumo, status, ícone, cor, capa) e áreas do filtro do catálogo:** `src/content/courses.ts`
-- **Conteúdo de cada curso (ementa, aula grátis, preços, FAQ):** `src/content/course-details/<slug>.ts`. A aula marcada com `free: true` aparece no player da página do curso.
+- **Conteúdo de cada curso (ementa, aula grátis, preços, FAQ):** `src/content/course-details/<slug>.ts`. A aula marcada com `free: true` aparece no player da página do curso. O endereço de cada aula em `/aprender` sai do título (`lessonSlug` em `src/content/course-details/index.ts`).
 - **Home (texto da seção Sobre):** `src/content/home.ts`
 - **Login, cadastro e redefinição de senha (textos, mensagens de erro, regras de senha e código):** `src/content/auth.ts`
 - **Cores, raios, sombras, animações:** `src/app/globals.css` (tokens `@theme` do Tailwind)
@@ -54,7 +56,7 @@ Direção "Lousa": a sala de aula como referência. Fundo de papel, texto em gra
 
 A conta criada no cadastro fica num cookie deste navegador (com a senha em hash), e só uma por vez: um novo cadastro substitui a anterior. Ela começa sem cursos e com o e-mail por confirmar; enquanto isso, uma faixa abaixo do header pede a confirmação, sem bloquear nada, e oferece um botão de protótipo que faz o papel do link do e-mail.
 
-As contas e a sessão ficam em `src/lib/auth.ts`; os cursos e o progresso da conta de demonstração, em `src/lib/enrollments.ts`, e os pedidos, em `src/lib/purchases.ts`. Páginas só para quem está logado usam `requireUser()`, que manda para `/entrar?next=…`. Em Configurações, o nome editado fica num cookie e aparece no header; a troca de senha é só simulada (a senha continua a mesma). É uma simulação: o cookie guarda só o e-mail e não é protegido contra falsificação, então deve ser substituído por um backend de autenticação real.
+As contas e a sessão ficam em `src/lib/auth.ts`; os cursos e o progresso inicial da conta de demonstração, em `src/lib/enrollments.ts` (as aulas marcadas como concluídas ficam num cookie deste navegador), e os pedidos, em `src/lib/purchases.ts`. Páginas só para quem está logado usam `requireUser()`, que manda para `/entrar?next=…`. Em Configurações, o nome editado fica num cookie e aparece no header; a troca de senha é só simulada (a senha continua a mesma). É uma simulação: o cookie guarda só o e-mail e não é protegido contra falsificação, então deve ser substituído por um backend de autenticação real.
 
 ## Limitações do protótipo
 

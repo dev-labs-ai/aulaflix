@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AccountEmptyState, AccountPage } from "@/components/account-page";
 import { CourseCover } from "@/components/course-list";
-import { cn, focusRing, ringOffset } from "@/components/ui";
+import { cn, focusRing, ProgressBar, ringOffset } from "@/components/ui";
 import { myCoursesCopy as copy } from "@/content/account";
 import { onSaleCourses, waitlistCourses } from "@/content/courses";
 import { requireUser } from "@/lib/auth";
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default async function MeusCursosPage() {
   const user = await requireUser("/meus-cursos");
-  const enrollments = getEnrollments(user);
+  const enrollments = await getEnrollments(user);
 
   const owned = new Set(enrollments.map((e) => e.course.slug));
   const notOwnedOnSale = onSaleCourses.filter((c) => !owned.has(c.slug)).length;
@@ -67,7 +67,7 @@ function describe({ completed, published, total }: Enrollment) {
 }
 
 function EnrollmentCard({ enrollment }: { enrollment: Enrollment }) {
-  const { course, completed, total } = enrollment;
+  const { course, completed, total, resume } = enrollment;
   const { meta, cta } = describe(enrollment);
   const percent = Math.round((completed / total) * 100);
 
@@ -78,20 +78,11 @@ function EnrollmentCard({ enrollment }: { enrollment: Enrollment }) {
         <h2 className="font-heading text-[22px] font-bold leading-[1.25] tracking-[-0.015em] text-ink">{course.title}</h2>
         <p className="mt-1.5 text-[15px] tabular-nums text-ink-muted">{meta}</p>
         {completed > 0 && (
-          <div
-            role="progressbar"
-            aria-label={copy.progressLabel(course.title)}
-            aria-valuemin={0}
-            aria-valuemax={100}
-            aria-valuenow={percent}
-            className="mt-3 h-2 w-full max-w-[240px] overflow-hidden rounded-full bg-surface-muted"
-          >
-            <div className="h-full rounded-full bg-lousa-400" style={{ width: `${percent}%` }} />
-          </div>
+          <ProgressBar value={percent} label={copy.progressLabel(course.title)} className="mt-3 max-w-[240px]" />
         )}
       </div>
       <Link
-        href={`/cursos/${course.slug}`}
+        href={`/aprender/${course.slug}/${resume.slug}`}
         className={cn(
           "inline-flex h-12 shrink-0 items-center justify-center self-start rounded-control border border-line bg-surface px-5 text-[16px] font-bold text-ink transition-colors hover:border-line-strong hover:bg-section sm:self-center",
           focusRing,

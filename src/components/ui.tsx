@@ -102,3 +102,19 @@ export function ButtonLink({ variant = "primary", offset = "canvas", className, 
 }
 
 export { focusRing };
+
+/** Barra de andamento de um curso (0 a 100%). */
+export function ProgressBar({ value, label, className }: { value: number; label: string; className?: string }) {
+  return (
+    <div
+      role="progressbar"
+      aria-label={label}
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={value}
+      className={cn("h-2 w-full overflow-hidden rounded-full bg-surface-muted", className)}
+    >
+      <div className="h-full rounded-full bg-lousa-400" style={{ width: `${value}%` }} />
+    </div>
+  );
+}

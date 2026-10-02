@@ -191,7 +191,7 @@ export function FreeLessonSection({
 }) {
   return (
     <CourseSection id={id} title="Aula grátis" note="Assista antes de comprar." className="scroll-mt-24 lg:sticky lg:top-24">
-      <LessonPlayer title={lesson.title} label={`Aula ${number} · ${moduleTitle}`} duration={lesson.duration ?? ""} />
+      <LessonPlayer title={lesson.title} duration={lesson.duration ?? ""} caption={{ label: `Aula ${number} · ${moduleTitle}` }} />
     </CourseSection>
   );
 }
