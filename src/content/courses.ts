@@ -20,8 +20,6 @@ export type Course = {
   title: string;
   summary: string;
   status: CourseStatus;
-  /** Faz parte da Trilha do Engenheiro de IA. */
-  inTrack: boolean;
   /** Ícone usado no placeholder da capa enquanto não há imagem própria. */
   icon: LucideIcon;
   /** Caminho em /public para a capa definitiva (opcional). */
@@ -40,7 +38,6 @@ export const courses: Course[] = [
     summary:
       "Aprenda a construir o harness de um agente, ou seja, a infraestrutura que define quais dados ele enxerga, quais ferramentas pode usar, como mantém memória, como executa tarefas e por onde uma pessoa ou equipe interage com ele.",
     status: "on-sale",
-    inTrack: true,
     icon: Workflow,
   },
   {
@@ -49,7 +46,6 @@ export const courses: Course[] = [
     summary:
       "Aprenda a usar agentes em um fluxo real de desenvolvimento de software: preparar o contexto, escrever specs, implementar, revisar, testar, trabalhar com git e avaliar a qualidade do código gerado por IA.",
     status: "on-sale",
-    inTrack: true,
     icon: SquareTerminal,
   },
   {
@@ -58,7 +54,6 @@ export const courses: Course[] = [
     summary:
       "Construa a base necessária para entender como sistemas com IA funcionam: modelos, tokens, prompts, tools, MCPs, skills, agentes, harness e segurança.",
     status: "on-sale",
-    inTrack: true,
     icon: Compass,
   },
   {
@@ -67,7 +62,6 @@ export const courses: Course[] = [
     summary:
       "Aprenda quando é necessário dividir uma tarefa entre vários agentes, como desenhar o papel de cada um e como controlar custo, contexto, latência e qualidade sem criar complexidade desnecessária.",
     status: "waitlist",
-    inTrack: false,
     icon: Network,
   },
   {
@@ -76,7 +70,6 @@ export const courses: Course[] = [
     summary:
       "Aprenda a construir um assistente com IA para uso pessoal ou compartilhado, disponível 24/7 no WhatsApp, Telegram, Slack, Teams ou em uma interface web, capaz de executar rotinas, usar ferramentas e respeitar limites de segurança, custo e privacidade.",
     status: "waitlist",
-    inTrack: false,
     icon: BellRing,
   },
   {
@@ -85,7 +78,6 @@ export const courses: Course[] = [
     summary:
       "Aprenda a escrever notas melhores com Obsidian: organizar fontes, conectar ideias, preservar o seu próprio raciocínio e preparar uma base de conhecimento que também possa ser usada com IA.",
     status: "waitlist",
-    inTrack: false,
     icon: Brain,
   },
   {
@@ -94,7 +86,6 @@ export const courses: Course[] = [
     summary:
       "Aprenda a criar sistemas úteis com IA mesmo sem programar profissionalmente, usando vibe coding para protótipos, ferramentas internas e scripts rápidos, e sabendo reconhecer limites de escala, segurança, manutenção e quando envolver um desenvolvedor.",
     status: "waitlist",
-    inTrack: false,
     icon: WandSparkles,
   },
   {
@@ -103,7 +94,6 @@ export const courses: Course[] = [
     summary:
       "Aprenda a usar Codex no fluxo de trabalho: CLI, app local e tarefas na nuvem, configurando contexto, skills, MCPs, permissões e metas para delegar trabalho sem perder controle.",
     status: "waitlist",
-    inTrack: false,
     icon: Terminal,
   },
   {
@@ -112,7 +102,6 @@ export const courses: Course[] = [
     summary:
       "Aprenda a usar Claude Code com mais controle: CLAUDE.md, slash commands, subagentes, skills, MCPs, permissões, modelos, paralelização e fluxos que viram prática diária.",
     status: "waitlist",
-    inTrack: false,
     icon: Keyboard,
   },
   {
@@ -121,7 +110,6 @@ export const courses: Course[] = [
     summary:
       "Aprenda a criar Agent Skills para transformar seu conhecimento e seus processos de trabalho em habilidades reutilizáveis que assistentes de IA e agentes de programação conseguem usar.",
     status: "waitlist",
-    inTrack: false,
     icon: Boxes,
   },
   {
@@ -130,13 +118,12 @@ export const courses: Course[] = [
     summary:
       "Aprenda a automatizar tarefas recorrentes com IA, combinando scripts, cron jobs, webhooks, scraping, APIs e agentes sem perder controle sobre custo, falhas e supervisão.",
     status: "waitlist",
-    inTrack: false,
     icon: Factory,
   },
 ];
 
-export const trackCourses = courses.filter((c) => c.inTrack);
-export const waitlistCourses = courses.filter((c) => !c.inTrack);
+export const onSaleCourses = courses.filter((c) => c.status === "on-sale");
+export const waitlistCourses = courses.filter((c) => c.status === "waitlist");
 
 export function getCourse(slug: string) {
   return courses.find((c) => c.slug === slug);

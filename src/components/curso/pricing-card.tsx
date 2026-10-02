@@ -1,8 +1,6 @@
-import Link from "next/link";
-import { ArrowRight, Check } from "lucide-react";
+import { Check } from "lucide-react";
 import { BuyButton } from "@/components/curso/buy-button";
-import { trackBundle, type CoursePricing } from "@/content/course-details";
-import { trilhaHref } from "@/content/site";
+import type { CoursePricing } from "@/content/course-details";
 
 const perks = ["Curso completo, com skills e materiais", "Acesso vitalício", "Garantia de 7 dias"];
 
@@ -19,7 +17,7 @@ function brl(value: number) {
 }
 
 /** Card de compra (coluna lateral no desktop, bloco no meio da página no mobile). */
-export function PricingCard({ pricing, inTrack }: { pricing: CoursePricing; inTrack: boolean }) {
+export function PricingCard({ pricing }: { pricing: CoursePricing }) {
   const installment = pricing.price / pricing.installments;
   const pix = pricing.price * (1 - pricing.pixDiscount);
 
@@ -52,23 +50,6 @@ export function PricingCard({ pricing, inTrack }: { pricing: CoursePricing; inTr
             </li>
           ))}
         </ul>
-
-        {inTrack && (
-          <div className="mt-5 flex flex-col gap-1.5 rounded-sm bg-section p-4">
-            <p className="font-sans text-[13px] leading-5 text-ink-tertiary">
-              Este curso também faz parte da <strong className="font-semibold text-ink">Trilha do Engenheiro de IA</strong>:{" "}
-              {trackBundle.courses} cursos por{" "}
-              <span className="font-mono text-[13px] font-semibold tabular-nums text-ink">{brl(trackBundle.price)}</span>.
-            </p>
-            <Link
-              href={trilhaHref}
-              className="inline-flex w-fit items-center gap-1.5 rounded-xs font-sans text-[14px] font-semibold text-ink-accent transition-colors hover:text-accent-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus"
-            >
-              Ver a Trilha
-              <ArrowRight aria-hidden="true" className="size-4" />
-            </Link>
-          </div>
-        )}
       </div>
     </div>
   );

@@ -141,11 +141,6 @@ export const recentArticles = [
 
 export const homeFaq = [
   {
-    question: "O que é a Trilha do Engenheiro de IA?",
-    answer:
-      "É o conjunto dos três cursos de base do Aulaflix: Harness Engineering, Programação Agêntica e Fundamentos da Engenharia de IA. As inscrições estão abertas.",
-  },
-  {
     question: "O Aulaflix funciona como uma assinatura?",
     answer:
       "Não. Você compra os cursos que quer estudar, individualmente ou em pacotes. O acesso é vitalício: uma vez comprado, o curso é seu para assistir quantas vezes quiser, no seu tempo. No futuro, a ideia é ter também um passe anual para quem preferir acessar todos os cursos publicados sem comprar cada curso separadamente.",

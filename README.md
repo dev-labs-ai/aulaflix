@@ -20,7 +20,6 @@ pnpm lint
 | `/` | `src/app/(site)/page.tsx` |
 | `/cursos` | `src/app/(site)/cursos/page.tsx` |
 | `/cursos/[slug]` (11 cursos) | `src/app/(site)/cursos/[slug]/page.tsx` |
-| `/trilha-do-engenheiro-de-ia` | `src/app/(site)/trilha-do-engenheiro-de-ia/page.tsx` |
 | `/privacidade` | `src/app/(site)/privacidade/page.tsx` |
 | `/entrar` | `src/app/entrar/page.tsx` (sem header/rodapé) |
 
@@ -32,7 +31,6 @@ O grupo `(site)` aplica header e rodapé; `/entrar` fica fora dele.
 - **Lista de cursos (título, resumo, status, ícone/capa):** `src/content/courses.ts`
 - **Conteúdo de cada curso (ementa, preços, FAQ):** `src/content/course-details/<slug>.ts`
 - **Home (depoimentos, FAQ, vídeos/artigos):** `src/content/home.ts`
-- **Trilha (preços, seções, FAQ):** `src/content/trilha.ts`
 - **Cores, raios, fontes, animações:** `src/app/globals.css` (tokens `@theme` do Tailwind)
 - **Imagens:** `src/components/placeholders.tsx` gera os placeholders. Para usar uma capa real de curso, coloque o arquivo em `public/` e preencha `image` no curso em `courses.ts`.
 

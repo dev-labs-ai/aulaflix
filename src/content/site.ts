@@ -11,11 +11,9 @@ export const site = {
   legalName: "AULAFLIX TECNOLOGIA LTDA",
 };
 
-export const trilhaHref = "/trilha-do-engenheiro-de-ia";
-export const trilhaBuyHref = `${trilhaHref}#trilha-hero-form`;
+type NavItem = { label: string; href: string; /** Selo ao lado do link, ex.: "Novo". */ badge?: string };
 
-export const mainNav = [
-  { label: "Trilha do Engenheiro de IA", href: trilhaHref, badge: "Novo" },
+export const mainNav: NavItem[] = [
   { label: "Cursos", href: "/cursos" },
   { label: "Sobre", href: "/#sobre" },
 ];
@@ -44,7 +42,6 @@ export const substack = {
 };
 
 export const footerNav = [
-  { label: "Trilha do Engenheiro de IA", href: trilhaHref },
   { label: "Cursos", href: "/cursos" },
   { label: "Como funciona", href: "/#como-funciona" },
   { label: "Sobre o Rafael", href: "/#sobre" },

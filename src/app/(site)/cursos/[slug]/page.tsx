@@ -35,7 +35,7 @@ export default async function CoursePage(props: PageProps<"/cursos/[slug]">) {
 
   const sideCard =
     detail.kind === "on-sale" ? (
-      <PricingCard pricing={detail.pricing} inTrack={course.inTrack} />
+      <PricingCard pricing={detail.pricing} />
     ) : (
       <WaitlistCard courseTitle={course.title} />
     );

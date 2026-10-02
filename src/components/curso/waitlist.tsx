@@ -1,10 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import { createContext, useContext, useId, useState, type ChangeEvent, type FormEvent, type ReactNode } from "react";
 import { ChevronDown, Globe } from "lucide-react";
 import { cn } from "@/components/ui";
-import { trilhaHref } from "@/content/site";
 import styles from "./waitlist.module.css";
 
 // Protótipo: nada é enviado a um backend. A inscrição fica só no estado do cliente
@@ -258,25 +256,6 @@ function WaitlistConfirmed({ name, email, courseTitle }: Submission & { courseTi
         Registrei seu interesse em <span className="text-ink">{courseTitle}</span>. Vou enviar as próximas atualizações
         para <span className={cn("font-mono text-[13.5px] text-ink", styles.email)}>{email}</span>.
       </p>
-
-      <div className={cn("mt-6 border-t border-line-subtle pt-5", styles.fadeUp, styles.delayNote)}>
-        <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-ink-accent">
-          Trilha do Engenheiro de IA
-        </p>
-        <p className="mt-2.5 font-heading text-[18px] font-semibold leading-[1.25] tracking-[-0.01em] text-ink">
-          Conheça também a Trilha do Engenheiro de IA. As inscrições estão abertas.
-        </p>
-        <p className="mt-2 font-sans text-[14px] leading-[1.55] text-ink-tertiary">
-          Uma formação completa para quem quer colocar agentes de IA em produção.
-        </p>
-        <Link
-          href={trilhaHref}
-          className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-sm bg-surface-accent px-5 py-3 font-sans text-[15px] font-semibold text-ink-inverse transition-colors hover:bg-accent-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-4 focus-visible:ring-offset-surface-raised"
-        >
-          Conhecer a Trilha
-          <span aria-hidden="true">→</span>
-        </Link>
-      </div>
     </output>
   );
 }

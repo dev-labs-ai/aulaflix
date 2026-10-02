@@ -33,5 +33,3 @@ export function getCourseDetail(slug: string): CourseDetail | undefined {
   return courseDetails[slug];
 }
 
-/** Preço do pacote da Trilha mostrado no card de compra dos cursos da Trilha. */
-export const trackBundle = { courses: 3, price: 3497 };

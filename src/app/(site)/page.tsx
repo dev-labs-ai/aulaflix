@@ -5,15 +5,15 @@ import { MediaFeed } from "@/components/media-feed";
 import { PortraitPlaceholder } from "@/components/placeholders";
 import { TestimonialsCarousel } from "@/components/testimonials-carousel";
 import { ButtonLink, Eyebrow, Highlight, cn, container, focusRing, ringOffset } from "@/components/ui";
-import { trackCourses, waitlistCourses } from "@/content/courses";
+import { onSaleCourses, waitlistCourses } from "@/content/courses";
 import { homeFaq, howItWorks, recentArticles, recentVideos, testimonials } from "@/content/home";
-import { instructor, substack, trilhaBuyHref, trilhaHref, youtubeChannel } from "@/content/site";
+import { instructor, substack, youtubeChannel } from "@/content/site";
 
 export default function HomePage() {
   return (
     <>
       <Hero />
-      <TrackSection />
+      <OnSaleSection />
       <TestimonialsSection />
       <WaitlistSection />
       <HowItWorksSection />
@@ -31,7 +31,7 @@ function Hero() {
       <div className="lg:grid lg:grid-cols-12 lg:items-center lg:gap-x-12">
         <div className="lg:col-span-8 lg:col-start-1">
           <p className="anim-hero font-mono text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-accent sm:text-[12px] sm:tracking-[0.16em]">
-            Trilha do Engenheiro de IA · Inscrições abertas
+            Cursos de Engenharia de IA
           </p>
           <h1
             id="hero-title"
@@ -40,11 +40,11 @@ function Hero() {
             <Highlight>Tudo</Highlight> que você precisa saber para utilizar agentes de IA <Highlight>em produção</Highlight>.
           </h1>
           <p className="anim-hero anim-hero-delay-2 mt-8 max-w-[48ch] font-sans text-[17px] leading-normal text-ink-tertiary sm:text-[19px]">
-            A Trilha do Engenheiro de IA reúne três cursos, em ordem: entenda os fundamentos, aplique a programação
-            agêntica na prática, construa e avalie sistemas de agentes de IA.
+            Cursos práticos para entender os fundamentos, aplicar a programação agêntica e construir e avaliar
+            sistemas de agentes de IA.
           </p>
           <div className="anim-hero anim-hero-delay-3 mt-10 flex flex-wrap items-center gap-3">
-            <ButtonLink href={trilhaHref}>Conhecer a Trilha</ButtonLink>
+            <ButtonLink href="/#a-venda">Ver cursos à venda</ButtonLink>
             <ButtonLink href="/cursos" variant="secondary">
               Ver todos os cursos
             </ButtonLink>
@@ -104,9 +104,9 @@ function Stat({ value, label }: { value: string; label: string }) {
   );
 }
 
-function TrackSection() {
+function OnSaleSection() {
   return (
-    <section id="trilha" aria-labelledby="trilha-launch-title" className="scroll-mt-20 border-t border-line-accent bg-section">
+    <section id="a-venda" aria-labelledby="a-venda-title" className="scroll-mt-20 border-t border-line-accent bg-section">
       <div className={cn(container, "py-18 sm:py-24")}>
         <div className="reveal lg:grid lg:grid-cols-12 lg:gap-x-12">
           <header className="lg:col-span-9 lg:col-start-1">
@@ -114,23 +114,17 @@ function TrackSection() {
               Inscrições abertas
             </p>
             <h2
-              id="trilha-launch-title"
+              id="a-venda-title"
               className="mt-5 font-heading text-[30px] font-semibold leading-[1.12] tracking-[-0.02em] text-ink sm:text-[40px] sm:leading-[1.08] lg:text-[48px]"
             >
-              Trilha do <Highlight>Engenheiro de IA</Highlight>
+              Cursos <Highlight>à venda</Highlight>
             </h2>
             <p className="mt-5 max-w-[60ch] font-sans text-[16px] leading-[1.55] text-ink-tertiary sm:text-[17px]">
-              Entenda os fundamentos. Aplique a programação agêntica na prática. Construa e avalie sistemas de agentes de
-              IA.
+              Você compra uma vez e o acesso é vitalício: o curso é seu para assistir quantas vezes quiser, no seu tempo.
             </p>
-            <div className="mt-8 flex flex-col flex-wrap items-stretch gap-6 sm:flex-row sm:items-center">
-              <ButtonLink href={trilhaBuyHref} offset="section">
-                Comprar a Trilha
-              </ButtonLink>
-            </div>
           </header>
         </div>
-        <CourseList courses={trackCourses} variant="card" label="Cursos da Trilha do Engenheiro de IA" className="mt-12" />
+        <CourseList courses={onSaleCourses} variant="card" label="Cursos à venda" className="mt-12" />
       </div>
     </section>
   );
@@ -347,17 +341,17 @@ function FinalCta() {
         <div className="reveal lg:grid lg:grid-cols-12 lg:gap-x-12">
           <div className="lg:col-span-9 lg:col-start-1">
             <p className="font-mono text-[12px] font-semibold uppercase tracking-[0.18em] text-ink-accent">
-              Trilha do Engenheiro de IA
+              Acesso vitalício
             </p>
             <h2
               id="final-cta-title"
               className="mt-5 font-heading text-[36px] leading-[1.04] font-semibold tracking-[-0.02em] text-ink sm:text-[48px] sm:leading-[1.04] lg:text-[56px]"
             >
-              Três cursos, uma formação completa.
+              Compre uma vez, assista quantas vezes quiser.
             </h2>
             <div className="mt-10">
-              <ButtonLink href={trilhaBuyHref} offset="muted">
-                Comprar a Trilha
+              <ButtonLink href="/cursos" offset="muted">
+                Ver os cursos
               </ButtonLink>
             </div>
           </div>

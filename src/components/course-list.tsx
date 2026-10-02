@@ -22,7 +22,7 @@ export function CourseCover({ course }: { course: Course }) {
 
 /**
  * Lista de cursos com capa, título, resumo e status.
- * - `card`: dentro de um cartão branco elevado (Trilha).
+ * - `card`: dentro de um cartão branco elevado (cursos à venda).
  * - `plain`: linhas soltas separadas por divisórias (lista de espera).
  */
 export function CourseList({
