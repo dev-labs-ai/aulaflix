@@ -22,8 +22,9 @@ pnpm lint
 | `/cursos/[slug]` (11 cursos) | `src/app/(site)/cursos/[slug]/page.tsx` |
 | `/privacidade` | `src/app/(site)/privacidade/page.tsx` |
 | `/entrar` | `src/app/entrar/page.tsx` (sem header/rodapé) |
+| `/cadastrar` | `src/app/cadastrar/page.tsx` (sem header/rodapé) |
 
-O grupo `(site)` aplica header e rodapé; `/entrar` fica fora dele.
+O grupo `(site)` aplica header e rodapé; `/entrar` e `/cadastrar` ficam fora dele.
 
 ## Onde mudar as coisas
 
@@ -31,9 +32,10 @@ O grupo `(site)` aplica header e rodapé; `/entrar` fica fora dele.
 - **Lista de cursos (título, resumo, status, ícone/capa):** `src/content/courses.ts`
 - **Conteúdo de cada curso (ementa, preços, FAQ):** `src/content/course-details/<slug>.ts`
 - **Home (depoimentos, FAQ, vídeos/artigos):** `src/content/home.ts`
+- **Cadastro (textos, mensagens de erro, regras de senha e código):** `src/content/auth.ts`
 - **Cores, raios, fontes, animações:** `src/app/globals.css` (tokens `@theme` do Tailwind)
 - **Imagens:** `src/components/placeholders.tsx` gera os placeholders. Para usar uma capa real de curso, coloque o arquivo em `public/` e preencha `image` no curso em `courses.ts`.
 
 ## Limitações do protótipo
 
-Formulários (login, compra, lista de espera) são só visuais: validam no navegador e mostram um estado de confirmação, mas não enviam nada. `/cadastrar` e `/redefinir-senha` ainda não existem.
+Formulários (login, cadastro, compra, lista de espera) são só visuais: validam no navegador e mostram um estado de confirmação, mas não enviam nada. No cadastro, a etapa de confirmação aceita qualquer código de 6 dígitos. `/redefinir-senha` ainda não existe.
