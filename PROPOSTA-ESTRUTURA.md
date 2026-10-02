@@ -55,3 +55,4 @@ A identidade visual do Aulaflix já é própria (direção Lousa), mas a estrutu
 2. Entrar e cadastrar no mesmo fluxo (item 4). **Feito.**
 3. Página de aula (item 5), que corrige o "Continuar" levando para a página de venda. **Feito.**
 4. Compra e conta (item 6 e o resto do item 5). **Feito.**
+5. Home (item 1), que não estava nesta ordem. **Feito.**
