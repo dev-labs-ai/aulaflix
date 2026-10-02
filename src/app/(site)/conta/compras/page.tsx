@@ -27,7 +27,7 @@ function formatDate(iso: string) {
       .formatToParts(new Date(iso))
       .map((part) => [part.type, part.value]),
   );
-  return `${parts.day} ${months[Number(parts.month) - 1]} ${parts.year}, ${parts.hour}:${parts.minute}`;
+  return `${Number(parts.day)} ${months[Number(parts.month) - 1]} ${parts.year}, ${parts.hour}:${parts.minute}`;
 }
 
 const brl = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
