@@ -29,6 +29,7 @@ type CourseDetailBase = {
   learn: string[];
   /** Itens de "Para quem é". */
   audience: string[];
+  /** Dúvidas só deste curso; as que valem para todos (pagamento, garantia…) ficam em `platformFaq`. */
   faq: FaqEntry[];
 };
 

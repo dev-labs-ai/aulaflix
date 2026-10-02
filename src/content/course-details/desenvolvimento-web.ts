@@ -27,17 +27,8 @@ export const desenvolvimentoWeb: WaitlistCourseDetail = {
   ],
   faq: [
     {
-      question: "Quando o curso será lançado?",
-      answer:
-        "Ainda não há data definida. Quem entra na lista de espera recebe um aviso por e-mail assim que as inscrições abrirem.",
-    },
-    {
       question: "Preciso saber programar?",
       answer: "Não. O curso começa do básico, e o que for necessário de programação é explicado ao longo das aulas.",
-    },
-    {
-      question: "Entrar na lista de espera tem algum custo?",
-      answer: "Não. A lista de espera é gratuita e não obriga você a comprar o curso quando ele for lançado.",
     },
   ],
 };

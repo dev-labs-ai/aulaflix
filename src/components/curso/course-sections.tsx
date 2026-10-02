@@ -197,11 +197,25 @@ export function FreeLessonSection({
   );
 }
 
-/** FAQ da página de curso. */
+/** FAQ da página de curso, só com as dúvidas do curso; as da plataforma ficam em Como funciona. */
 export function CourseFaqSection({ items }: { items: FaqEntry[] }) {
   return (
     <CourseSection title="Perguntas frequentes">
       <FaqList items={items} />
+      <p className="mt-6 text-[16px] leading-[1.6] text-ink-muted">
+        Pagamento, garantia, acesso e lista de espera valem para todos os cursos e estão explicados em{" "}
+        <Link
+          href="/como-funciona"
+          className={cn(
+            "rounded-control font-bold text-ink-accent underline decoration-2 underline-offset-4 transition-colors hover:text-ink-accent-hover",
+            focusRing,
+            ringOffset.canvas,
+          )}
+        >
+          Como funciona
+        </Link>
+        .
+      </p>
     </CourseSection>
   );
 }

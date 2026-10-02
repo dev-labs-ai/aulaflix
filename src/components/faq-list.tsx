@@ -1,6 +1,6 @@
 import type { FaqEntry } from "@/content/course-details";
 
-/** Perguntas que abrem a resposta ao clicar, para reaproveitar o FAQ da página de curso. */
+/** Perguntas que abrem a resposta ao clicar, na página de curso e em Como funciona. */
 export function FaqList({ items }: { items: FaqEntry[] }) {
   return (
     <ul className="divide-y divide-line border-y border-line">

@@ -56,9 +56,5 @@ export const analiseDeDadosComPlanilhas: OnSaleCourseDetail = {
       question: "Preciso saber matemática avançada?",
       answer: "Não. As contas são do dia a dia, e cada fórmula é explicada com exemplos antes de ser usada.",
     },
-    {
-      question: "E se o curso não for para mim?",
-      answer: "Você tem 7 dias de garantia. Se não gostar, é só pedir o reembolso dentro desse prazo.",
-    },
   ],
 };

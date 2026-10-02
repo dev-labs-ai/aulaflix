@@ -60,13 +60,5 @@ export const programacaoDoZero: OnSaleCourseDetail = {
       answer:
         "Não. O curso começa do zero e explica cada conceito antes de usá-lo. Basta saber usar o computador para tarefas do dia a dia.",
     },
-    {
-      question: "Por quanto tempo tenho acesso ao curso?",
-      answer: "O acesso é vitalício. Depois da compra, você pode assistir às aulas quantas vezes quiser, no seu ritmo.",
-    },
-    {
-      question: "E se o curso não for para mim?",
-      answer: "Você tem 7 dias de garantia. Se não gostar, é só pedir o reembolso dentro desse prazo.",
-    },
   ],
 };

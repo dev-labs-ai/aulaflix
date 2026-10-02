@@ -2,7 +2,7 @@ import Link from "next/link";
 import { areaIcons, courseIcons, toneClasses } from "@/components/placeholders";
 import { Board, ButtonLink, cn, container, focusRing, ringOffset } from "@/components/ui";
 import { areaLabel, areas, waitlistCourses, type CourseTone } from "@/content/courses";
-import { howItWorks } from "@/content/home";
+import { howItWorksCopy, howItWorksSteps } from "@/content/how-it-works";
 
 export default function HomePage() {
   return (
@@ -69,16 +69,24 @@ function Hero() {
 
 const stepTones: CourseTone[] = ["coral", "amarelo", "salvia"];
 
-/** "Como funciona" em três fichas pautadas: escolher, comprar uma vez e estudar no seu ritmo. */
+/**
+ * Resumo de "Como funciona" em três fichas pautadas (escolher, comprar uma vez e estudar no seu ritmo),
+ * com o link para a página que detalha cada passo e reúne as dúvidas.
+ */
 function HowItWorks() {
   return (
-    <section id="como-funciona" aria-labelledby="como-funciona-title" className="scroll-mt-20 border-y border-line bg-section">
+    <section aria-labelledby="como-funciona-title" className="border-y border-line bg-section">
       <div className={cn(container, "py-16 sm:py-24")}>
-        <h2 id="como-funciona-title" className={sectionTitle}>
-          Como funciona
-        </h2>
+        <header className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-3">
+          <h2 id="como-funciona-title" className={sectionTitle}>
+            {howItWorksCopy.title}
+          </h2>
+          <Link href="/como-funciona" className={cn(textLink, ringOffset.section)}>
+            Ver detalhes e dúvidas
+          </Link>
+        </header>
         <ol className="mt-10 grid gap-6 sm:mt-12 md:grid-cols-3 lg:gap-7">
-          {howItWorks.map((step, i) => (
+          {howItWorksSteps.map((step, i) => (
             <li
               key={step.title}
               className="flex flex-col overflow-hidden rounded-card border border-line shadow-(--shadow-raised)"
@@ -93,7 +101,7 @@ function HowItWorks() {
                   <span className="sr-only">{i + 1}. </span>
                   {step.title}
                 </h3>
-                <p className="mt-7 text-[16px] leading-7 text-ink-tertiary">{step.body}</p>
+                <p className="mt-7 text-[16px] leading-7 text-ink-tertiary">{step.summary}</p>
               </div>
             </li>
           ))}

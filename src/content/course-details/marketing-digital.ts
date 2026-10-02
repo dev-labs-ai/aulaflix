@@ -27,18 +27,9 @@ export const marketingDigital: WaitlistCourseDetail = {
   ],
   faq: [
     {
-      question: "Quando o curso será lançado?",
-      answer:
-        "Ainda não há data definida. Quem entra na lista de espera recebe um aviso por e-mail assim que as inscrições abrirem.",
-    },
-    {
       question: "Preciso investir em anúncios para acompanhar o curso?",
       answer:
         "Não. A maior parte do conteúdo funciona sem anúncios, e a parte de campanhas pagas mostra como começar com valores baixos.",
-    },
-    {
-      question: "Entrar na lista de espera tem algum custo?",
-      answer: "Não. A lista de espera é gratuita e não obriga você a comprar o curso quando ele for lançado.",
     },
   ],
 };

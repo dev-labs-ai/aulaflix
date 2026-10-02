@@ -65,9 +65,5 @@ export const designDeInterfaces: OnSaleCourseDetail = {
       answer:
         "As aulas usam uma ferramenta de design gratuita, e os princípios valem para qualquer outra que você prefira.",
     },
-    {
-      question: "Por quanto tempo tenho acesso ao curso?",
-      answer: "O acesso é vitalício. Depois da compra, você pode assistir às aulas quantas vezes quiser, no seu ritmo.",
-    },
   ],
 };
