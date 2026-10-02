@@ -6,7 +6,10 @@ import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Logo } from "@/components/logo";
 import { cn, container, focusRing, ringOffset } from "@/components/ui";
+import { authCopy } from "@/content/auth";
 import { mainNav } from "@/content/site";
+import type { SessionUser } from "@/lib/auth";
+import { signOut } from "@/lib/auth-actions";
 
 const navLink = cn("font-sans text-[14px] text-ink-tertiary transition-colors hover:text-ink", focusRing, ringOffset.canvas);
 
@@ -16,7 +19,20 @@ const NavBadge = ({ children }: { children: string }) => (
   </span>
 );
 
-export function SiteHeader() {
+const UserBadge = ({ user }: { user: SessionUser }) => (
+  <span className="inline-flex items-center gap-2.5 font-sans text-[14px] text-ink-secondary">
+    <span
+      aria-hidden="true"
+      className="inline-flex size-8 items-center justify-center rounded-full bg-accent-100 font-heading text-[13px] font-semibold text-ink-accent"
+    >
+      {user.name.charAt(0).toUpperCase()}
+    </span>
+    {user.name}
+  </span>
+);
+
+/** `user` vem do servidor (cookie de sessão); `null` mostra o botão Entrar. */
+export function SiteHeader({ user }: { user: SessionUser | null }) {
   const pathname = usePathname();
   const [openPath, setOpenPath] = useState<string | null>(null);
   // O menu fecha sozinho ao navegar, porque fica associado à rota em que foi aberto.
@@ -36,17 +52,35 @@ export function SiteHeader() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 md:flex">
-          <Link
-            href="/entrar"
-            className={cn(
-              "inline-flex h-10 items-center justify-center whitespace-nowrap rounded-sm bg-surface-accent px-5 py-2 font-sans text-[14px] font-medium text-ink-inverse transition-colors duration-150 hover:bg-accent-600",
-              focusRing,
-              ringOffset.canvas,
-            )}
-          >
-            Entrar
-          </Link>
+        <div className="hidden items-center gap-4 md:flex">
+          {user ? (
+            <>
+              <UserBadge user={user} />
+              <form action={signOut}>
+                <button
+                  type="submit"
+                  className={cn(
+                    "inline-flex h-10 items-center justify-center whitespace-nowrap rounded-sm border border-line bg-canvas px-4 font-sans text-[14px] font-medium text-ink transition-colors hover:border-line-strong hover:bg-section",
+                    focusRing,
+                    ringOffset.canvas,
+                  )}
+                >
+                  {authCopy.signOut}
+                </button>
+              </form>
+            </>
+          ) : (
+            <Link
+              href="/entrar"
+              className={cn(
+                "inline-flex h-10 items-center justify-center whitespace-nowrap rounded-sm bg-surface-accent px-5 py-2 font-sans text-[14px] font-medium text-ink-inverse transition-colors duration-150 hover:bg-accent-600",
+                focusRing,
+                ringOffset.canvas,
+              )}
+            >
+              {authCopy.signIn.title}
+            </Link>
+          )}
         </div>
 
         <button
@@ -75,13 +109,27 @@ export function SiteHeader() {
                 {item.badge && <NavBadge>{item.badge}</NavBadge>}
               </Link>
             ))}
-            <Link
-              href="/entrar"
-              onClick={() => setOpenPath(null)}
-              className="mt-3 inline-flex h-11 items-center justify-center rounded-sm bg-surface-accent font-sans text-[15px] font-medium text-ink-inverse"
-            >
-              Entrar
-            </Link>
+            {user ? (
+              <div className="mt-3 flex items-center justify-between gap-4 border-t border-line-subtle pt-4">
+                <UserBadge user={user} />
+                <form action={signOut}>
+                  <button
+                    type="submit"
+                    className="inline-flex h-10 items-center justify-center rounded-sm border border-line bg-canvas px-4 font-sans text-[14px] font-medium text-ink"
+                  >
+                    {authCopy.signOut}
+                  </button>
+                </form>
+              </div>
+            ) : (
+              <Link
+                href="/entrar"
+                onClick={() => setOpenPath(null)}
+                className="mt-3 inline-flex h-11 items-center justify-center rounded-sm bg-surface-accent font-sans text-[15px] font-medium text-ink-inverse"
+              >
+                {authCopy.signIn.title}
+              </Link>
+            )}
           </div>
         </nav>
       )}

@@ -9,7 +9,7 @@ Stack: Next.js 16 (App Router, Turbopack) · React 19 · Tailwind CSS v4 · Type
 ```bash
 pnpm install
 pnpm dev        # http://localhost:3000
-pnpm build      # build de produção (todas as páginas são estáticas)
+pnpm build      # build de produção
 pnpm lint
 ```
 
@@ -36,6 +36,12 @@ O grupo `(site)` aplica header e rodapé; as telas de autenticação (`/entrar`,
 - **Cores, raios, fontes, animações:** `src/app/globals.css` (tokens `@theme` do Tailwind)
 - **Imagens:** `src/components/placeholders.tsx` gera os placeholders. Para usar uma capa real de curso, coloque o arquivo em `public/` e preencha `image` no curso em `courses.ts`.
 
+## Login de demonstração
+
+Em `/entrar`, use **aulaflix@email.com** com a senha **aulaflix**. As credenciais são conferidas no servidor (Server Action em `src/lib/auth-actions.ts`) e a sessão fica num cookie `httpOnly` por 7 dias; o header passa a mostrar o usuário e o botão Sair. `/entrar?next=/caminho` define para onde ir depois de entrar.
+
+A conta e a sessão ficam em `src/lib/auth.ts`. É uma simulação: o cookie guarda só o e-mail e não é protegido contra falsificação, então deve ser substituído por um backend de autenticação real.
+
 ## Limitações do protótipo
 
-Formulários (login, cadastro, redefinição de senha, compra, lista de espera) são só visuais: validam no navegador e mostram um estado de confirmação, mas não enviam nada. No cadastro e na redefinição de senha, qualquer código de 6 dígitos é aceito.
+Fora o login com a conta de demonstração, os formulários (Google/GitHub, cadastro, redefinição de senha, compra, lista de espera) são só visuais: validam no navegador e mostram um estado de confirmação, mas não enviam nada. No cadastro e na redefinição de senha, qualquer código de 6 dígitos é aceito.

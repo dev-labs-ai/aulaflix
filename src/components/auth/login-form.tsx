@@ -1,19 +1,29 @@
 "use client";
 
 import Link from "next/link";
-import { useState, type FormEvent } from "react";
-import { AuthCard, AuthDivider, PrototypeNotice, inlineLinkClass, submitButtonClass } from "@/components/auth/auth-ui";
+import { startTransition, useActionState, useState, type FormEvent } from "react";
+import {
+  AuthAlert,
+  AuthCard,
+  AuthDivider,
+  PrototypeNotice,
+  inlineLinkClass,
+  submitButtonClass,
+} from "@/components/auth/auth-ui";
 import { useFieldValidation } from "@/components/auth/hooks";
 import { OAuthButtons } from "@/components/auth/oauth-buttons";
 import { TextField } from "@/components/auth/text-field";
 import { cn } from "@/components/ui";
 import { authCopy, authErrors, isEmail } from "@/content/auth";
+import { signIn } from "@/lib/auth-actions";
 
-// Protótipo: não há backend de autenticação. O envio só valida os campos e mostra um aviso.
+// O e-mail e a senha são conferidos no servidor (Server Action). Google e GitHub
+// ainda não têm backend e só mostram um aviso.
 
-export function LoginForm() {
+export function LoginForm({ next }: { next: string }) {
   const [values, setValues] = useState({ email: "", password: "" });
-  const [notice, setNotice] = useState(false);
+  const [oauthNotice, setOauthNotice] = useState(false);
+  const [state, signInAction, pending] = useActionState(signIn, { error: null });
 
   const errors: Partial<Record<keyof typeof values, string>> = {};
   if (!values.email.trim()) errors.email = authErrors.emailRequired;
@@ -31,14 +41,18 @@ export function LoginForm() {
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setNotice(validation.submit());
+    if (pending || !validation.submit()) return;
+    const formData = new FormData(event.currentTarget);
+    startTransition(() => signInAction(formData));
   }
 
   return (
     <AuthCard label={authCopy.signIn.title}>
-      <OAuthButtons onSelect={() => setNotice(true)} />
+      <OAuthButtons onSelect={() => setOauthNotice(true)} />
       <AuthDivider />
       <form className="flex flex-col gap-4" noValidate onSubmit={handleSubmit}>
+        {state.error && <AuthAlert tone="error">{state.error}</AuthAlert>}
+        <input type="hidden" name="next" value={next} />
         <TextField
           label={authCopy.fields.email}
           type="email"
@@ -57,10 +71,10 @@ export function LoginForm() {
           }
           {...field("password")}
         />
-        <button type="submit" className={cn(submitButtonClass, "mt-2")}>
-          {authCopy.signIn.submit}
+        <button type="submit" disabled={pending} className={cn(submitButtonClass, "mt-2")}>
+          {pending ? authCopy.signIn.pending : authCopy.signIn.submit}
         </button>
-        {notice && <PrototypeNotice>{authCopy.prototype.unavailable}</PrototypeNotice>}
+        {oauthNotice && <PrototypeNotice>{authCopy.prototype.unavailable}</PrototypeNotice>}
       </form>
     </AuthCard>
   );

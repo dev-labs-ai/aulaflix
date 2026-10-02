@@ -9,6 +9,7 @@ export const authCopy = {
   signIn: {
     title: "Entrar",
     submit: "Entrar",
+    pending: "Entrando…",
     forgotPassword: "Esqueci minha senha",
     switchPrompt: "Ainda não tem conta?",
     switchLink: "Criar conta",
@@ -37,6 +38,7 @@ export const authCopy = {
     body: (email: string) => ["Enviamos um código para ", email, "."] as const,
     submit: "Salvar senha e entrar",
   },
+  signOut: "Sair",
   back: "Voltar",
   divider: "ou",
   google: "Continuar com Google",
@@ -75,6 +77,7 @@ export const authErrors = {
   emailRequired: "Informe seu e-mail.",
   emailInvalid: "Use um e-mail válido.",
   passwordRequired: "Informe sua senha.",
+  wrongCredentials: "E-mail ou senha incorretos.",
   passwordTooShort: `A senha precisa ter pelo menos ${AUTH_PASSWORD_MIN_LENGTH} caracteres.`,
   passwordMismatch: "As senhas não são iguais.",
 };
