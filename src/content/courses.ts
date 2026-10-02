@@ -1,8 +1,10 @@
-import { Camera, ChartColumn, Code, Globe, Megaphone, PenTool, PiggyBank, type LucideIcon } from "lucide-react";
-
 // Catálogo de exemplo: cursos genéricos para o protótipo.
+// Sem dependência de framework: só dados e tipos, reaproveitáveis em outro front-end.
 
 export type CourseStatus = "on-sale" | "waitlist";
+
+/** Nome do ícone na biblioteca Lucide (https://lucide.dev/icons). */
+export type CourseIcon = "code" | "pen-tool" | "chart-column" | "globe" | "megaphone" | "camera" | "piggy-bank";
 
 export type Course = {
   slug: string;
@@ -10,7 +12,7 @@ export type Course = {
   summary: string;
   status: CourseStatus;
   /** Ícone usado no placeholder da capa enquanto não há imagem própria. */
-  icon: LucideIcon;
+  icon: CourseIcon;
   /** Caminho em /public para a capa definitiva (opcional). */
   image?: string;
 };
@@ -27,7 +29,7 @@ export const courses: Course[] = [
     summary:
       "Aprenda lógica de programação e escreva seus primeiros programas em Python, com exercícios curtos que levam do primeiro comando a pequenos projetos completos.",
     status: "on-sale",
-    icon: Code,
+    icon: "code",
   },
   {
     slug: "design-de-interfaces",
@@ -35,7 +37,7 @@ export const courses: Course[] = [
     summary:
       "Aprenda os fundamentos de layout, tipografia, cor e hierarquia visual para criar telas claras e agradáveis, do rascunho ao protótipo navegável.",
     status: "on-sale",
-    icon: PenTool,
+    icon: "pen-tool",
   },
   {
     slug: "analise-de-dados-com-planilhas",
@@ -43,7 +45,7 @@ export const courses: Course[] = [
     summary:
       "Organize, limpe e analise dados em planilhas, use fórmulas e tabelas dinâmicas e transforme números em gráficos que ajudam a tomar decisões.",
     status: "on-sale",
-    icon: ChartColumn,
+    icon: "chart-column",
   },
   {
     slug: "desenvolvimento-web",
@@ -51,7 +53,7 @@ export const courses: Course[] = [
     summary:
       "Construa sites com HTML, CSS e JavaScript, entendendo como as páginas são estruturadas, estilizadas, deixadas interativas e publicadas na internet.",
     status: "waitlist",
-    icon: Globe,
+    icon: "globe",
   },
   {
     slug: "marketing-digital",
@@ -59,7 +61,7 @@ export const courses: Course[] = [
     summary:
       "Planeje sua presença online, produza conteúdo para redes sociais, crie campanhas simples e acompanhe os números que mostram o que está funcionando.",
     status: "waitlist",
-    icon: Megaphone,
+    icon: "megaphone",
   },
   {
     slug: "fotografia-com-celular",
@@ -67,7 +69,7 @@ export const courses: Course[] = [
     summary:
       "Tire fotos melhores usando só o celular: composição, luz natural, recursos da câmera e edição rápida em aplicativos gratuitos.",
     status: "waitlist",
-    icon: Camera,
+    icon: "camera",
   },
   {
     slug: "financas-pessoais",
@@ -75,7 +77,7 @@ export const courses: Course[] = [
     summary:
       "Monte um orçamento que funcione, organize as dívidas, crie uma reserva de emergência e dê os primeiros passos para investir com segurança.",
     status: "waitlist",
-    icon: PiggyBank,
+    icon: "piggy-bank",
   },
 ];
 
