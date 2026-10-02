@@ -38,14 +38,6 @@ export const footerNav = [
   { label: "Sobre", href: "/#sobre" },
 ];
 
-export const footerElsewhere = [
-  { icon: "substack", label: "Substack", detail: substack.name, href: substack.href },
-  { icon: "youtube", label: "YouTube", detail: youtubeChannel.name, href: youtubeChannel.href },
-  { icon: "discord", label: "Discord", detail: instructor.name, href: "https://discord.gg/xCAYeh8mGf" },
-] as const;
-
 export const socialLinks = [
   { icon: "github", label: "GitHub", href: "https://github.com/robsonoliveiradacosta" },
-  { icon: "instagram", label: "Instagram", href: "https://www.instagram.com/quant_brasil/" },
-  { icon: "telegram", label: "Telegram", href: "https://t.me/quantbrasil" },
 ] as const;

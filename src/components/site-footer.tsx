@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { brandIcons } from "@/components/brand-icons";
 import { Logo } from "@/components/logo";
-import { cn, container, focusRing } from "@/components/ui";
-import { footerElsewhere, footerNav, instructor, site, socialLinks } from "@/content/site";
+import { cn, container } from "@/components/ui";
+import { footerNav, instructor, site, socialLinks } from "@/content/site";
 
 const smallRing = "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-section";
 
@@ -27,43 +27,6 @@ export function SiteFooter() {
                 </Link>
               </li>
             ))}
-          </ul>
-        </div>
-
-        <div className="space-y-3">
-          <h3 className="font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-ink-muted">Onde mais</h3>
-          <ul className="space-y-3">
-            {footerElsewhere.map((item) => {
-              const Icon = brandIcons[item.icon];
-              return (
-                <li key={item.href}>
-                  <a
-                    href={item.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={cn(
-                      "group grid grid-cols-[auto_1fr] items-start gap-x-3 rounded-sm",
-                      focusRing,
-                      "focus-visible:ring-offset-section",
-                    )}
-                  >
-                    <Icon className="mt-0.5 size-[18px] text-ink-tertiary transition-colors group-hover:text-ink group-focus-visible:text-ink" />
-                    <span className="flex min-w-0 flex-col gap-0.5">
-                      <span className="inline-flex items-center gap-1.5 font-sans text-[14px] text-ink-secondary transition-colors group-hover:text-ink group-focus-visible:text-ink">
-                        {item.label}
-                        <span
-                          aria-hidden="true"
-                          className="font-mono text-[10px] text-ink-muted transition-transform group-hover:translate-x-0.5"
-                        >
-                          ↗
-                        </span>
-                      </span>
-                      <span className="font-mono text-[11px] tabular-nums text-ink-muted">{item.detail}</span>
-                    </span>
-                  </a>
-                </li>
-              );
-            })}
           </ul>
         </div>
       </div>
