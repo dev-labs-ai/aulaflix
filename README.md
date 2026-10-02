@@ -23,12 +23,12 @@ pnpm lint
 | `/meus-cursos` (só logado) | `src/app/(site)/meus-cursos/page.tsx` |
 | `/aprender/[curso]` (só para quem tem o curso) | `src/app/(site)/aprender/[curso]/page.tsx`, que leva à aula onde o aluno parou |
 | `/aprender/[curso]/[aula]` (só para quem tem o curso) | `src/app/(site)/aprender/[curso]/[aula]/page.tsx` |
-| `/compras` (só logado) | `src/app/(site)/compras/page.tsx` |
-| `/configuracoes` (só logado) | `src/app/(site)/configuracoes/page.tsx` |
+| `/conta` (só logado; aba Dados da conta) | `src/app/(site)/conta/page.tsx`, com as abas em `src/app/(site)/conta/layout.tsx` |
+| `/conta/compras` (só logado; aba Compras) | `src/app/(site)/conta/compras/page.tsx` |
 | `/entrar` (entrar e criar conta) | `src/app/entrar/page.tsx` (sem header/rodapé) |
 | `/redefinir-senha` | `src/app/redefinir-senha/page.tsx` (sem header/rodapé) |
 
-O grupo `(site)` aplica header e rodapé; as telas de autenticação (`/entrar`, `/redefinir-senha`) ficam fora dele. `/cadastrar` redireciona para `/entrar` (em `next.config.ts`).
+O grupo `(site)` aplica header e rodapé; as telas de autenticação (`/entrar`, `/redefinir-senha`) ficam fora dele. `/cadastrar` redireciona para `/entrar`, e os endereços antigos `/compras` e `/configuracoes` para as abas de `/conta` (em `next.config.ts`).
 
 ## Onde mudar as coisas
 
@@ -56,7 +56,7 @@ Direção "Lousa": a sala de aula como referência. Fundo de papel, texto em gra
 
 A conta criada no cadastro fica num cookie deste navegador (com a senha em hash), e só uma por vez: um novo cadastro substitui a anterior. Ela começa sem cursos e com o e-mail por confirmar; enquanto isso, uma faixa abaixo do header pede a confirmação, sem bloquear nada, e oferece um botão de protótipo que faz o papel do link do e-mail.
 
-As contas e a sessão ficam em `src/lib/auth.ts`; os cursos e o progresso inicial da conta de demonstração, em `src/lib/enrollments.ts` (as aulas marcadas como concluídas ficam num cookie deste navegador), e os pedidos, em `src/lib/purchases.ts`. Páginas só para quem está logado usam `requireUser()`, que manda para `/entrar?next=…`. Em Configurações, o nome editado fica num cookie e aparece no header; a troca de senha é só simulada (a senha continua a mesma). É uma simulação: o cookie guarda só o e-mail e não é protegido contra falsificação, então deve ser substituído por um backend de autenticação real.
+As contas e a sessão ficam em `src/lib/auth.ts`; os cursos e o progresso inicial da conta de demonstração, em `src/lib/enrollments.ts` (as aulas marcadas como concluídas ficam num cookie deste navegador), e os pedidos, em `src/lib/purchases.ts`. Páginas só para quem está logado usam `requireUser()`, que manda para `/entrar?next=…`. Em Conta, o nome editado fica num cookie e aparece no header; a troca de senha é só simulada (a senha continua a mesma). É uma simulação: o cookie guarda só o e-mail e não é protegido contra falsificação, então deve ser substituído por um backend de autenticação real.
 
 ## Limitações do protótipo
 

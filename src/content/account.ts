@@ -1,7 +1,7 @@
-// Textos da área do aluno: menu do usuário, Meus cursos, Minhas compras e Configurações.
+// Textos da área do aluno: menu do usuário, Meus cursos e Conta (dados da conta e compras).
 
 /** Nome do ícone na biblioteca Lucide (https://lucide.dev/icons). */
-export type AccountIcon = "book-open" | "receipt" | "settings";
+export type AccountIcon = "book-open" | "circle-user";
 
 export type AccountLink = { label: string; href: string; icon: AccountIcon };
 
@@ -11,10 +11,19 @@ export const accountMenu = {
   /** Áreas da conta; no celular aparecem junto com os links do menu principal. */
   links: [
     { label: "Meus cursos", href: "/meus-cursos", icon: "book-open" },
-    { label: "Minhas compras", href: "/compras", icon: "receipt" },
+    { label: "Conta", href: "/conta", icon: "circle-user" },
   ] satisfies AccountLink[],
-  settings: { label: "Configurações", href: "/configuracoes", icon: "settings" } satisfies AccountLink,
   signOut: "Sair",
+};
+
+/** Página /conta: o título e as abas. */
+export const accountCopy = {
+  title: "Conta",
+  tabsLabel: "Seções da conta",
+  tabs: [
+    { label: "Dados da conta", href: "/conta" },
+    { label: "Compras", href: "/conta/compras" },
+  ],
 };
 
 /** Iniciais para o avatar: primeira e última palavra do nome ("Aluno Aulaflix" → "AA"). */
@@ -49,7 +58,7 @@ export const myCoursesCopy = {
 };
 
 export const purchasesCopy = {
-  title: "Minhas compras",
+  title: "Compras",
   description: "Seus pedidos no Aulaflix: pagamentos, valores e cursos incluídos.",
   status: { paid: "Pago" },
   paymentMethod: { pix: "Pix", card: "Cartão" },
@@ -63,7 +72,7 @@ export const purchasesCopy = {
 };
 
 export const settingsCopy = {
-  title: "Configurações",
+  title: "Dados da conta",
   description: "Seu nome, e-mail e senha no Aulaflix.",
   name: "Nome",
   email: "E-mail",

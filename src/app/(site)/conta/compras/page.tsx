@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { AccountEmptyState, AccountPage } from "@/components/account-page";
+import { AccountEmptyState } from "@/components/account-page";
 import { Badge } from "@/components/ui";
 import { purchasesCopy as copy } from "@/content/account";
 import { requireUser } from "@/lib/auth";
@@ -37,22 +37,19 @@ function listCourses(titles: string[]) {
   return `${titles.length > 1 ? `${titles.slice(0, -1).join(", ")} e ${titles.at(-1)}` : titles[0]}.`;
 }
 
+/** Aba "Compras" de /conta: os pedidos, do mais recente para o mais antigo. */
 export default async function ComprasPage() {
-  const user = await requireUser("/compras");
+  const user = await requireUser("/conta/compras");
   const purchases = getPurchases(user);
 
-  return (
-    <AccountPage id="compras-title" title={copy.title}>
-      {purchases.length > 0 ? (
-        <ul className="mt-8 flex flex-col gap-4">
-          {purchases.map((purchase) => (
-            <PurchaseCard key={purchase.id} purchase={purchase} />
-          ))}
-        </ul>
-      ) : (
-        <AccountEmptyState {...copy.empty} />
-      )}
-    </AccountPage>
+  return purchases.length > 0 ? (
+    <ul className="mt-8 flex flex-col gap-4">
+      {purchases.map((purchase) => (
+        <PurchaseCard key={purchase.id} purchase={purchase} />
+      ))}
+    </ul>
+  ) : (
+    <AccountEmptyState {...copy.empty} />
   );
 }
 

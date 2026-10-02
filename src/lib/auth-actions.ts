@@ -68,7 +68,7 @@ export async function signOut() {
 export type UpdateNameState = { error: string | null };
 
 export async function updateName(_previous: UpdateNameState, formData: FormData): Promise<UpdateNameState> {
-  const user = await requireUser("/configuracoes");
+  const user = await requireUser("/conta");
   const name = cleanName(text(formData, "name"));
   if (!name) return { error: authErrors.nameRequired };
   if (name.length > NAME_MAX_LENGTH) return { error: settingsCopy.nameTooLong };
