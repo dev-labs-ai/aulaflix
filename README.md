@@ -1,5 +1,8 @@
 # Aulaflix
 
+> [!IMPORTANT]
+> Este repositório está arquivado. O protótipo foi portado para Nuxt 4 e continua em [`dev-labs-ai/aulaflix-web`](https://github.com/dev-labs-ai/aulaflix-web), com as mesmas páginas, textos e endereços. O que está aqui fica só para consulta.
+
 Protótipo do site do Aulaflix, uma plataforma de cursos online para desenvolvedores de software (backend, frontend, banco de dados, DevOps, IA e outras áreas). A estrutura das páginas partiu de uma réplica de [programe.ai](https://programe.ai/); a identidade visual é própria (veja abaixo). Textos e cursos são conteúdo de exemplo e as capas são placeholders.
 
 Stack: Next.js 16 (App Router, Turbopack) · React 19 · Tailwind CSS v4 · TypeScript · lucide-react.
